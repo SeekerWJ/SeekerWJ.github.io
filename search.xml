@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title></title>
+      <title>Python学习笔记Day2_1</title>
       <link href="2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day2_1/"/>
       <url>2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day2_1/</url>
       
@@ -12,12 +12,18 @@
       
       
       
+        <tags>
+            
+            <tag> study </tag>
+            
+        </tags>
+      
     </entry>
     
     
     
     <entry>
-      <title></title>
+      <title>Python学习笔记Day1_2</title>
       <link href="2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day1_2/"/>
       <url>2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day1_2/</url>
       
@@ -25,12 +31,18 @@
       
       
       
+        <tags>
+            
+            <tag> study </tag>
+            
+        </tags>
+      
     </entry>
     
     
     
     <entry>
-      <title></title>
+      <title>Python学习笔记Day1_1</title>
       <link href="2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day1_1/"/>
       <url>2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day1_1/</url>
       
@@ -38,12 +50,18 @@
       
       
       
+        <tags>
+            
+            <tag> study </tag>
+            
+        </tags>
+      
     </entry>
     
     
     
     <entry>
-      <title></title>
+      <title>Python学习笔记Day5_1</title>
       <link href="2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day5_1/"/>
       <url>2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day5_1/</url>
       
@@ -51,12 +69,18 @@
       
       
       
+        <tags>
+            
+            <tag> study </tag>
+            
+        </tags>
+      
     </entry>
     
     
     
     <entry>
-      <title></title>
+      <title>Python学习笔记Day4_2</title>
       <link href="2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day4_2/"/>
       <url>2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day4_2/</url>
       
@@ -64,12 +88,18 @@
       
       
       
+        <tags>
+            
+            <tag> study </tag>
+            
+        </tags>
+      
     </entry>
     
     
     
     <entry>
-      <title></title>
+      <title>Python学习笔记Day4_1</title>
       <link href="2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day4_1/"/>
       <url>2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day4_1/</url>
       
@@ -77,18 +107,30 @@
       
       
       
+        <tags>
+            
+            <tag> study </tag>
+            
+        </tags>
+      
     </entry>
     
     
     
     <entry>
-      <title></title>
+      <title>Python学习笔记Day3_1</title>
       <link href="2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day3_1/"/>
       <url>2020/09/17/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0Day3_1/</url>
       
         <content type="html"><![CDATA[<h1 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h1><p><em>注：</em></p><p>​    <em>字典{}</em></p><p>​    <em>元组()</em></p><p>​    <em>列表[]</em></p><p>所谓字典即是一系列的键-值对。每一个键都与一个值相关联。与键相关联的可以使数字、字符串、列表，也可以是字典</p><pre class=" language-python"><code class="language-python">alien_0 <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'color':'green','points':'5'&amp;#125;</span><span class="token keyword">print</span><span class="token punctuation">(</span>alien_0<span class="token punctuation">[</span><span class="token string">'color'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#输出结果</span>green</code></pre><h2 id="对字典添加键值对"><a href="#对字典添加键值对" class="headerlink" title="对字典添加键值对"></a>对字典添加键值对</h2><pre class=" language-python"><code class="language-python">alien_0 <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'color':'green','points':'5'&amp;#125;</span><span class="token keyword">print</span><span class="token punctuation">(</span>alien_0<span class="token punctuation">[</span><span class="token string">'color'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>alien_0<span class="token punctuation">[</span><span class="token string">'x_position'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>alien_0<span class="token punctuation">[</span><span class="token string">'y_position'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">25</span><span class="token keyword">print</span><span class="token punctuation">(</span>alien_0<span class="token punctuation">)</span><span class="token comment" spellcheck="true">#输出结果</span>green<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'color': 'green', 'points': '5', 'x_position': 0, 'y_position': 25&amp;#125;</span></code></pre><p>​    对字典来说，不关心所谓键值对的顺序，只关心键和值之间的联系。有时为了方便键值对的添加操作，可以先创建一个空的字典，再分行添加键值对</p><pre class=" language-python"><code class="language-python">alien_0 <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;&amp;#125;</span>alien_0<span class="token punctuation">[</span><span class="token string">'color'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'green'</span>alien_0<span class="token punctuation">[</span><span class="token string">'points'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">5</span><span class="token keyword">print</span><span class="token punctuation">(</span>alien_0<span class="token punctuation">)</span><span class="token comment" spellcheck="true">#输出结果</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'color': 'green', 'points': 5&amp;#125;</span></code></pre><p>​    使用字典来存储用户提供的数据或在编写能自动生成大量键值对的代码时，通常都先定义一个空字典</p><h2 id="修改字典中的值"><a href="#修改字典中的值" class="headerlink" title="修改字典中的值"></a>修改字典中的值</h2><pre class=" language-python"><code class="language-python">alien_0 <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'color':'green','points':'5'&amp;#125;</span><span class="token keyword">print</span><span class="token punctuation">(</span>alien_0<span class="token punctuation">)</span>alien_0<span class="token punctuation">[</span><span class="token string">'color'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'yellow'</span><span class="token keyword">print</span><span class="token punctuation">(</span>alien_0<span class="token punctuation">)</span><span class="token comment" spellcheck="true">#输出结果</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'color': 'green', 'points': '5'&amp;#125;</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'color': 'yellow', 'points': '5'&amp;#125;</span></code></pre><h2 id="删除键值对"><a href="#删除键值对" class="headerlink" title="删除键值对"></a>删除键值对</h2><pre class=" language-python"><code class="language-python">alien_0 <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'color':'green','points':'5'&amp;#125;</span><span class="token keyword">print</span><span class="token punctuation">(</span>alien_0<span class="token punctuation">)</span><span class="token keyword">del</span> alien_0<span class="token punctuation">[</span><span class="token string">'points'</span><span class="token punctuation">]</span><span class="token keyword">print</span><span class="token punctuation">(</span>alien_0<span class="token punctuation">)</span><span class="token comment" spellcheck="true">#输出结果</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'color': 'green', 'points': '5'&amp;#125;</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'color': 'green'&amp;#125;</span></code></pre><p>​    对于想删除的键值对，可以利用del语句来将其删除</p><h2 id="遍历字典"><a href="#遍历字典" class="headerlink" title="遍历字典"></a>遍历字典</h2><h3 id="1-遍历所有的键-值对"><a href="#1-遍历所有的键-值对" class="headerlink" title="1. 遍历所有的键-值对"></a>1. 遍历所有的键-值对</h3><pre class=" language-python"><code class="language-python">user_0 <span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>    <span class="token string">'username'</span><span class="token punctuation">:</span> <span class="token string">'wangweijun'</span><span class="token punctuation">,</span>    <span class="token string">'first'</span><span class="token punctuation">:</span> <span class="token string">'NB!'</span><span class="token punctuation">,</span>    <span class="token string">'last'</span><span class="token punctuation">:</span> <span class="token string">'taiNB!'</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span><span class="token keyword">for</span> key<span class="token punctuation">,</span>value <span class="token keyword">in</span> user_0<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true">#利用items可以返回键值数组</span>    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nKey: "</span> <span class="token operator">+</span> key<span class="token punctuation">)</span>    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Value: "</span> <span class="token operator">+</span> value<span class="token punctuation">)</span><span class="token comment" spellcheck="true">#输出结果</span>Key<span class="token punctuation">:</span> usernameValue<span class="token punctuation">:</span> wangweijunKey<span class="token punctuation">:</span> firstValue<span class="token punctuation">:</span> NB!Key<span class="token punctuation">:</span> lastValue<span class="token punctuation">:</span> taiNB!</code></pre><p>​    利用key来存储键，利用value来存储值</p><p>​    user_0.items()的作用就是返回可遍历的键值对</p><p>​    若要返回字典中所有的键，则需要利用user_0.keys()</p><pre class=" language-python"><code class="language-python">Key<span class="token punctuation">:</span> usernameKey<span class="token punctuation">:</span> firstKey<span class="token punctuation">:</span> lastuser_0 <span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>    <span class="token string">'username'</span><span class="token punctuation">:</span> <span class="token string">'wangweijun'</span><span class="token punctuation">,</span>    <span class="token string">'first'</span><span class="token punctuation">:</span> <span class="token string">'NB!'</span><span class="token punctuation">,</span>    <span class="token string">'last'</span><span class="token punctuation">:</span> <span class="token string">'taiNB!'</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span><span class="token keyword">for</span> key <span class="token keyword">in</span> user_0<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nKey: "</span> <span class="token operator">+</span> key<span class="token punctuation">)</span><span class="token comment" spellcheck="true">#输出结果</span>Key<span class="token punctuation">:</span> usernameKey<span class="token punctuation">:</span> firstKey<span class="token punctuation">:</span> last</code></pre><p>​    同理，若要返回字典中所有的值，利用user_0.values()即可</p><p>​    为了剔除重复项，可以使用set()语句选择出集合(每个元素都是独一无二的)</p><pre class=" language-python"><code class="language-python">favorite_languages <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>    <span class="token string">'jen'</span><span class="token punctuation">:</span> <span class="token string">'python'</span><span class="token punctuation">,</span>    <span class="token string">'sarah'</span><span class="token punctuation">:</span> <span class="token string">'c'</span><span class="token punctuation">,</span>    <span class="token string">'edward'</span><span class="token punctuation">:</span> <span class="token string">'ruby'</span><span class="token punctuation">,</span>    <span class="token string">'phil'</span><span class="token punctuation">:</span> <span class="token string">'python'</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span><span class="token keyword">for</span> language <span class="token keyword">in</span> set<span class="token punctuation">(</span>favorite_languages<span class="token punctuation">.</span>values<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>    <span class="token keyword">print</span><span class="token punctuation">(</span>language<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#输出结果</span>CRubyPython</code></pre><h2 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h2><h3 id="字典列表"><a href="#字典列表" class="headerlink" title="字典列表"></a>字典列表</h3><p>即将字典当成一个列表中的元素</p><pre class=" language-python"><code class="language-python">alien_0 <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>    <span class="token string">'color'</span><span class="token punctuation">:</span> <span class="token string">'green'</span><span class="token punctuation">,</span>    <span class="token string">'points'</span><span class="token punctuation">:</span> <span class="token number">5</span>    <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>alien_1 <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>    <span class="token string">'color'</span><span class="token punctuation">:</span> <span class="token string">'yellow'</span><span class="token punctuation">,</span>    <span class="token string">'points'</span><span class="token punctuation">:</span> <span class="token number">10</span>    <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>alien_2 <span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>    <span class="token string">'color'</span><span class="token punctuation">:</span> <span class="token string">'red'</span><span class="token punctuation">,</span>    <span class="token string">'points'</span><span class="token punctuation">:</span> <span class="token number">15</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>aliens <span class="token operator">=</span> <span class="token punctuation">[</span>alien_0<span class="token punctuation">,</span> alien_1<span class="token punctuation">,</span> alien_2<span class="token punctuation">]</span><span class="token keyword">for</span> alien <span class="token keyword">in</span> aliens<span class="token punctuation">:</span>    <span class="token keyword">print</span><span class="token punctuation">(</span>alien<span class="token punctuation">)</span><span class="token comment" spellcheck="true">#输出结果</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'color': 'green', 'points': 5&amp;#125;</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'color': 'yellow', 'points': 10&amp;#125;</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'color': 'red', 'points': 15&amp;#125;</span></code></pre><h3 id="在字典中存储列表"><a href="#在字典中存储列表" class="headerlink" title="在字典中存储列表"></a>在字典中存储列表</h3><p>即，有时候一个键需要多个对应的值时，可以采用字典存储列表的形式</p><pre class=" language-python"><code class="language-python">pizza <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>    <span class="token string">'crust'</span><span class="token punctuation">:</span> <span class="token string">'thick'</span><span class="token punctuation">,</span>    <span class="token string">'toppings'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'mushrooms'</span><span class="token punctuation">,</span><span class="token string">'extra cheese'</span><span class="token punctuation">]</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"you ordered a"</span> <span class="token operator">+</span> pizza<span class="token punctuation">[</span><span class="token string">'crust'</span><span class="token punctuation">]</span> <span class="token operator">+</span>     <span class="token string">"-crust pizza"</span> <span class="token operator">+</span> <span class="token string">"with the following topping"</span>    <span class="token punctuation">)</span><span class="token keyword">for</span> topping <span class="token keyword">in</span> pizza<span class="token punctuation">[</span><span class="token string">'toppings'</span><span class="token punctuation">]</span><span class="token punctuation">:</span>    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\t"</span> <span class="token operator">+</span> topping<span class="token punctuation">)</span><span class="token comment" spellcheck="true">#输出结果</span>you ordered athick<span class="token operator">-</span>crust pizzawith the following topping        mushrooms        extra cheese</code></pre><h3 id="在字典中存储字典"><a href="#在字典中存储字典" class="headerlink" title="在字典中存储字典"></a>在字典中存储字典</h3><p>例如，一个用户作为一个键，该用户的属性(性别，身高，体重…)作为键中对应的键，此时可以利用字典嵌套字典的方式来存储信息</p><pre class=" language-python"><code class="language-python">user <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>    <span class="token string">'a'</span><span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>        <span class="token string">'first'</span><span class="token punctuation">:</span> <span class="token string">'albert'</span><span class="token punctuation">,</span>        <span class="token string">'last'</span><span class="token punctuation">:</span> <span class="token string">'eintein'</span><span class="token punctuation">,</span>        <span class="token string">'location'</span><span class="token punctuation">:</span> <span class="token string">'princeton'</span>    <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;,</span>    <span class="token string">'b'</span><span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>        <span class="token string">'first'</span><span class="token punctuation">:</span> <span class="token string">'marie'</span><span class="token punctuation">,</span>        <span class="token string">'last'</span><span class="token punctuation">:</span> <span class="token string">'curie'</span><span class="token punctuation">,</span>        <span class="token string">'location'</span><span class="token punctuation">:</span> <span class="token string">'paris'</span>    <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span><span class="token comment" spellcheck="true">#返回键值对</span><span class="token comment" spellcheck="true">#但是user_info作为值是一个字典</span><span class="token keyword">for</span> username<span class="token punctuation">,</span>user_info <span class="token keyword">in</span> user<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nUsername: "</span> <span class="token operator">+</span> username<span class="token punctuation">)</span>    full_name <span class="token operator">=</span> user_info<span class="token punctuation">[</span><span class="token string">'first'</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> user_info<span class="token punctuation">[</span><span class="token string">'last'</span><span class="token punctuation">]</span>    location <span class="token operator">=</span> user_info<span class="token punctuation">[</span><span class="token string">'location'</span><span class="token punctuation">]</span>    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\tFullname: "</span> <span class="token operator">+</span> full_name<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\tlocation: "</span> <span class="token operator">+</span> location<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#输出结果</span>Username<span class="token punctuation">:</span> a        Fullname<span class="token punctuation">:</span> Albert Eintein        location<span class="token punctuation">:</span> PrincetonUsername<span class="token punctuation">:</span> b        Fullname<span class="token punctuation">:</span> Marie Curie        location<span class="token punctuation">:</span> Paris</code></pre><p>​    此时的键值对中的值是作为一个字典返回回来的</p>]]></content>
       
       
+      
+        <tags>
+            
+            <tag> study </tag>
+            
+        </tags>
       
     </entry>
     
