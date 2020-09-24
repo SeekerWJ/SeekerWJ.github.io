@@ -464,7 +464,7 @@
             <div id="articleContent">
                 <h2 id="SG90舵机的控制原理"><a href="#SG90舵机的控制原理" class="headerlink" title="SG90舵机的控制原理"></a>SG90舵机的控制原理</h2><p>舵机的控制一般需要一个20ms的时基脉冲，该脉冲的高电平部分一般为0.5ms~2.5ms范围内的角度控制脉冲部分。以180度角度舵机为例，那么对应的控制关系是这样的： </p>
 <p>0.5ms————-0度；<br>1.0ms————45度；<br>1.5ms————90度；<br>2.0ms———–135度；<br>2.5ms———–180度； </p>
-<p><img src="/2020/09/24/STM32%E9%80%9A%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8%E9%A9%B1%E5%8A%A8SG90%E8%88%B5%E6%9C%BA/Users\asus\Desktop\图片\20140419164038468.gif" alt="20140419164038468"></p>
+<p><img src="https://s1.ax1x.com/2020/09/24/0SubZR.gif" alt="0SubZR.gif"></p>
 <p>所以，通过单片机输出相应的PWM信号即可控制舵机旋转相应的角度</p>
 <h2 id="STM32通用定时器输出PWM信号配置"><a href="#STM32通用定时器输出PWM信号配置" class="headerlink" title="STM32通用定时器输出PWM信号配置"></a>STM32通用定时器输出PWM信号配置</h2><h3 id="定时器周期计算公式："><a href="#定时器周期计算公式：" class="headerlink" title="定时器周期计算公式："></a>定时器周期计算公式：</h3><p>T = （（Prescaler + 1） * （Period + 1） ） / TimeClockFren; </p>
 <p>Prescaler：分频TIM时钟的预分频器值。 </p>
@@ -525,7 +525,7 @@
   <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
 <p>最终效果如图</p>
-<p><img src="/2020/09/24/STM32%E9%80%9A%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8%E9%A9%B1%E5%8A%A8SG90%E8%88%B5%E6%9C%BA/Users\asus\Desktop\图片\160093125253120209241513141.gif" alt="160093125253120209241513141"></p>
+<p><img src="https://s1.ax1x.com/2020/09/24/0SKGWT.gif" alt="0SKGWT.gif"></p>
 
             </div>
             <hr/>
