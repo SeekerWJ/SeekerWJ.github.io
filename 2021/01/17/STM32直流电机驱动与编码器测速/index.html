@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="STM32," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.什么是编码器​    编码器是一种将角位移或者角速度转换成一连串电数字脉冲的旋转式传感器，我们可以通过编码器测量到底位移或者速度信息。编码器从输出数据类型上分，可以分为增量式编码器和绝对式编码器。​    从编码器检测原理上来分，还可以分为光学式、磁式、感应式、电容式。常见的是光电编码器（光学式）和霍尔编码器（磁式）。  ​    这里使用的编码器就是霍尔编码器 2.编码器原理​    光电编">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32直流电机驱动与编码器测速">
+<meta property="og:url" content="https://seekerwj.github.io/2021/01/17/STM32%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E4%B8%8E%E7%BC%96%E7%A0%81%E5%99%A8%E6%B5%8B%E9%80%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.什么是编码器​    编码器是一种将角位移或者角速度转换成一连串电数字脉冲的旋转式传感器，我们可以通过编码器测量到底位移或者速度信息。编码器从输出数据类型上分，可以分为增量式编码器和绝对式编码器。​    从编码器检测原理上来分，还可以分为光学式、磁式、感应式、电容式。常见的是光电编码器（光学式）和霍尔编码器（磁式）。  ​    这里使用的编码器就是霍尔编码器 2.编码器原理​    光电编">
+<meta property="og:locale">
+<meta property="og:image" content="https://z4a.net/images/2021/01/16/20200725161723303.png">
+<meta property="og:image" content="https://z4a.net/images/2021/01/16/20200725161759680.png">
+<meta property="og:image" content="https://z4a.net/images/2021/01/17/20200725161906256.png">
+<meta property="og:image" content="https://z4a.net/images/2021/01/17/1610648473170.gif">
+<meta property="og:image" content="https://z4a.net/images/2021/01/17/1610829367881.gif">
+<meta property="article:published_time" content="2021-01-17T02:49:01.000Z">
+<meta property="article:modified_time" content="2021-01-16T20:49:47.004Z">
+<meta property="article:author" content="WJ">
+<meta property="article:tag" content="STM32">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://z4a.net/images/2021/01/16/20200725161723303.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://SeekerWJ.github.io/2021/01/17/STM32直流电机驱动与编码器测速/"/>
+
+
+
+
+
+  <title>STM32直流电机驱动与编码器测速 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://SeekerWJ.github.io/2021/01/17/STM32%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E4%B8%8E%E7%BC%96%E7%A0%81%E5%99%A8%E6%B5%8B%E9%80%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1610055064437.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">STM32直流电机驱动与编码器测速</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-17T10:49:01+08:00">
+                2021-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-什么是编码器"><a href="#1-什么是编码器" class="headerlink" title="1.什么是编码器"></a>1.什么是编码器</h1><p>​    编码器是一种将角位移或者角速度转换成一连串电数字脉冲的旋转式传感器，我们可以通过编码器测量到底位移或者速度信息。编码器从输出数据类型上分，可以分为增量式编码器和绝对式编码器。<br>​    从编码器检测原理上来分，还可以分为光学式、磁式、感应式、电容式。常见的是光电编码器（光学式）和霍尔编码器（磁式）。 </p>
+<p>​    这里使用的编码器就是霍尔编码器</p>
+<h1 id="2-编码器原理"><a href="#2-编码器原理" class="headerlink" title="2.编码器原理"></a>2.编码器原理</h1><p>​    光电编码器是一种通过光电转换将输出轴上的机械几何位移量转换成脉冲或数字量的传感器。光电编码器是由光码盘和光电检测装置组成。光码盘是在一定直径的圆板上等分地开通若干个长方形孔。由于光电码盘与电动机同轴，电动机旋转时，检测装置检测输出若干脉冲信号，为判断转向，一般输出两组存在一定相位差的方波信号。 </p>
+<p>​    霍尔编码器是一种通过磁电转换将输出轴上的机械几何位移量转换成脉冲或数字量的传感器。霍尔编码器是由霍尔码盘和霍尔元件组成。霍尔码盘是在一定直径的圆板上等分地布置有不同的磁极。霍尔码盘与电动机同轴，电动机旋转时，霍尔元件检测输出若干脉冲信号，为判断转向，一般输出两组存在一定相位差的方波信号。 </p>
+<p>​     可以看到两种原理的编码器目的都是获取AB相输出的方波信号，其使用方法也是一样，下面是一个简单的示意图。 </p>
+<img src="https://z4a.net/images/2021/01/16/20200725161723303.png" alt="20200725161723303.png" style="zoom:67%;">
+
+<a id="more"></a>
+
+<h1 id="3-编码器接线说明"><a href="#3-编码器接线说明" class="headerlink" title="3.编码器接线说明"></a>3.编码器接线说明</h1><img src="https://z4a.net/images/2021/01/16/20200725161759680.png" alt="20200725161759680.png" style="zoom:50%;">
+
+<p>​    这是一款增量式输出的霍尔编码器。编码器有AB相输出，所以不仅可以测速，还可以辨别转向。根据上图的接线说明可以看到，只需给编码器电源5V供电，在电机转动的时候即可通过AB相输出方波信号。编码器自带了上拉电阻，所以无需外部上拉，可以直接连接到单片机IO读取。 </p>
+<h1 id="4-编码器的四倍频计数"><a href="#4-编码器的四倍频计数" class="headerlink" title="4.编码器的四倍频计数"></a>4.编码器的四倍频计数</h1><p>​    这是一项实用的技术，可以真正地把编码器的精度提升4倍。作用可类比于单反相机的光学变焦，而并非牺牲清晰度来放大图像的数码变焦。 </p>
+<img src="https://z4a.net/images/2021/01/17/20200725161906256.png" alt="20200725161906256.png" style="zoom:67%;">
+
+<p>​    常规的方法，我们只测量A相（或B相）的上升沿或者下降沿，也就是上图中对应的数字1234中的某一个，这样就只能计数3次。而四倍频的方法是测量A相和B相编码器的上升沿和下降沿。这样在同样的时间内，可以计数12次（3个1234的循环）。这就是四倍频的原理。 </p>
+<p>​    这里的话不建议采用利用IO口中断的方式来采集脉冲，这样会过于占用单片机资源</p>
+<p>​    STM32正好就带有编码器接口，这样操作起来会方便很多</p>
+<h1 id="5-STM32-TIM-编码器模式配置"><a href="#5-STM32-TIM-编码器模式配置" class="headerlink" title="5.STM32 TIM 编码器模式配置"></a>5.STM32 TIM 编码器模式配置</h1><pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/**************************************************************************
+函数功能：把TIM2初始化为编码器接口模式
+入口参数：无
+返回  值：无
+**************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">Encoder_Init_TIM2</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure<span class="token punctuation">;</span>  
+  TIM_ICInitTypeDef TIM_ICInitStructure<span class="token punctuation">;</span>  
+  GPIO_InitTypeDef GPIO_InitStructure<span class="token punctuation">;</span>
+  <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM2<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//使能定时器2的时钟</span>
+  <span class="token function">RCC_APB2PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB2Periph_GPIOA<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//使能PA端口时钟</span>
+
+  GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Pin <span class="token operator">=</span> GPIO_Pin_0<span class="token operator">|</span>GPIO_Pin_1<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//端口配置</span>
+  GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Mode <span class="token operator">=</span> GPIO_Mode_IN_FLOATING<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//浮空输入</span>
+  <span class="token function">GPIO_Init</span><span class="token punctuation">(</span>GPIOA<span class="token punctuation">,</span> <span class="token operator">&amp;</span>GPIO_InitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>                              <span class="token comment" spellcheck="true">//根据设定参数初始化GPIOA</span>
+
+  <span class="token function">TIM_TimeBaseStructInit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span> <span class="token number">0x0</span><span class="token punctuation">;</span>                             <span class="token comment" spellcheck="true">// 预分频器 </span>
+  TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> ENCODER_TIM_PERIOD<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//设定计数器自动重装值</span>
+  TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> TIM_CKD_DIV1<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//选择时钟分频：不分频</span>
+  TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//TIM向上计数  </span>
+  <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">TIM_EncoderInterfaceConfig</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> TIM_EncoderMode_TI12<span class="token punctuation">,</span> TIM_ICPolarity_Rising<span class="token punctuation">,</span> TIM_ICPolarity_Rising<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//使用编码器模式3</span>
+
+  <span class="token function">TIM_ICStructInit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>TIM_ICInitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  TIM_ICInitStructure<span class="token punctuation">.</span>TIM_ICFilter <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+  <span class="token function">TIM_ICInit</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_ICInitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">TIM_ClearFlag</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> TIM_FLAG_Update<span class="token punctuation">)</span><span class="token punctuation">;</span>                                        <span class="token comment" spellcheck="true">//清除TIM的更新标志位</span>
+  <span class="token function">TIM_ITConfig</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> TIM_IT_Update<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>                            <span class="token comment" spellcheck="true">//使能TIM2的中断，防止计数溢出</span>
+
+  <span class="token function">TIM_SetCounter</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**************************************************************************
+函数功能：单位时间读取编码器计数
+入口参数：定时器
+返回  值：速度值
+**************************************************************************/</span>
+<span class="token keyword">int</span> <span class="token function">Read_Encoder</span><span class="token punctuation">(</span>u8 TIMX<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> Encoder_TIM<span class="token punctuation">;</span>    
+    <span class="token keyword">switch</span><span class="token punctuation">(</span>TIMX<span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token number">2</span><span class="token punctuation">:</span>  Encoder_TIM<span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">short</span><span class="token punctuation">)</span>TIM2 <span class="token operator">-></span> CNT<span class="token punctuation">;</span>  TIM2 <span class="token operator">-></span> CNT<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>  Encoder_TIM<span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">short</span><span class="token punctuation">)</span>TIM3 <span class="token operator">-></span> CNT<span class="token punctuation">;</span>  TIM3 <span class="token operator">-></span> CNT<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>    
+        <span class="token keyword">case</span> <span class="token number">4</span><span class="token punctuation">:</span>  Encoder_TIM<span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">short</span><span class="token punctuation">)</span>TIM4 <span class="token operator">-></span> CNT<span class="token punctuation">;</span>  TIM4 <span class="token operator">-></span> CNT<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>    
+        <span class="token keyword">default</span><span class="token punctuation">:</span> Encoder_TIM<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> Encoder_TIM<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**************************************************************************
+函数功能：TIM2中断服务函数
+入口参数：无
+返回  值：无
+**************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">TIM2_IRQHandler</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>                                       
+    <span class="token keyword">if</span><span class="token punctuation">(</span>TIM2<span class="token operator">-></span>SR<span class="token operator">&amp;</span><span class="token number">0X0001</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//溢出中断</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        TIM2<span class="token operator">-></span>SR<span class="token operator">&amp;</span><span class="token operator">=</span><span class="token operator">~</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">&lt;&lt;</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//清除中断标志位 </span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>                            
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<h1 id="6-速度计算方法"><a href="#6-速度计算方法" class="headerlink" title="6.速度计算方法"></a>6.速度计算方法</h1><p> 这里计算的是真实的电机轮子的物理转速</p>
+<p> 电机转动一圈的脉冲数：num1 单位：个 </p>
+<p> 单位时间：t 单位：秒 </p>
+<p> 单位时间内捕获的脉冲变化数：num2 单位：个 （反应电机正反转） </p>
+<p> 电机轮子半径：r 单位：m </p>
+<p> 速度：speed 单位： mm/s<br>$$<br>Speed = 1000<em>num2</em>(2<em>pi</em>r/num1)/t<br>$$</p>
+<h1 id="7-PWM驱动直流电机及1S中断配置"><a href="#7-PWM驱动直流电机及1S中断配置" class="headerlink" title="7.PWM驱动直流电机及1S中断配置"></a>7.PWM驱动直流电机及1S中断配置</h1><pre class=" language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">TIM3_Int_Init</span><span class="token punctuation">(</span>u16 arr<span class="token punctuation">,</span>u16 psc<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure<span class="token punctuation">;</span>
+
+    <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM3<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//时钟使能</span>
+
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> arr<span class="token punctuation">;</span>             <span class="token comment" spellcheck="true">//设置在下一个更新事件装入活动的自动重装载寄存器周期的值     计数到5000为500ms</span>
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span>psc<span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">//设置用来作为TIMx时钟频率除数的预分频值  10Khz的计数频率  </span>
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//不分频</span>
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//TIM向上计数模式</span>
+    <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//根据TIM_TimeBaseInitStruct中指定的参数初始化TIMx的时间基数单位</span>
+
+    <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使能TIM3外设</span>
+
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">void</span> <span class="token function">TIM4_Int_Init</span><span class="token punctuation">(</span>u16 arr<span class="token punctuation">,</span>u16 psc<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure<span class="token punctuation">;</span>
+
+    <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM4<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//时钟使能</span>
+
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> arr<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//arr为999 psc为71 就是1ms的中断溢出</span>
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span>psc<span class="token punctuation">;</span>  
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span>  
+    <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+    <span class="token function">TIM_ITConfig</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span>TIM_IT_Update <span class="token punctuation">,</span>ENABLE <span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//开启TIM4中断</span>
+
+    <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使能TIM4外设</span>
+
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">TIM4_IRQHandler</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>                                                       <span class="token comment" spellcheck="true">//TIM4中断回调函数</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">TIM_GetITStatus</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span> TIM_IT_Update<span class="token punctuation">)</span> <span class="token operator">!=</span> RESET<span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">//检查指定的TIM中断发生与否</span>
+        <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            time<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>time <span class="token operator">==</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+            <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                time <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                Encoder <span class="token operator">=</span> <span class="token function">Read_Encoder</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+            <span class="token function">TIM_ClearITPendingBit</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span> TIM_IT_Update<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//清除TIMx的中断待处理位        </span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">TIM3_PWM_Init</span><span class="token punctuation">(</span>u16 arr<span class="token punctuation">,</span>u16 psc<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>  
+    GPIO_InitTypeDef GPIO_InitStructure<span class="token punctuation">;</span>
+    TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure<span class="token punctuation">;</span>
+    TIM_OCInitTypeDef  TIM_OCInitStructure<span class="token punctuation">;</span>
+
+
+    <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM3<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//使能定时器3时钟</span>
+     <span class="token function">RCC_APB2PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB2Periph_GPIOA<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//使能GPIO外设时钟</span>
+
+    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Pin <span class="token operator">=</span> GPIO_Pin_6<span class="token punctuation">;</span>                             <span class="token comment" spellcheck="true">//CH1</span>
+    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Mode <span class="token operator">=</span> GPIO_Mode_AF_PP<span class="token punctuation">;</span>                  <span class="token comment" spellcheck="true">//复用推挽输出</span>
+    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Speed <span class="token operator">=</span> GPIO_Speed_50MHz<span class="token punctuation">;</span>
+    <span class="token function">GPIO_Init</span><span class="token punctuation">(</span>GPIOA<span class="token punctuation">,</span> <span class="token operator">&amp;</span>GPIO_InitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>                                    <span class="token comment" spellcheck="true">//初始化GPIO</span>
+
+  <span class="token comment" spellcheck="true">//初始化TIM3</span>
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> arr<span class="token punctuation">;</span> 
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span>psc<span class="token punctuation">;</span>  
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span>  
+    <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//初始化TIM3 CHl PWM模式     </span>
+    TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OCMode <span class="token operator">=</span> TIM_OCMode_PWM1<span class="token punctuation">;</span> 
+     TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OutputState <span class="token operator">=</span> TIM_OutputState_Enable<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//比较输出使能</span>
+    TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OCPolarity <span class="token operator">=</span> TIM_OCPolarity_High<span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">//输出极性:TIM输出比较极性高</span>
+    <span class="token function">TIM_OC1Init</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_OCInitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>                                          <span class="token comment" spellcheck="true">//根据T指定的参数初始化外设TIM3 OC1</span>
+
+    <span class="token function">TIM_OC1PreloadConfig</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> TIM_OCPreload_Enable<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使能TIM3在CCR1上的预装载寄存器</span>
+
+    <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使能TIM3</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<hr>
+<h1 id="实际效果"><a href="#实际效果" class="headerlink" title="实际效果"></a>实际效果</h1><img src="https://z4a.net/images/2021/01/17/1610648473170.gif" alt="1610648473170.gif" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/17/1610829367881.gif" alt="1610829367881.gif" style="zoom:50%;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/STM32/" rel="tag"># STM32</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/14/%E6%B7%B1%E6%B7%B1%E7%9A%84%E8%BF%9B%E5%85%A5%E5%BD%93%E4%B8%8B2/" rel="next" title="深深的进入当下2">
+                <i class="fa fa-chevron-left"></i> 深深的进入当下2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/1610055064437.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E7%BC%96%E7%A0%81%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">1.什么是编码器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%BC%96%E7%A0%81%E5%99%A8%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">2.编码器原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E7%BC%96%E7%A0%81%E5%99%A8%E6%8E%A5%E7%BA%BF%E8%AF%B4%E6%98%8E"><span class="nav-number">3.</span> <span class="nav-text">3.编码器接线说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%BC%96%E7%A0%81%E5%99%A8%E7%9A%84%E5%9B%9B%E5%80%8D%E9%A2%91%E8%AE%A1%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">4.编码器的四倍频计数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-STM32-TIM-%E7%BC%96%E7%A0%81%E5%99%A8%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE"><span class="nav-number">5.</span> <span class="nav-text">5.STM32 TIM 编码器模式配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E9%80%9F%E5%BA%A6%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">6.速度计算方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-PWM%E9%A9%B1%E5%8A%A8%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E5%8F%8A1S%E4%B8%AD%E6%96%AD%E9%85%8D%E7%BD%AE"><span class="nav-number">7.</span> <span class="nav-text">7.PWM驱动直流电机及1S中断配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%95%88%E6%9E%9C"><span class="nav-number">8.</span> <span class="nav-text">实际效果</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WJ</span>
+
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+-->
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -79,10 +79,12 @@
 
 
 
+<meta name="description" content="工农区战神">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="https://seekerwj.github.io/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="工农区战神">
 <meta property="og:locale">
 <meta property="article:author" content="WJ">
 <meta name="twitter:card" content="summary">
@@ -269,6 +271,166 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://SeekerWJ.github.io/2021/01/17/STM32%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E4%B8%8E%E7%BC%96%E7%A0%81%E5%99%A8%E6%B5%8B%E9%80%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1610055064437.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/01/17/STM32%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E4%B8%8E%E7%BC%96%E7%A0%81%E5%99%A8%E6%B5%8B%E9%80%9F/" itemprop="url">STM32直流电机驱动与编码器测速</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-17T10:49:01+08:00">
+                2021-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="1-什么是编码器"><a href="#1-什么是编码器" class="headerlink" title="1.什么是编码器"></a>1.什么是编码器</h1><p>​    编码器是一种将角位移或者角速度转换成一连串电数字脉冲的旋转式传感器，我们可以通过编码器测量到底位移或者速度信息。编码器从输出数据类型上分，可以分为增量式编码器和绝对式编码器。<br>​    从编码器检测原理上来分，还可以分为光学式、磁式、感应式、电容式。常见的是光电编码器（光学式）和霍尔编码器（磁式）。 </p>
+<p>​    这里使用的编码器就是霍尔编码器</p>
+<h1 id="2-编码器原理"><a href="#2-编码器原理" class="headerlink" title="2.编码器原理"></a>2.编码器原理</h1><p>​    光电编码器是一种通过光电转换将输出轴上的机械几何位移量转换成脉冲或数字量的传感器。光电编码器是由光码盘和光电检测装置组成。光码盘是在一定直径的圆板上等分地开通若干个长方形孔。由于光电码盘与电动机同轴，电动机旋转时，检测装置检测输出若干脉冲信号，为判断转向，一般输出两组存在一定相位差的方波信号。 </p>
+<p>​    霍尔编码器是一种通过磁电转换将输出轴上的机械几何位移量转换成脉冲或数字量的传感器。霍尔编码器是由霍尔码盘和霍尔元件组成。霍尔码盘是在一定直径的圆板上等分地布置有不同的磁极。霍尔码盘与电动机同轴，电动机旋转时，霍尔元件检测输出若干脉冲信号，为判断转向，一般输出两组存在一定相位差的方波信号。 </p>
+<p>​     可以看到两种原理的编码器目的都是获取AB相输出的方波信号，其使用方法也是一样，下面是一个简单的示意图。 </p>
+<img src="https://z4a.net/images/2021/01/16/20200725161723303.png" alt="20200725161723303.png" style="zoom:67%;">
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/01/17/STM32%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E4%B8%8E%E7%BC%96%E7%A0%81%E5%99%A8%E6%B5%8B%E9%80%9F/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -798,7 +960,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
