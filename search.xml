@@ -1,121 +1,660 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>如何快速绘制一张PCB板并生产？</title>
-      <link href="2021/01/27/PCB%E5%B0%8F%E7%BB%93/"/>
-      <url>2021/01/27/PCB%E5%B0%8F%E7%BB%93/</url>
-      
-        <content type="html"><![CDATA[<p>[TOC]</p><h2 id="创建PCB工程项目"><a href="#创建PCB工程项目" class="headerlink" title="创建PCB工程项目"></a>创建PCB工程项目</h2><p>首先一个PCB文档应该分类准确</p><img src="/2021/01/27/PCB%E5%B0%8F%E7%BB%93/Users\asus\AppData\Roaming\Typora\typora-user-images\1611725625424.png" alt="1611725625424" style="zoom:67%;"><p>然后创建一个PCB工程</p><img src="https://z4a.net/images/2021/01/27/QQ20210127135429.png" alt="QQ20210127135429.png" style="zoom:50%;"><p>之后再向PCB工程中添加文件</p><img src="https://z4a.net/images/2021/01/27/QQ20210127135350.png" alt="QQ20210127135350.png" style="zoom:50%;"><p>一个PCB工程中需要包括：</p><ul><li>原理图</li><li>PCB</li><li>原理图库</li><li>PCB封装库</li></ul><p>至于PCB库与原理图库可以直接白嫖立创的也可以直接去淘宝上买别人已经创建好的</p><a id="more"></a><h2 id="原理图的绘制"><a href="#原理图的绘制" class="headerlink" title="原理图的绘制"></a>原理图的绘制</h2><p>​    这我就不多BB了，直接绘制就好了</p><p>注意一下快捷键的应用就好</p><img src="/2021/01/27/PCB%E5%B0%8F%E7%BB%93/Users\asus\AppData\Roaming\Typora\typora-user-images\1611727063677.png" alt="1611727063677" style="zoom:50%;"><p>原理图绘制好后需要对元件进行标注，这里直接全部强制标注就好了</p><img src="https://z4a.net/images/2021/01/27/QQ20210127135938.png" alt="QQ20210127135938.png" style="zoom: 50%;"><p>之后为原理图中的元件添加封装</p><p>封装管理器：T+G 方便查看是否全部的元件都添加了封装，一般库没问题的话添加封装这方面也不会有问题</p><img src="https://z4a.net/images/2021/01/27/QQ20210127171446.png" alt="QQ20210127171446.png" style="zoom:50%;"><p>之后检查无误后进行编译更新到PCB中</p><img src="https://z4a.net/images/2021/01/27/QQ20210127140055.png" alt="QQ20210127140055.png" style="zoom:50%;"><p>点击验证变更</p><img src="https://z4a.net/images/2021/01/27/QQ20210127143840.png" alt="QQ20210127143840.png" style="zoom:50%;"><p>右方都是绿圈说明没有问题，之后再点击执行变更后就可以导入PCB中了</p><h2 id="PCB的绘制"><a href="#PCB的绘制" class="headerlink" title="PCB的绘制"></a>PCB的绘制</h2><p>首先要放置一个原点</p><img src="https://z4a.net/images/2021/01/27/QQ20210127143458.png" alt="QQ20210127143458.png" style="zoom:50%;"><p>然后在机械层绘制出板子的形状后，选中这些线</p><img src="https://z4a.net/images/2021/01/27/QQ20210127143943.png" alt="QQ20210127143943.png" style="zoom:50%;"><p>就可以生成你需要的板子形状</p><p>对于需要设置安装孔的地方在机械层绘制出需要打孔的形状</p><img src="https://z4a.net/images/2021/01/27/QQ20210127144614.png" alt="QQ20210127144614.png" style="zoom:50%;"><p>即可切除这部分板子</p><img src="https://z4a.net/images/2021/01/27/QQ20210127144726.png" alt="QQ20210127144726.png" style="zoom:50%;"><p>接下来就是将元件部分进行布局</p><p>为了更好的进行PCB布局可以将窗口进行平铺，然后开启交叉选择模式在原理图中选择元件的时候PCB也会同时显示出元件的位置，更方便放置</p><img src="https://z4a.net/images/2021/01/27/QQ20210127171700.png" alt="QQ20210127171700.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127171646.png" alt="QQ20210127171646.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127171654.png" alt="QQ20210127171654.png" style="zoom:50%;"><p>接下来就可以开始布局了，这是我布局完成的PCB图</p><p>如图</p><img src="https://z4a.net/images/2021/01/27/QQ20210127145010.png" alt="QQ20210127145010.png" style="zoom:50%;"><p>点击元器件可以设置改元器件是在板子的正面还是反面</p><img src="https://z4a.net/images/2021/01/27/QQ20210127152129.png" alt="QQ20210127152129.png" style="zoom:50%;"><p>为了更方便查看走线趋势，按下L+S可以唤出</p><img src="https://z4a.net/images/2021/01/27/QQ20210127145137.png" alt="QQ20210127145137.png" style="zoom:50%;"><p>在这里可以隐藏或显示各个层，由于丝印层（就是黄色的那层）碍眼…我这里就先把它隐藏了</p><img src="https://z4a.net/images/2021/01/27/QQ20210127145406.png" alt="QQ20210127145406.png" style="zoom:50%;"><p>之后就可以进行布线操作了</p><p>在布线时，由于电源线与地线是比较多的，这样会显得比较杂乱，不太看得清其他网络的走向趋势所以在这里可以先创建一个类，然后将地线与电源线添加进去，并将它们隐藏起来</p><img src="https://z4a.net/images/2021/01/27/QQ20210127145601.png" alt="QQ20210127145601.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127145702.png" alt="QQ20210127145702.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127145748.png" alt="QQ20210127145748.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127145801.png" alt="QQ20210127145801.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127150035.png" alt="QQ20210127150035.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127150106.png" alt="QQ20210127150106.png" style="zoom:50%;"><p>这样的话PCB中所有的地线与电源线都被隐藏了</p><img src="https://z4a.net/images/2021/01/27/QQ20210127150220.png" alt="QQ20210127150220.png" style="zoom:50%;"><p>之后就可以进行布线了，可以选择手动布线，也可以选择自动布线</p><p>由于板子电路比较简单，这里就选择自动布线了，但是自动布线需要进行规则设置</p><hr><h3 id="一些在PCB绘制中遇到的小问题"><a href="#一些在PCB绘制中遇到的小问题" class="headerlink" title="一些在PCB绘制中遇到的小问题"></a>一些在PCB绘制中遇到的小问题</h3><p>PCB中元件变灰了怎么办？</p><p>​    使用shift+c可以清除过滤器</p><p>PCB中如何测量元件之间的距离？</p><p>​    利用Ctrl+M可以测量元件之间的距离，并且利用Shift+C可以清除测量后的痕迹</p><p>在PCB中按Ctrl+D可以隐藏文字，覆铜等</p><h2 id="自动布线的规则设置"><a href="#自动布线的规则设置" class="headerlink" title="自动布线的规则设置"></a>自动布线的规则设置</h2><p>这里主要设置三个规则</p><img src="https://z4a.net/images/2021/01/27/QQ20210127151455.png" alt="QQ20210127151455.png" style="zoom:50%;"><p>先设置线宽，在规则设置时，使用规则向导可以更方便的进行规则设置</p><p>步骤与参数如图所示</p><img src="https://z4a.net/images/2021/01/27/QQ20210127150449.png" alt="QQ20210127150449.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127150545.png" alt="QQ20210127150545.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127150806.png" alt="QQ20210127150806.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127150815.png" alt="QQ20210127150815.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127150824.png" alt="QQ20210127150824.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127150836.png" alt="QQ20210127150836.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127150844.png" alt="QQ20210127150844.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127150928.png" alt="QQ20210127150928.png" style="zoom:50%;"><p>之后再在设计-规则一栏中找到</p><img src="https://z4a.net/images/2021/01/27/QQ20210127151749.png" alt="QQ20210127151749.png" style="zoom: 67%;"><p>这是电器规则设置</p><p>参数如图</p><img src="https://z4a.net/images/2021/01/27/QQ20210127151054.png" alt="QQ20210127151054.png" style="zoom:50%;"><p>之后设置过孔参数</p><img src="https://z4a.net/images/2021/01/27/QQ20210127151107.png" alt="QQ20210127151107.png" style="zoom:50%;"><p>这样子的话，对于这张板子就差不多了</p><h2 id="自动走线"><a href="#自动走线" class="headerlink" title="自动走线"></a>自动走线</h2><img src="https://z4a.net/images/2021/01/27/QQ20210127152256.png" alt="QQ20210127152256.png" style="zoom:50%;"><p>点击Route All即可自动布线</p><p><img src="https://z4a.net/images/2021/01/27/QQ20210127152332.png" alt="QQ20210127152332.png"></p><p>之后只需等待几秒钟系统就会自动走完线，显示0个Failed就说明整个板子成功布完线了</p><img src="https://z4a.net/images/2021/01/27/QQ20210127152417.png" alt="QQ20210127152417.png" style="zoom:50%;"><p>如图，是不是有点那味了</p><img src="https://z4a.net/images/2021/01/27/QQ20210127152706.png" alt="QQ20210127152706.png" style="zoom:50%;"><p>走完线后看看是否有些线路需要调整，差不多的话就可以进行覆铜操作了</p><h2 id="电路板覆铜"><a href="#电路板覆铜" class="headerlink" title="电路板覆铜"></a>电路板覆铜</h2><p>有时电路板是异形板，所以还是使用覆铜管理器来进行覆铜比较好</p><img src="https://z4a.net/images/2021/01/27/QQ20210127152859.png" alt="QQ20210127152859.png" style="zoom:50%;"><p>选择板外形</p><img src="https://z4a.net/images/2021/01/27/QQ20210127153027.png" alt="QQ20210127153027.png" style="zoom:50%;"><p>创建后，注意看是顶层还是底层，两层都要创建覆铜，去除死铜和网络一定要选上</p><img src="https://z4a.net/images/2021/01/27/QQ20210127154202.png" alt="QQ20210127154202.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127154220.png" alt="QQ20210127154220.png" style="zoom:50%;"><p>点击应用后，铜皮就出来了如图</p><img src="https://z4a.net/images/2021/01/27/QQ20210127154623.png" alt="QQ20210127154623.png" style="zoom:50%;"><p>这时还要再设置一下规则，按规定来说铜皮和走线之间的距离要大一些，所以这里设置为10mil，如图</p><img src="https://z4a.net/images/2021/01/27/QQ20210127154319.png" alt="QQ20210127154319.png" style="zoom:50%;"><p>最后，再重铺下所有铜，这个板子就大致完成了</p><img src="https://z4a.net/images/2021/01/27/QQ20210127154954.png" alt="QQ20210127154954.png" style="zoom:50%;"><p>最后板子就长这样</p><img src="https://z4a.net/images/2021/01/27/QQ20210127155035.png" alt="QQ20210127155035.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127155046.png" alt="QQ20210127155046.png" style="zoom:50%;"><p>按下3可以查看下3D状态下的PCB板子，再按2可以切换会PCB绘制状态</p><p>怎么样，是不是有点那味了….</p><img src="https://z4a.net/images/2021/01/27/QQ20210127155057.png" alt="QQ20210127155057.png" style="zoom:50%;"><p>这样一张PCB板子就大致完成了，之后还需要再进行下电气规则检查</p><h2 id="电气规则检查"><a href="#电气规则检查" class="headerlink" title="电气规则检查"></a>电气规则检查</h2><img src="https://z4a.net/images/2021/01/27/QQ20210127170841.png" alt="QQ20210127170841.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127170942.png" alt="QQ20210127170942.png" style="zoom:50%;"><p>之后会出来一个窗口，如果板子有设计错误的话，你可以在上面看到错误信息然后进行修改</p><p>如图，我这张板子没有问题，那么接下来在输出Gerber文件后就可以把板子交给厂家进行生产了</p><p><img src="https://z4a.net/images/2021/01/27/QQ20210127171027.png" alt="QQ20210127171027.png"></p><h2 id="Gerber文件的输出"><a href="#Gerber文件的输出" class="headerlink" title="Gerber文件的输出"></a>Gerber文件的输出</h2><p>跟着图来进行配置即可</p><img src="https://z4a.net/images/2021/01/27/QQ20210127155512.png" alt="QQ20210127155512.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127155529.png" alt="QQ20210127155529.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127155608.png" alt="QQ20210127155608.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127155618.png" alt="QQ20210127155618.png" style="zoom:50%;"><p>光圈参数保持默认就好</p><img src="https://z4a.net/images/2021/01/27/QQ20210127155632.png" alt="QQ20210127155632.png" style="zoom:50%;"><p>这里注意下，在原来参数之后都加上一个0之后点确定</p><img src="https://z4a.net/images/2021/01/27/QQ20210127155709.png" alt="QQ20210127155709.png" style="zoom:50%;"><p>之后在输出钻孔文件</p><img src="https://z4a.net/images/2021/01/27/QQ20210127155730.png" alt="QQ20210127155730.png" style="zoom:50%;"><p>一定要勾上钻孔文件，否则之后生成不了钻孔文件</p><img src="https://z4a.net/images/2021/01/27/QQ20210127155802.png" alt="QQ20210127155802.png" style="zoom:50%;"><p>这里参数保持默认就好</p><img src="https://z4a.net/images/2021/01/27/QQ20210127155811.png" alt="QQ20210127155811.png" style="zoom:67%;"><p>这就是你的PCB板钻孔文件了，如图。<img src="https://z4a.net/images/2021/01/27/QQ20210127155836.png" alt="QQ20210127155836.png"></p><p>回到原来的PCB目录下你会发现一个Project Outputs for XXXX的文件夹，里面就是重要的PCB生产文件了</p><p>生成的GERBER小文件在 project Outputs for XXXX这里面找<br>小文件如下：<br>GTL顶层线路 top<br>GBL底层线路 bottom<br>GTS顶层阻焊 top solder<br>GBS底层阻焊 bottom solder<br>GTO顶层字符 top overlay<br>GBO底层字符 bottom overlay<br>DRL钻孔层<br>GKO禁止布线层（边框） keepout<br>GDD一般不用，是分孔图，用来标注和分辨孔的大小位置  </p><img src="https://z4a.net/images/2021/01/27/QQ20210127161246.png" alt="QQ20210127161246.png" style="zoom:50%;"><p>然后将这个Project Outputs for XXXX文件夹压缩成一个压缩包形式，发送给厂家就可以进行下单了</p><h2 id="嘉立创下单步骤"><a href="#嘉立创下单步骤" class="headerlink" title="嘉立创下单步骤"></a>嘉立创下单步骤</h2><p>由于现在嘉立创10*10之内的双层板就5元，还是比价实惠的所以就先选择在嘉立创进行打板了</p><p>先在嘉立创官网下载一个嘉立创下单助手吧，这样会更方便些</p><p><img src="https://z4a.net/images/2021/01/27/QQ20210127161619.png" alt="QQ20210127161619.png"></p><p>打开后找到在线下单</p><img src="https://z4a.net/images/2021/01/27/QQ20210127161635.png" alt="QQ20210127161635.png" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/27/QQ20210127161731.png" alt="QQ20210127161731.png" style="zoom:50%;"><p>上传之前压缩好的Gerber文件</p><img src="https://z4a.net/images/2021/01/27/QQ20210127161716.png" alt="QQ20210127161716.png" style="zoom:50%;"><p>等待几秒钟后系统会自动帮你分析好文件，之后需要填写板子的层数和需要打板的板子数量</p><img src="https://z4a.net/images/2021/01/27/QQ20210127161840.png" alt="QQ20210127161840.png" style="zoom:50%;"><p>填写好之后点击下一步继续</p><p>PCB工艺如图</p><p>阻焊颜色可以随便选，不过绿色的生产要快些，板子厚度2.0与0.4都需要加钱，一般情况下就选1.2或者1.6就好，阻焊选择过孔盖油，焊盘喷漆的话选择选择有铅喷锡就好，沉金需要加钱，其余默认</p><img src="https://z4a.net/images/2021/01/27/QQ20210127161931.png" alt="QQ20210127161931.png" style="zoom:50%;"><p>SMT贴片的话看个人情况，如果需要SMT贴片的话还需要生成贴片文件，这里先选择不需要</p><img src="https://z4a.net/images/2021/01/27/QQ20210127161942.png" alt="QQ20210127161942.png" style="zoom:50%;"><p>这里保持默认就好</p><img src="https://z4a.net/images/2021/01/27/QQ20210127161957.png" alt="QQ20210127161957.png" style="zoom:50%;"><p>看个人情况选择是否需要钢网，这里先选择不需要了</p><img src="https://z4a.net/images/2021/01/27/QQ20210127162018.png" alt="QQ20210127162018.png" style="zoom:50%;"><p>发票同样看个人情况</p><img src="https://z4a.net/images/2021/01/27/QQ20210127162044.png" alt="QQ20210127162044.png" style="zoom:50%;"><p>再填好地址与送货选项，最后确认无误后付钱就好了</p><img src="https://z4a.net/images/2021/01/27/QQ20210127162137.png" alt="QQ20210127162137.png" style="zoom:50%;"><hr><p>至此这样一张PCB板制作就完成了</p><p>一般2~3天板子就到手了</p><p>芜湖<del>~</del></p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> PCB </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>深深的进入当下3</title>
-      <link href="2021/01/20/%E6%B7%B1%E6%B7%B1%E7%9A%84%E8%BF%9B%E5%85%A5%E5%BD%93%E4%B8%8B3/"/>
-      <url>2021/01/20/%E6%B7%B1%E6%B7%B1%E7%9A%84%E8%BF%9B%E5%85%A5%E5%BD%93%E4%B8%8B3/</url>
-      
-        <content type="html"><![CDATA[<h2 id="所有问题都是时间的幻象"><a href="#所有问题都是时间的幻象" class="headerlink" title="所有问题都是时间的幻象"></a>所有问题都是时间的幻象</h2><h3 id="“也许我进入了当下，感到一个沉重的负担被卸下来了，顿时浑身轻松。我感觉到很清晰，但是仍然有许多问题在等待着我，不是吗？它们都还没有得到解决，我难道不是在暂时逃避这些问题吗？”"><a href="#“也许我进入了当下，感到一个沉重的负担被卸下来了，顿时浑身轻松。我感觉到很清晰，但是仍然有许多问题在等待着我，不是吗？它们都还没有得到解决，我难道不是在暂时逃避这些问题吗？”" class="headerlink" title="“也许我进入了当下，感到一个沉重的负担被卸下来了，顿时浑身轻松。我感觉到很清晰，但是仍然有许多问题在等待着我，不是吗？它们都还没有得到解决，我难道不是在暂时逃避这些问题吗？”"></a>“也许我进入了当下，感到一个沉重的负担被卸下来了，顿时浑身轻松。我感觉到很清晰，但是仍然有许多问题在等待着我，不是吗？它们都还没有得到解决，我难道不是在暂时逃避这些问题吗？”</h3><ul><li><p>这些与解决你的问题无关，而是要认识到现在没有任何问题。只有一些需要在当下处理掉，或者顺其发展并把它看作是当下本然面目一部分的某些情景，知道他们发生变化或可以处理了，采取采取行动。问题是思维创造的，它们需要时间来生存。在当下时刻的现实情况下，它们是无法生存的。现在把注意力集中在当下，你会发现当下时刻你不会有任何问题</p></li><li><p>一个新的情景出现时，我们要么去应付他，要么就是去接受它，对它说”好的”。为什么要把它转变成一个问题呢？为什么要将任何事情都转变成问题呢？难道生活中的挑战还不够多吗？你需要问题来做什么呢？</p></li><li><p>思维会无意识的喜欢上问题，因为他们给你某种身份的认同。这是正常的同时也是病态的。“问题”的意思是，你在心理上不断地琢磨某种情况，而没有真正地在当下采取行动，并且你还无意识的将它变成你自我感觉的一部分。你被你的生活情境所累倒，以至于丧失了对生命的感觉，存在的感觉。或者，你大脑中背负着100件你在未来将会或必须做的事情的重担，却没有将注意力集中在一件你现在就能做的事情上。</p></li><li><p>如果你曾处于生死关头的紧急情况，你就会知道那不是个问题。思维没有时间来得及使它成为一个问题。在真正的紧急情况下，思维停止了；你完全临在于当下，被一种更为有力的东西接管了。这就是许多普通人突然能够做出令人难以置信的事的原因。在任何紧急情况下，你要么生存，要么死亡。无论何者，他都不是一个问题。简而言之就是Do or Die.</p></li></ul><a id="more"></a><ul><li>也许人们会气愤，为什么说问题只是一种幻象。因为他们是谁的感觉受到了威胁。他们将大量时间投入在一种虚假的自我感上。多年以来，他们无意识地将自我认同与他们的问题和痛苦结合起来。如果没有了这些问题和痛苦，他们将会是谁呢？</li><li>人们所说的，所思考的，所做的很多事情实际上都源自于恐惧，当然，这还与他们对未来的关注以及与当下时刻的脱离有关。如果当下没有问题，那么也就没有恐惧。</li><li>如果出现了你现在就需要解决的问题，而你的行动是产生于当下的觉知，那么它们就会很果断，很清晰，并更有效。这种反应不是来源于你过去的思维模式，而是来源于对问题的直觉反应。在其他情况下，如果被时间限制的思维模式做出了反应，你就会发现：什么都不做，在当下归于中心反而更有效。</li></ul><h2 id="本体的喜悦"><a href="#本体的喜悦" class="headerlink" title="本体的喜悦"></a>本体的喜悦</h2><ul><li><p>你可以用一个简单的标准来判断自己是否被心理时间所控制了。问自己：”我现在做的事情是否让我感到喜悦，自在和轻松呢？”如果不是，当下时刻就被时间控制了，并且生命因此被视为一个负担或一种挣扎。</p></li><li><p>如果你正在做的事情无法让你感受到喜悦，自在和轻松，这并不意味着你需要改变你正在做的事情，你需要改变的是你做事的方式。如何做事通常比做什么事更重要。试试看，如果你将注意力更多地放在你正在做的事情上，而不是放在通过做这件事所取得的结果上，你就会发现，只要关注当下时刻，你所有的不快乐和挣扎就会消失，你的生活也会充满喜悦和安逸。只要你以当下的觉知来采取行动，无论你做什么，他都会充满美德，关怀和爱————即使是一个最简单的行动。</p></li><li><p>所以请不要担心你行动的结果————仅仅关注行动本身就好了。行动的结果会自然而然的产生。这是一个非常有效的灵修方法。这在《Bhagavad Gita》中被称为业力瑜伽。它也被描述为”神圣的行动”。</p></li><li><p>当你更深的感觉是来自本体，而你也从心理需求的上瘾症中走出来时，无论你的快乐或自我感都不取决于事情的结果，因此你可以说是从恐惧中解脱了！你不会在一个无常的世界中追求永恒，因为它是一个有形有相，有得有失，有生有死的世界。你不会要求情境，状况，地点或人物让你快乐，如果他们未能达到你的要求你就痛苦。尊重每一件事，却又不在乎这一切。身体形式有生有死，但你意识到了处于形式之下的永恒的东西。当这变为你的存在状态时，你怎么会不取得成功呢？你已经成功了。</p></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 读书笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>STM32直流电机驱动与编码器测速</title>
-      <link href="2021/01/17/STM32%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E4%B8%8E%E7%BC%96%E7%A0%81%E5%99%A8%E6%B5%8B%E9%80%9F/"/>
-      <url>2021/01/17/STM32%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E4%B8%8E%E7%BC%96%E7%A0%81%E5%99%A8%E6%B5%8B%E9%80%9F/</url>
-      
-        <content type="html"><![CDATA[<h1 id="1-什么是编码器"><a href="#1-什么是编码器" class="headerlink" title="1.什么是编码器"></a>1.什么是编码器</h1><p>​    编码器是一种将角位移或者角速度转换成一连串电数字脉冲的旋转式传感器，我们可以通过编码器测量到底位移或者速度信息。编码器从输出数据类型上分，可以分为增量式编码器和绝对式编码器。<br>​    从编码器检测原理上来分，还可以分为光学式、磁式、感应式、电容式。常见的是光电编码器（光学式）和霍尔编码器（磁式）。 </p><p>​    这里使用的编码器就是霍尔编码器</p><h1 id="2-编码器原理"><a href="#2-编码器原理" class="headerlink" title="2.编码器原理"></a>2.编码器原理</h1><p>​    光电编码器是一种通过光电转换将输出轴上的机械几何位移量转换成脉冲或数字量的传感器。光电编码器是由光码盘和光电检测装置组成。光码盘是在一定直径的圆板上等分地开通若干个长方形孔。由于光电码盘与电动机同轴，电动机旋转时，检测装置检测输出若干脉冲信号，为判断转向，一般输出两组存在一定相位差的方波信号。 </p><p>​    霍尔编码器是一种通过磁电转换将输出轴上的机械几何位移量转换成脉冲或数字量的传感器。霍尔编码器是由霍尔码盘和霍尔元件组成。霍尔码盘是在一定直径的圆板上等分地布置有不同的磁极。霍尔码盘与电动机同轴，电动机旋转时，霍尔元件检测输出若干脉冲信号，为判断转向，一般输出两组存在一定相位差的方波信号。 </p><p>​     可以看到两种原理的编码器目的都是获取AB相输出的方波信号，其使用方法也是一样，下面是一个简单的示意图。 </p><img src="https://z4a.net/images/2021/01/16/20200725161723303.png" alt="20200725161723303.png" style="zoom:67%;"><a id="more"></a><h1 id="3-编码器接线说明"><a href="#3-编码器接线说明" class="headerlink" title="3.编码器接线说明"></a>3.编码器接线说明</h1><img src="https://z4a.net/images/2021/01/16/20200725161759680.png" alt="20200725161759680.png" style="zoom:50%;"><p>​    这是一款增量式输出的霍尔编码器。编码器有AB相输出，所以不仅可以测速，还可以辨别转向。根据上图的接线说明可以看到，只需给编码器电源5V供电，在电机转动的时候即可通过AB相输出方波信号。编码器自带了上拉电阻，所以无需外部上拉，可以直接连接到单片机IO读取。 </p><h1 id="4-编码器的四倍频计数"><a href="#4-编码器的四倍频计数" class="headerlink" title="4.编码器的四倍频计数"></a>4.编码器的四倍频计数</h1><p>​    这是一项实用的技术，可以真正地把编码器的精度提升4倍。作用可类比于单反相机的光学变焦，而并非牺牲清晰度来放大图像的数码变焦。 </p><img src="https://z4a.net/images/2021/01/17/20200725161906256.png" alt="20200725161906256.png" style="zoom:67%;"><p>​    常规的方法，我们只测量A相（或B相）的上升沿或者下降沿，也就是上图中对应的数字1234中的某一个，这样就只能计数3次。而四倍频的方法是测量A相和B相编码器的上升沿和下降沿。这样在同样的时间内，可以计数12次（3个1234的循环）。这就是四倍频的原理。 </p><p>​    这里的话不建议采用利用IO口中断的方式来采集脉冲，这样会过于占用单片机资源</p><p>​    STM32正好就带有编码器接口，这样操作起来会方便很多</p><h1 id="5-STM32-TIM-编码器模式配置"><a href="#5-STM32-TIM-编码器模式配置" class="headerlink" title="5.STM32 TIM 编码器模式配置"></a>5.STM32 TIM 编码器模式配置</h1><pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/**************************************************************************函数功能：把TIM2初始化为编码器接口模式入口参数：无返回  值：无**************************************************************************/</span><span class="token keyword">void</span> <span class="token function">Encoder_Init_TIM2</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>  TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure<span class="token punctuation">;</span>    TIM_ICInitTypeDef TIM_ICInitStructure<span class="token punctuation">;</span>    GPIO_InitTypeDef GPIO_InitStructure<span class="token punctuation">;</span>  <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM2<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//使能定时器2的时钟</span>  <span class="token function">RCC_APB2PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB2Periph_GPIOA<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//使能PA端口时钟</span>  GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Pin <span class="token operator">=</span> GPIO_Pin_0<span class="token operator">|</span>GPIO_Pin_1<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//端口配置</span>  GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Mode <span class="token operator">=</span> GPIO_Mode_IN_FLOATING<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//浮空输入</span>  <span class="token function">GPIO_Init</span><span class="token punctuation">(</span>GPIOA<span class="token punctuation">,</span> <span class="token operator">&amp;</span>GPIO_InitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>                              <span class="token comment" spellcheck="true">//根据设定参数初始化GPIOA</span>  <span class="token function">TIM_TimeBaseStructInit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>  TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span> <span class="token number">0x0</span><span class="token punctuation">;</span>                             <span class="token comment" spellcheck="true">// 预分频器 </span>  TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> ENCODER_TIM_PERIOD<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//设定计数器自动重装值</span>  TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> TIM_CKD_DIV1<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//选择时钟分频：不分频</span>  TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//TIM向上计数  </span>  <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token function">TIM_EncoderInterfaceConfig</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> TIM_EncoderMode_TI12<span class="token punctuation">,</span> TIM_ICPolarity_Rising<span class="token punctuation">,</span> TIM_ICPolarity_Rising<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//使用编码器模式3</span>  <span class="token function">TIM_ICStructInit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>TIM_ICInitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>  TIM_ICInitStructure<span class="token punctuation">.</span>TIM_ICFilter <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>  <span class="token function">TIM_ICInit</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_ICInitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token function">TIM_ClearFlag</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> TIM_FLAG_Update<span class="token punctuation">)</span><span class="token punctuation">;</span>                                        <span class="token comment" spellcheck="true">//清除TIM的更新标志位</span>  <span class="token function">TIM_ITConfig</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> TIM_IT_Update<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>                            <span class="token comment" spellcheck="true">//使能TIM2的中断，防止计数溢出</span>  <span class="token function">TIM_SetCounter</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">/**************************************************************************函数功能：单位时间读取编码器计数入口参数：定时器返回  值：速度值**************************************************************************/</span><span class="token keyword">int</span> <span class="token function">Read_Encoder</span><span class="token punctuation">(</span>u8 TIMX<span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>    <span class="token keyword">int</span> Encoder_TIM<span class="token punctuation">;</span>        <span class="token keyword">switch</span><span class="token punctuation">(</span>TIMX<span class="token punctuation">)</span>    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>        <span class="token keyword">case</span> <span class="token number">2</span><span class="token punctuation">:</span>  Encoder_TIM<span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">short</span><span class="token punctuation">)</span>TIM2 <span class="token operator">-></span> CNT<span class="token punctuation">;</span>  TIM2 <span class="token operator">-></span> CNT<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>        <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>  Encoder_TIM<span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">short</span><span class="token punctuation">)</span>TIM3 <span class="token operator">-></span> CNT<span class="token punctuation">;</span>  TIM3 <span class="token operator">-></span> CNT<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>            <span class="token keyword">case</span> <span class="token number">4</span><span class="token punctuation">:</span>  Encoder_TIM<span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">short</span><span class="token punctuation">)</span>TIM4 <span class="token operator">-></span> CNT<span class="token punctuation">;</span>  TIM4 <span class="token operator">-></span> CNT<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>            <span class="token keyword">default</span><span class="token punctuation">:</span> Encoder_TIM<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>    <span class="token keyword">return</span> Encoder_TIM<span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">/**************************************************************************函数功能：TIM2中断服务函数入口参数：无返回  值：无**************************************************************************/</span><span class="token keyword">void</span> <span class="token function">TIM2_IRQHandler</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>                                           <span class="token keyword">if</span><span class="token punctuation">(</span>TIM2<span class="token operator">-></span>SR<span class="token operator">&amp;</span><span class="token number">0X0001</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//溢出中断</span>    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>        TIM2<span class="token operator">-></span>SR<span class="token operator">&amp;</span><span class="token operator">=</span><span class="token operator">~</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">&lt;&lt;</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//清除中断标志位 </span>    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>                            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre><h1 id="6-速度计算方法"><a href="#6-速度计算方法" class="headerlink" title="6.速度计算方法"></a>6.速度计算方法</h1><p> 这里计算的是真实的电机轮子的物理转速</p><p> 电机转动一圈的脉冲数：num1 单位：个 </p><p> 单位时间：t 单位：秒 </p><p> 单位时间内捕获的脉冲变化数：num2 单位：个 （反应电机正反转） </p><p> 电机轮子半径：r 单位：m </p><p> 速度：speed 单位： mm/s<br>$$<br>Speed = 1000<em>num2</em>(2<em>pi</em>r/num1)/t<br>$$</p><h1 id="7-PWM驱动直流电机及1S中断配置"><a href="#7-PWM驱动直流电机及1S中断配置" class="headerlink" title="7.PWM驱动直流电机及1S中断配置"></a>7.PWM驱动直流电机及1S中断配置</h1><pre class=" language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">TIM3_Int_Init</span><span class="token punctuation">(</span>u16 arr<span class="token punctuation">,</span>u16 psc<span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>  TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure<span class="token punctuation">;</span>    <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM3<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//时钟使能</span>    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> arr<span class="token punctuation">;</span>             <span class="token comment" spellcheck="true">//设置在下一个更新事件装入活动的自动重装载寄存器周期的值     计数到5000为500ms</span>    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span>psc<span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">//设置用来作为TIMx时钟频率除数的预分频值  10Khz的计数频率  </span>    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//不分频</span>    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//TIM向上计数模式</span>    <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//根据TIM_TimeBaseInitStruct中指定的参数初始化TIMx的时间基数单位</span>    <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使能TIM3外设</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token keyword">void</span> <span class="token function">TIM4_Int_Init</span><span class="token punctuation">(</span>u16 arr<span class="token punctuation">,</span>u16 psc<span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>  TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure<span class="token punctuation">;</span>    <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM4<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//时钟使能</span>    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> arr<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//arr为999 psc为71 就是1ms的中断溢出</span>    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span>psc<span class="token punctuation">;</span>      TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>     TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span>      <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token function">TIM_ITConfig</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span>TIM_IT_Update <span class="token punctuation">,</span>ENABLE <span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//开启TIM4中断</span>    <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使能TIM4外设</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token keyword">void</span> <span class="token function">TIM4_IRQHandler</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>                                                       <span class="token comment" spellcheck="true">//TIM4中断回调函数</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">TIM_GetITStatus</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span> TIM_IT_Update<span class="token punctuation">)</span> <span class="token operator">!=</span> RESET<span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">//检查指定的TIM中断发生与否</span>        <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>            time<span class="token operator">++</span><span class="token punctuation">;</span>            <span class="token keyword">if</span><span class="token punctuation">(</span>time <span class="token operator">==</span> <span class="token number">1000</span><span class="token punctuation">)</span>            <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>                time <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>                Encoder <span class="token operator">=</span> <span class="token function">Read_Encoder</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>            <span class="token function">TIM_ClearITPendingBit</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span> TIM_IT_Update<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//清除TIMx的中断待处理位        </span>        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token keyword">void</span> <span class="token function">TIM3_PWM_Init</span><span class="token punctuation">(</span>u16 arr<span class="token punctuation">,</span>u16 psc<span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>      GPIO_InitTypeDef GPIO_InitStructure<span class="token punctuation">;</span>    TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure<span class="token punctuation">;</span>    TIM_OCInitTypeDef  TIM_OCInitStructure<span class="token punctuation">;</span>    <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM3<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//使能定时器3时钟</span>     <span class="token function">RCC_APB2PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB2Periph_GPIOA<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//使能GPIO外设时钟</span>    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Pin <span class="token operator">=</span> GPIO_Pin_6<span class="token punctuation">;</span>                             <span class="token comment" spellcheck="true">//CH1</span>    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Mode <span class="token operator">=</span> GPIO_Mode_AF_PP<span class="token punctuation">;</span>                  <span class="token comment" spellcheck="true">//复用推挽输出</span>    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Speed <span class="token operator">=</span> GPIO_Speed_50MHz<span class="token punctuation">;</span>    <span class="token function">GPIO_Init</span><span class="token punctuation">(</span>GPIOA<span class="token punctuation">,</span> <span class="token operator">&amp;</span>GPIO_InitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>                                    <span class="token comment" spellcheck="true">//初始化GPIO</span>  <span class="token comment" spellcheck="true">//初始化TIM3</span>    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> arr<span class="token punctuation">;</span>     TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span>psc<span class="token punctuation">;</span>      TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>     TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span>      <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//初始化TIM3 CHl PWM模式     </span>    TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OCMode <span class="token operator">=</span> TIM_OCMode_PWM1<span class="token punctuation">;</span>      TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OutputState <span class="token operator">=</span> TIM_OutputState_Enable<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//比较输出使能</span>    TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OCPolarity <span class="token operator">=</span> TIM_OCPolarity_High<span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">//输出极性:TIM输出比较极性高</span>    <span class="token function">TIM_OC1Init</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_OCInitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>                                          <span class="token comment" spellcheck="true">//根据T指定的参数初始化外设TIM3 OC1</span>    <span class="token function">TIM_OC1PreloadConfig</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> TIM_OCPreload_Enable<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使能TIM3在CCR1上的预装载寄存器</span>    <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使能TIM3</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre><hr><h1 id="实际效果"><a href="#实际效果" class="headerlink" title="实际效果"></a>实际效果</h1><img src="https://z4a.net/images/2021/01/17/1610648473170.gif" alt="1610648473170.gif" style="zoom:50%;"><img src="https://z4a.net/images/2021/01/17/1610829367881.gif" alt="1610829367881.gif" style="zoom:50%;">]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> STM32 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>深深的进入当下2</title>
-      <link href="2021/01/14/%E6%B7%B1%E6%B7%B1%E7%9A%84%E8%BF%9B%E5%85%A5%E5%BD%93%E4%B8%8B2/"/>
-      <url>2021/01/14/%E6%B7%B1%E6%B7%B1%E7%9A%84%E8%BF%9B%E5%85%A5%E5%BD%93%E4%B8%8B2/</url>
-      
-        <content type="html"><![CDATA[<h2 id="汲取当下的力量"><a href="#汲取当下的力量" class="headerlink" title="汲取当下的力量"></a>汲取当下的力量</h2><ul><li>无时间状态可以转变人类的感知。但是光有体验是不够的，不论他是多么美好或者深刻，。我们需要的和所关注的是意识层面的永久转变。</li><li>把对当下时刻的意识作为一种习惯，当不需要关注过去和未来的时候，请把你的注意力从他们之中解放出来。</li><li>在日常生活中，尽可能的从时间的意识中把自己解放出来。如果发现很难直接进入当下时刻，那么请你观察自己老想要脱离当下时刻的惯性开始。这样你将会体会到，你总是吧未来看的比现在更好或更坏。如果想象的未来比现在好，它会给你希望，或者让你愉悦地期待；如果他比现在更糟糕，则会让你焦虑————其实这二者都是幻象。</li><li>通过自我观察，更多的临在意识会自动的进入你的生活当中。当你意识到自己没有在当下的那一刻起，你就在当下了。</li></ul><a id="more"></a><ul><li><p>任何时候，当你有能力观察你的思维时，你就不会再落入时间的陷阱了。这时，另外一个不属于思维的东西就来临了：观察者的临在。</p><ul><li><p>保持临在，随时观察你的思维，想法，情绪以及在各种情况下你的反应。请多关注自己对各种人，事，物的反应。</p></li><li><p>同时关注你的注意力是否常常跑到过去或者未来之中。不要去分析或者判断你所观察到的内容，就只是观察你的想法，感受你的情绪，关注你的反应，而不要把他们变成个人的问题。</p></li><li><p>这样你将会感受到一些比你所有观察到的更为有力量的东西：在思维背后，那个宁静的，观察临在的本身————宁静的观察者。</p></li></ul></li><li><p>思维认同给予了思维更多的能量，对思维的观察却能把能量撤回；思维认同创造了更多的时间，对思维的观察却能开启无时间的领域。而这些从思维中撤回的能量就会转变为临在。</p></li><li><p>这一切实际上就是学会对思维的控制。即，学会了如何向思维注入和收回能量</p></li></ul><h2 id="摆脱心理时间"><a href="#摆脱心理时间" class="headerlink" title="摆脱心理时间"></a>摆脱心理时间</h2><ul><li><p>所谓钟表时间就是在生活中实际事务上的利用时间。钟表时间不仅仅是用来安排约会或者计划任务的。它还包括从过去中吸取经验教训。使我们不会一次又一次的犯相同的错误。包括设定目标向其迈进；还包括以规律，法则，物理数学等方式预测未来并从过去汲取经验教训，同时在预测的基础上采取合适的行动</p></li><li><p>所谓心理时间就是认同过去，并且持续地，强迫地投射到未来</p></li><li><p>开悟的人通常会将注意力集中在当下，但是他们对时间的关注仍然同时在进行着。换句话说，他们会继续利用钟表时间，但是他们会将自己从心理时间上解脱出来。</p></li><li><p>当你设定了目标并且努力的去实现它，那么你是在利用钟表时间。你知道你的目标，但是你也全力地关注你当下时刻采取的行动。然而，若是你过于注重目标，或许因为你在寻找幸福或者成就感，成为一个更圆满的自我感，这时你就没有在关注当下了。当下失去了固有的价值，而沦为通向未来的踏脚石。这样钟表时间就变成了心理时间。</p></li><li><p>如何在利用钟表目标的过程中又不过于关注结果呢？这实际上就是进入临在状态后（进入临在状态是前提，只有处在临在状态下才能控制能量的流转）控制能量的问题。在需要钟表时间的时候向其注入能量，即，对目标思维认同，而查看完成之后观察思维本身收回能量，专注于当下。</p></li></ul><h2 id="消极心态和痛苦根植于时间之中"><a href="#消极心态和痛苦根植于时间之中" class="headerlink" title="消极心态和痛苦根植于时间之中"></a>消极心态和痛苦根植于时间之中</h2><ul><li><p>一般来说，未来是过去的复制品。表面变化是有可能发生的，但是真正的变化却很少发生，这主要依赖于你是否能充分保持临在，并通过汲取当下的力量来解决过去的事情。</p></li><li><p>你对未来的看法是你当下意识状态不可分的一部分。如果你的思维背负着过去的沉重负担，未来你将会体验更多的相同负担。由于缺乏临在，过去还会侵入你的思维。你在当下的时刻的意识的质量影响着你的未来，而未来，当然只能在当下里经历。</p></li><li><p>真正能够发生变化以及瓦解过去的唯一地方就是当下</p></li><li><p>所有的消极心态都是由积累了心理时间以及对当下时刻的拒绝所引起的。焦虑，紧张，不安，压力，烦恼————所有形式的恐惧，都是因为对未来过于关注而对当下关注不够所引起的。愧疚，后悔，悲伤，怨恨，痛苦以及所有形式的不宽恕都是由过于关注过去而很少关注当下时刻引起的。</p></li><li><p>除非解决了大脑不断制造麻烦的功能失调问题，否则所有的麻烦都会换汤不换药的重复出现。如果造成你所有问题，痛苦，不幸的原因都在今天奇迹般的消失，但是你还是没有变得更为临在，更有意识，那你很快就会发现同样的问题或痛苦的原因又会如影随形般的出现在你身边。最终，问题只有一个：被时间所限的思维本身。</p></li><li><p>我无法相信，我有朝一日能从问题中完全的释放出来。其实你是对的，在时间中永远无法达成这种状态，因为你已经在那个时间点上了。那就是现在！在时间中没有救赎。你无法在未来被释放，当下时刻才是你获取自由的关键，所以你只有在当下才能解脱。</p></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 读书笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>深深的进入当下1</title>
-      <link href="2021/01/12/%E6%B7%B1%E6%B7%B1%E7%9A%84%E8%BF%9B%E5%85%A5%E5%BD%93%E4%B8%8B1/"/>
-      <url>2021/01/12/%E6%B7%B1%E6%B7%B1%E7%9A%84%E8%BF%9B%E5%85%A5%E5%BD%93%E4%B8%8B1/</url>
-      
-        <content type="html"><![CDATA[<h2 id="不在思维中寻找自己"><a href="#不在思维中寻找自己" class="headerlink" title="不在思维中寻找自己"></a>不在思维中寻找自己</h2><ul><li>思维认同，它创造了一个虚假的自我，也就是小我，而这个虚假的自我替代了你真正的自我。而你真正的自我是根植与本体之中的。</li><li>小我的需求是无止尽的。它感到自己很脆弱，容易受到威胁，所以他一直生活在一种恐惧和缺乏的状态中。</li><li>小我喜欢将各种各样的的问题都转化为复杂的个人问题，它喜欢将自己与你的问题联系在一起，通过这种依托关系以便于加强它虚幻的自我感。所以，小我喜欢你无意识的大量地投资在痛苦和苦难中。</li><li>一旦认识到无意识的根本原因是思维认同和情感认同，你就可以逐步走出这个阴影了。你可以进入当下，这时，你就会允许思维的存在而不陷思维的陷阱中了。思维本身是个很好的工具，但不要从大脑思维中寻找自己，并认为它就是我自己，如果那样的话，他就会变成一种小我的思维，并且控制你的整个生活。</li></ul><a id="more"></a><h2 id="终结时间的幻象"><a href="#终结时间的幻象" class="headerlink" title="终结时间的幻象"></a>终结时间的幻象</h2><ul><li><p>时间和思维是密不可分的，从思维中去除时间，思维就会停止————除非你运用它。</p></li><li><p>当你与思维认同时，你就陷入了时间的陷阱，你会不由自主的完全生活在对过去的回忆和对未来的期待或恐惧之中。这样你的心思就会完全被过去和未来占据，而不愿意接收当下的时刻。实际上这两者都是幻象。</p></li><li><p>时间一点也不珍贵，因为他只是一种幻象。珍贵的东西不是时间，而是不在时间内的那一点，即当下。当下才是唯一珍贵的东西，因为作为生物来说，整个生命都是在这个永恒当下空间中展开的。</p></li><li><p>当下这一刻，当时间缺席时，你所有的问题都会消失。苦难只有在时间中才能存在，在当下它无法存活。</p></li></ul><h2 id="任何事物都不可能存在于当下时刻之外"><a href="#任何事物都不可能存在于当下时刻之外" class="headerlink" title="任何事物都不可能存在于当下时刻之外"></a>任何事物都不可能存在于当下时刻之外</h2><ul><li><p>没有任何事情可以发生在过去，也没有任何事情可以发生在未来，所有事情只能发生在当下。过去发生的事情是一个记忆的痕迹，它存储在大脑中，是过去的当下。当你记起过去发生的那件事，你就重新激活了那个记忆————而你是在当下做的这件事情。未来也只是一个幻象的当下，是思维对未来的投射。当未来来临时，它也是以当下的形式到来。当你思考未来时，你也是在当下做这件事。</p></li><li><p>过去和未来都没有现实性，就像月亮本来就不会发光一样，他只能反射太阳光，所有过去和未来仅是永恒当下的光线，力量和现实性的反射。过去和未来的现实性，力量都是从当下借过来的。</p></li></ul>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 读书笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>STM32通用定时器驱动SG90舵机</title>
-      <link href="2020/09/24/STM32%E9%80%9A%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8%E9%A9%B1%E5%8A%A8SG90%E8%88%B5%E6%9C%BA/"/>
-      <url>2020/09/24/STM32%E9%80%9A%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8%E9%A9%B1%E5%8A%A8SG90%E8%88%B5%E6%9C%BA/</url>
-      
-        <content type="html"><![CDATA[<h2 id="SG90舵机的控制原理"><a href="#SG90舵机的控制原理" class="headerlink" title="SG90舵机的控制原理"></a>SG90舵机的控制原理</h2><p>舵机的控制一般需要一个20ms的时基脉冲，该脉冲的高电平部分一般为0.5ms~2.5ms范围内的角度控制脉冲部分。以180度角度舵机为例，那么对应的控制关系是这样的： </p><p>0.5ms————-0度；<br>1.0ms————45度；<br>1.5ms————90度；<br>2.0ms———–135度；<br>2.5ms———–180度； </p><p><img src="https://s1.ax1x.com/2020/09/24/0SubZR.gif" alt="0SubZR.gif"></p><p>所以，通过单片机输出相应的PWM信号即可控制舵机旋转相应的角度</p><a id="more"></a><h2 id="STM32通用定时器输出PWM信号配置"><a href="#STM32通用定时器输出PWM信号配置" class="headerlink" title="STM32通用定时器输出PWM信号配置"></a>STM32通用定时器输出PWM信号配置</h2><h3 id="定时器周期计算公式："><a href="#定时器周期计算公式：" class="headerlink" title="定时器周期计算公式："></a>定时器周期计算公式：</h3><p>T = （（Prescaler + 1） * （Period + 1） ） / TimeClockFren; </p><p>Prescaler：分频TIM时钟的预分频器值。 </p><p>Period：计数重载值，TIM计数当超过这个值，则重新计数。</p><p>TimeClockFren：定时器的输入时钟频率（单位MHZ），也就是当前使用的TIM所用的CLOK的时钟频率。 这里为72Mhz</p><p>需要20ms的时基脉冲 20ms = (7200*200)/72000000=0.02 </p><p>所以TIM_Period = 199，TIM_Prescaler = 7199 </p><h3 id="结构体初始化"><a href="#结构体初始化" class="headerlink" title="结构体初始化"></a>结构体初始化</h3><pre class=" language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">pwm_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>    GPIO_InitTypeDef GPIO_InitStructure<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//声明一个结构体变量，用来初始化GPIO</span>    TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//声明一个结构体变量，用来初始化定时器</span>    TIM_OCInitTypeDef TIM_OCInitStructure<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//根据TIM_OCInitStruct中指定的参数初始化外设TIMx</span>    <span class="token comment" spellcheck="true">/* 开启时钟 */</span>    <span class="token function">RCC_APB2PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB2Periph_GPIOC<span class="token punctuation">,</span>ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM3<span class="token punctuation">,</span>ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">/*  配置GPIO的模式和IO口 */</span>    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Pin<span class="token operator">=</span>GPIO_Pin_6<span class="token punctuation">;</span><span class="token comment" spellcheck="true">// PA6</span>    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Speed<span class="token operator">=</span>GPIO_Speed_50MHz<span class="token punctuation">;</span>    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Mode<span class="token operator">=</span>GPIO_Mode_AF_PP<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//复用推挽输出</span>    <span class="token function">GPIO_Init</span><span class="token punctuation">(</span>GPIOA<span class="token punctuation">,</span><span class="token operator">&amp;</span>GPIO_InitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//TIM3定时器初始化</span>    TIM_TimeBaseInitStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> <span class="token number">199</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//PWM 频率=72000/(199+1)=36Khz//设置自动重装载寄存器周期的值</span>    TIM_TimeBaseInitStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span> <span class="token number">7199</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//设置用来作为TIMx时钟频率预分频值</span>    TIM_TimeBaseInitStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//设置时钟分割:TDTS = Tck_tim</span>    TIM_TimeBaseInitStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//TIM向上计数模式</span>    <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token operator">&amp;</span> TIM_TimeBaseInitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//PWM初始化      //根据TIM_OCInitStruct中指定的参数初始化外设TIMx</span>    TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OCMode<span class="token operator">=</span>TIM_OCMode_PWM1<span class="token punctuation">;</span>    TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OutputState<span class="token operator">=</span>TIM_OutputState_Enable<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//PWM输出使能</span>    TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OCPolarity<span class="token operator">=</span>TIM_OCPolarity_Low<span class="token punctuation">;</span>    <span class="token function">TIM_OC1Init</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span><span class="token operator">&amp;</span>TIM_OCInitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//注意此处初始化时TIM_OC1Init而不是TIM_OCInit，否则会出错。因为固件库的版本不一样。</span>    <span class="token function">TIM_OC1PreloadConfig</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> TIM_OCPreload_Enable<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//使能或者失能TIMx在CCR1上的预装载寄存器</span>    <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span>ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//使能或者失能TIMx外设</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre><p>这里TIM_OCInitTypeDef.TIM_Pulse不用配置，而是在主函数中通过TIM_SetCompare1(TIMx,x)函数来修改他的值，已达到想要转动舵机角度的目的</p><p><em>TIMx_CCRx寄存器能够在任何时候通过软件进行更新以控制波形，这个通过软件写入控制波形的值是立即生效呢还是在定时器发生下一次更新事件时被更新的，是由TIM_OCxPreloadConfig(TIMx, TIM_OCPreload_Enable)这条语句决定的！Enable就是下一次更新事件时被更新；Disable是立即生效</em></p><pre class=" language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">/* 定时器初始化 */</span>    <span class="token function">pwm_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>  <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>        <span class="token function">TIM_SetCompare1</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token number">195</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//0度</span>        <span class="token function">delay_ms</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token function">TIM_SetCompare1</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token number">185</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//90度</span>        <span class="token function">delay_ms</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token function">TIM_SetCompare1</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token number">175</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//180度</span>        <span class="token function">delay_ms</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre><p>最终效果如图</p><p><img src="https://s1.ax1x.com/2020/09/24/0SKGWT.gif" alt="0SKGWT.gif"></p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> STM32 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
+<search>
+  <entry>
+    <title>STM32直流电机驱动与编码器测速</title>
+    <url>/2021/01/17/STM32%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E4%B8%8E%E7%BC%96%E7%A0%81%E5%99%A8%E6%B5%8B%E9%80%9F/</url>
+    <content><![CDATA[<h1 id="1-什么是编码器"><a href="#1-什么是编码器" class="headerlink" title="1.什么是编码器"></a>1.什么是编码器</h1><p>​    编码器是一种将角位移或者角速度转换成一连串电数字脉冲的旋转式传感器，我们可以通过编码器测量到底位移或者速度信息。编码器从输出数据类型上分，可以分为增量式编码器和绝对式编码器。<br>​    从编码器检测原理上来分，还可以分为光学式、磁式、感应式、电容式。常见的是光电编码器（光学式）和霍尔编码器（磁式）。 </p>
+<p>​    这里使用的编码器就是霍尔编码器</p>
+<h1 id="2-编码器原理"><a href="#2-编码器原理" class="headerlink" title="2.编码器原理"></a>2.编码器原理</h1><p>​    光电编码器是一种通过光电转换将输出轴上的机械几何位移量转换成脉冲或数字量的传感器。光电编码器是由光码盘和光电检测装置组成。光码盘是在一定直径的圆板上等分地开通若干个长方形孔。由于光电码盘与电动机同轴，电动机旋转时，检测装置检测输出若干脉冲信号，为判断转向，一般输出两组存在一定相位差的方波信号。 </p>
+<p>​    霍尔编码器是一种通过磁电转换将输出轴上的机械几何位移量转换成脉冲或数字量的传感器。霍尔编码器是由霍尔码盘和霍尔元件组成。霍尔码盘是在一定直径的圆板上等分地布置有不同的磁极。霍尔码盘与电动机同轴，电动机旋转时，霍尔元件检测输出若干脉冲信号，为判断转向，一般输出两组存在一定相位差的方波信号。 </p>
+<p>​     可以看到两种原理的编码器目的都是获取AB相输出的方波信号，其使用方法也是一样，下面是一个简单的示意图。 </p>
+<img src="https://z4a.net/images/2021/01/16/20200725161723303.png" alt="20200725161723303.png" style="zoom:67%;">
+
+<a id="more"></a>
+
+<h1 id="3-编码器接线说明"><a href="#3-编码器接线说明" class="headerlink" title="3.编码器接线说明"></a>3.编码器接线说明</h1><img src="https://z4a.net/images/2021/01/16/20200725161759680.png" alt="20200725161759680.png" style="zoom:50%;">
+
+<p>​    这是一款增量式输出的霍尔编码器。编码器有AB相输出，所以不仅可以测速，还可以辨别转向。根据上图的接线说明可以看到，只需给编码器电源5V供电，在电机转动的时候即可通过AB相输出方波信号。编码器自带了上拉电阻，所以无需外部上拉，可以直接连接到单片机IO读取。 </p>
+<h1 id="4-编码器的四倍频计数"><a href="#4-编码器的四倍频计数" class="headerlink" title="4.编码器的四倍频计数"></a>4.编码器的四倍频计数</h1><p>​    这是一项实用的技术，可以真正地把编码器的精度提升4倍。作用可类比于单反相机的光学变焦，而并非牺牲清晰度来放大图像的数码变焦。 </p>
+<img src="https://z4a.net/images/2021/01/17/20200725161906256.png" alt="20200725161906256.png" style="zoom:67%;">
+
+<p>​    常规的方法，我们只测量A相（或B相）的上升沿或者下降沿，也就是上图中对应的数字1234中的某一个，这样就只能计数3次。而四倍频的方法是测量A相和B相编码器的上升沿和下降沿。这样在同样的时间内，可以计数12次（3个1234的循环）。这就是四倍频的原理。 </p>
+<p>​    这里的话不建议采用利用IO口中断的方式来采集脉冲，这样会过于占用单片机资源</p>
+<p>​    STM32正好就带有编码器接口，这样操作起来会方便很多</p>
+<h1 id="5-STM32-TIM-编码器模式配置"><a href="#5-STM32-TIM-编码器模式配置" class="headerlink" title="5.STM32 TIM 编码器模式配置"></a>5.STM32 TIM 编码器模式配置</h1><pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/**************************************************************************
+函数功能：把TIM2初始化为编码器接口模式
+入口参数：无
+返回  值：无
+**************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">Encoder_Init_TIM2</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure<span class="token punctuation">;</span>  
+  TIM_ICInitTypeDef TIM_ICInitStructure<span class="token punctuation">;</span>  
+  GPIO_InitTypeDef GPIO_InitStructure<span class="token punctuation">;</span>
+  <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM2<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//使能定时器2的时钟</span>
+  <span class="token function">RCC_APB2PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB2Periph_GPIOA<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//使能PA端口时钟</span>
+
+  GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Pin <span class="token operator">=</span> GPIO_Pin_0<span class="token operator">|</span>GPIO_Pin_1<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//端口配置</span>
+  GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Mode <span class="token operator">=</span> GPIO_Mode_IN_FLOATING<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//浮空输入</span>
+  <span class="token function">GPIO_Init</span><span class="token punctuation">(</span>GPIOA<span class="token punctuation">,</span> <span class="token operator">&amp;</span>GPIO_InitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>                              <span class="token comment" spellcheck="true">//根据设定参数初始化GPIOA</span>
+
+  <span class="token function">TIM_TimeBaseStructInit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span> <span class="token number">0x0</span><span class="token punctuation">;</span>                             <span class="token comment" spellcheck="true">// 预分频器 </span>
+  TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> ENCODER_TIM_PERIOD<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//设定计数器自动重装值</span>
+  TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> TIM_CKD_DIV1<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//选择时钟分频：不分频</span>
+  TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//TIM向上计数  </span>
+  <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">TIM_EncoderInterfaceConfig</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> TIM_EncoderMode_TI12<span class="token punctuation">,</span> TIM_ICPolarity_Rising<span class="token punctuation">,</span> TIM_ICPolarity_Rising<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//使用编码器模式3</span>
+
+  <span class="token function">TIM_ICStructInit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>TIM_ICInitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  TIM_ICInitStructure<span class="token punctuation">.</span>TIM_ICFilter <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+  <span class="token function">TIM_ICInit</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_ICInitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">TIM_ClearFlag</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> TIM_FLAG_Update<span class="token punctuation">)</span><span class="token punctuation">;</span>                                        <span class="token comment" spellcheck="true">//清除TIM的更新标志位</span>
+  <span class="token function">TIM_ITConfig</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> TIM_IT_Update<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>                            <span class="token comment" spellcheck="true">//使能TIM2的中断，防止计数溢出</span>
+
+  <span class="token function">TIM_SetCounter</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM2<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**************************************************************************
+函数功能：单位时间读取编码器计数
+入口参数：定时器
+返回  值：速度值
+**************************************************************************/</span>
+<span class="token keyword">int</span> <span class="token function">Read_Encoder</span><span class="token punctuation">(</span>u8 TIMX<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> Encoder_TIM<span class="token punctuation">;</span>    
+    <span class="token keyword">switch</span><span class="token punctuation">(</span>TIMX<span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token number">2</span><span class="token punctuation">:</span>  Encoder_TIM<span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">short</span><span class="token punctuation">)</span>TIM2 <span class="token operator">-></span> CNT<span class="token punctuation">;</span>  TIM2 <span class="token operator">-></span> CNT<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>  Encoder_TIM<span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">short</span><span class="token punctuation">)</span>TIM3 <span class="token operator">-></span> CNT<span class="token punctuation">;</span>  TIM3 <span class="token operator">-></span> CNT<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>    
+        <span class="token keyword">case</span> <span class="token number">4</span><span class="token punctuation">:</span>  Encoder_TIM<span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">short</span><span class="token punctuation">)</span>TIM4 <span class="token operator">-></span> CNT<span class="token punctuation">;</span>  TIM4 <span class="token operator">-></span> CNT<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>    
+        <span class="token keyword">default</span><span class="token punctuation">:</span> Encoder_TIM<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> Encoder_TIM<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**************************************************************************
+函数功能：TIM2中断服务函数
+入口参数：无
+返回  值：无
+**************************************************************************/</span>
+<span class="token keyword">void</span> <span class="token function">TIM2_IRQHandler</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>                                       
+    <span class="token keyword">if</span><span class="token punctuation">(</span>TIM2<span class="token operator">-></span>SR<span class="token operator">&amp;</span><span class="token number">0X0001</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//溢出中断</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        TIM2<span class="token operator">-></span>SR<span class="token operator">&amp;</span><span class="token operator">=</span><span class="token operator">~</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">&lt;&lt;</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//清除中断标志位 </span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>                            
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<h1 id="6-速度计算方法"><a href="#6-速度计算方法" class="headerlink" title="6.速度计算方法"></a>6.速度计算方法</h1><p> 这里计算的是真实的电机轮子的物理转速</p>
+<p> 电机转动一圈的脉冲数：num1 单位：个 </p>
+<p> 单位时间：t 单位：秒 </p>
+<p> 单位时间内捕获的脉冲变化数：num2 单位：个 （反应电机正反转） </p>
+<p> 电机轮子半径：r 单位：m </p>
+<p> 速度：speed 单位： mm/s<br>$$<br>Speed = 1000<em>num2</em>(2<em>pi</em>r/num1)/t<br>$$</p>
+<h1 id="7-PWM驱动直流电机及1S中断配置"><a href="#7-PWM驱动直流电机及1S中断配置" class="headerlink" title="7.PWM驱动直流电机及1S中断配置"></a>7.PWM驱动直流电机及1S中断配置</h1><pre class=" language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">TIM3_Int_Init</span><span class="token punctuation">(</span>u16 arr<span class="token punctuation">,</span>u16 psc<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure<span class="token punctuation">;</span>
+
+    <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM3<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//时钟使能</span>
+
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> arr<span class="token punctuation">;</span>             <span class="token comment" spellcheck="true">//设置在下一个更新事件装入活动的自动重装载寄存器周期的值     计数到5000为500ms</span>
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span>psc<span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">//设置用来作为TIMx时钟频率除数的预分频值  10Khz的计数频率  </span>
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//不分频</span>
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//TIM向上计数模式</span>
+    <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//根据TIM_TimeBaseInitStruct中指定的参数初始化TIMx的时间基数单位</span>
+
+    <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使能TIM3外设</span>
+
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">void</span> <span class="token function">TIM4_Int_Init</span><span class="token punctuation">(</span>u16 arr<span class="token punctuation">,</span>u16 psc<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure<span class="token punctuation">;</span>
+
+    <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM4<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//时钟使能</span>
+
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> arr<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//arr为999 psc为71 就是1ms的中断溢出</span>
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span>psc<span class="token punctuation">;</span>  
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span>  
+    <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+    <span class="token function">TIM_ITConfig</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span>TIM_IT_Update <span class="token punctuation">,</span>ENABLE <span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//开启TIM4中断</span>
+
+    <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使能TIM4外设</span>
+
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">TIM4_IRQHandler</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>                                                       <span class="token comment" spellcheck="true">//TIM4中断回调函数</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">TIM_GetITStatus</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span> TIM_IT_Update<span class="token punctuation">)</span> <span class="token operator">!=</span> RESET<span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">//检查指定的TIM中断发生与否</span>
+        <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            time<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>time <span class="token operator">==</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+            <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                time <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                Encoder <span class="token operator">=</span> <span class="token function">Read_Encoder</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+            <span class="token function">TIM_ClearITPendingBit</span><span class="token punctuation">(</span>TIM4<span class="token punctuation">,</span> TIM_IT_Update<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//清除TIMx的中断待处理位        </span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">TIM3_PWM_Init</span><span class="token punctuation">(</span>u16 arr<span class="token punctuation">,</span>u16 psc<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>  
+    GPIO_InitTypeDef GPIO_InitStructure<span class="token punctuation">;</span>
+    TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure<span class="token punctuation">;</span>
+    TIM_OCInitTypeDef  TIM_OCInitStructure<span class="token punctuation">;</span>
+
+
+    <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM3<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//使能定时器3时钟</span>
+     <span class="token function">RCC_APB2PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB2Periph_GPIOA<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//使能GPIO外设时钟</span>
+
+    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Pin <span class="token operator">=</span> GPIO_Pin_6<span class="token punctuation">;</span>                             <span class="token comment" spellcheck="true">//CH1</span>
+    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Mode <span class="token operator">=</span> GPIO_Mode_AF_PP<span class="token punctuation">;</span>                  <span class="token comment" spellcheck="true">//复用推挽输出</span>
+    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Speed <span class="token operator">=</span> GPIO_Speed_50MHz<span class="token punctuation">;</span>
+    <span class="token function">GPIO_Init</span><span class="token punctuation">(</span>GPIOA<span class="token punctuation">,</span> <span class="token operator">&amp;</span>GPIO_InitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>                                    <span class="token comment" spellcheck="true">//初始化GPIO</span>
+
+  <span class="token comment" spellcheck="true">//初始化TIM3</span>
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> arr<span class="token punctuation">;</span> 
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span>psc<span class="token punctuation">;</span>  
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+    TIM_TimeBaseStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span>  
+    <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_TimeBaseStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//初始化TIM3 CHl PWM模式     </span>
+    TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OCMode <span class="token operator">=</span> TIM_OCMode_PWM1<span class="token punctuation">;</span> 
+     TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OutputState <span class="token operator">=</span> TIM_OutputState_Enable<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//比较输出使能</span>
+    TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OCPolarity <span class="token operator">=</span> TIM_OCPolarity_High<span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">//输出极性:TIM输出比较极性高</span>
+    <span class="token function">TIM_OC1Init</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token operator">&amp;</span>TIM_OCInitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>                                          <span class="token comment" spellcheck="true">//根据T指定的参数初始化外设TIM3 OC1</span>
+
+    <span class="token function">TIM_OC1PreloadConfig</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> TIM_OCPreload_Enable<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使能TIM3在CCR1上的预装载寄存器</span>
+
+    <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使能TIM3</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<hr>
+<h1 id="实际效果"><a href="#实际效果" class="headerlink" title="实际效果"></a>实际效果</h1><img src="https://z4a.net/images/2021/01/17/1610648473170.gif" alt="1610648473170.gif" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/17/1610829367881.gif" alt="1610829367881.gif" style="zoom:50%;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <tags>
+        <tag>STM32</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>STM32通用定时器驱动SG90舵机</title>
+    <url>/2020/09/24/STM32%E9%80%9A%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8%E9%A9%B1%E5%8A%A8SG90%E8%88%B5%E6%9C%BA/</url>
+    <content><![CDATA[<h2 id="SG90舵机的控制原理"><a href="#SG90舵机的控制原理" class="headerlink" title="SG90舵机的控制原理"></a>SG90舵机的控制原理</h2><p>舵机的控制一般需要一个20ms的时基脉冲，该脉冲的高电平部分一般为0.5ms~2.5ms范围内的角度控制脉冲部分。以180度角度舵机为例，那么对应的控制关系是这样的： </p>
+<p>0.5ms————-0度；<br>1.0ms————45度；<br>1.5ms————90度；<br>2.0ms———–135度；<br>2.5ms———–180度； </p>
+<p><img src="https://s1.ax1x.com/2020/09/24/0SubZR.gif" alt="0SubZR.gif"></p>
+<p>所以，通过单片机输出相应的PWM信号即可控制舵机旋转相应的角度</p>
+<a id="more"></a>
+
+<h2 id="STM32通用定时器输出PWM信号配置"><a href="#STM32通用定时器输出PWM信号配置" class="headerlink" title="STM32通用定时器输出PWM信号配置"></a>STM32通用定时器输出PWM信号配置</h2><h3 id="定时器周期计算公式："><a href="#定时器周期计算公式：" class="headerlink" title="定时器周期计算公式："></a>定时器周期计算公式：</h3><p>T = （（Prescaler + 1） * （Period + 1） ） / TimeClockFren; </p>
+<p>Prescaler：分频TIM时钟的预分频器值。 </p>
+<p>Period：计数重载值，TIM计数当超过这个值，则重新计数。</p>
+<p>TimeClockFren：定时器的输入时钟频率（单位MHZ），也就是当前使用的TIM所用的CLOK的时钟频率。 这里为72Mhz</p>
+<p>需要20ms的时基脉冲 20ms = (7200*200)/72000000=0.02 </p>
+<p>所以TIM_Period = 199，TIM_Prescaler = 7199 </p>
+<h3 id="结构体初始化"><a href="#结构体初始化" class="headerlink" title="结构体初始化"></a>结构体初始化</h3><pre class=" language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">pwm_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    GPIO_InitTypeDef GPIO_InitStructure<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//声明一个结构体变量，用来初始化GPIO</span>
+
+    TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//声明一个结构体变量，用来初始化定时器</span>
+
+    TIM_OCInitTypeDef TIM_OCInitStructure<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//根据TIM_OCInitStruct中指定的参数初始化外设TIMx</span>
+
+    <span class="token comment" spellcheck="true">/* 开启时钟 */</span>
+    <span class="token function">RCC_APB2PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB2Periph_GPIOC<span class="token punctuation">,</span>ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">RCC_APB1PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB1Periph_TIM3<span class="token punctuation">,</span>ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/*  配置GPIO的模式和IO口 */</span>
+    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Pin<span class="token operator">=</span>GPIO_Pin_6<span class="token punctuation">;</span><span class="token comment" spellcheck="true">// PA6</span>
+    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Speed<span class="token operator">=</span>GPIO_Speed_50MHz<span class="token punctuation">;</span>
+    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Mode<span class="token operator">=</span>GPIO_Mode_AF_PP<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//复用推挽输出</span>
+    <span class="token function">GPIO_Init</span><span class="token punctuation">(</span>GPIOA<span class="token punctuation">,</span><span class="token operator">&amp;</span>GPIO_InitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//TIM3定时器初始化</span>
+    TIM_TimeBaseInitStructure<span class="token punctuation">.</span>TIM_Period <span class="token operator">=</span> <span class="token number">199</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//PWM 频率=72000/(199+1)=36Khz//设置自动重装载寄存器周期的值</span>
+    TIM_TimeBaseInitStructure<span class="token punctuation">.</span>TIM_Prescaler <span class="token operator">=</span> <span class="token number">7199</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//设置用来作为TIMx时钟频率预分频值</span>
+    TIM_TimeBaseInitStructure<span class="token punctuation">.</span>TIM_ClockDivision <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//设置时钟分割:TDTS = Tck_tim</span>
+    TIM_TimeBaseInitStructure<span class="token punctuation">.</span>TIM_CounterMode <span class="token operator">=</span> TIM_CounterMode_Up<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//TIM向上计数模式</span>
+    <span class="token function">TIM_TimeBaseInit</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token operator">&amp;</span> TIM_TimeBaseInitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//PWM初始化      //根据TIM_OCInitStruct中指定的参数初始化外设TIMx</span>
+    TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OCMode<span class="token operator">=</span>TIM_OCMode_PWM1<span class="token punctuation">;</span>
+    TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OutputState<span class="token operator">=</span>TIM_OutputState_Enable<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//PWM输出使能</span>
+    TIM_OCInitStructure<span class="token punctuation">.</span>TIM_OCPolarity<span class="token operator">=</span>TIM_OCPolarity_Low<span class="token punctuation">;</span>
+
+    <span class="token function">TIM_OC1Init</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span><span class="token operator">&amp;</span>TIM_OCInitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//注意此处初始化时TIM_OC1Init而不是TIM_OCInit，否则会出错。因为固件库的版本不一样。</span>
+    <span class="token function">TIM_OC1PreloadConfig</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> TIM_OCPreload_Enable<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//使能或者失能TIMx在CCR1上的预装载寄存器</span>
+    <span class="token function">TIM_Cmd</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span>ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//使能或者失能TIMx外设</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<p>这里TIM_OCInitTypeDef.TIM_Pulse不用配置，而是在主函数中通过TIM_SetCompare1(TIMx,x)函数来修改他的值，已达到想要转动舵机角度的目的</p>
+<p><em>TIMx_CCRx寄存器能够在任何时候通过软件进行更新以控制波形，这个通过软件写入控制波形的值是立即生效呢还是在定时器发生下一次更新事件时被更新的，是由TIM_OCxPreloadConfig(TIMx, TIM_OCPreload_Enable)这条语句决定的！Enable就是下一次更新事件时被更新；Disable是立即生效</em></p>
+<pre class=" language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/* 定时器初始化 */</span>
+    <span class="token function">pwm_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token function">TIM_SetCompare1</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token number">195</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//0度</span>
+        <span class="token function">delay_ms</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">TIM_SetCompare1</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token number">185</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//90度</span>
+        <span class="token function">delay_ms</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">TIM_SetCompare1</span><span class="token punctuation">(</span>TIM3<span class="token punctuation">,</span> <span class="token number">175</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//180度</span>
+        <span class="token function">delay_ms</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<p>最终效果如图</p>
+<p><img src="https://s1.ax1x.com/2020/09/24/0SKGWT.gif" alt="0SKGWT.gif"></p>
+]]></content>
+      <tags>
+        <tag>STM32</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深深的进入当下1</title>
+    <url>/2021/01/12/%E6%B7%B1%E6%B7%B1%E7%9A%84%E8%BF%9B%E5%85%A5%E5%BD%93%E4%B8%8B1/</url>
+    <content><![CDATA[<h2 id="不在思维中寻找自己"><a href="#不在思维中寻找自己" class="headerlink" title="不在思维中寻找自己"></a>不在思维中寻找自己</h2><ul>
+<li>思维认同，它创造了一个虚假的自我，也就是小我，而这个虚假的自我替代了你真正的自我。而你真正的自我是根植与本体之中的。</li>
+<li>小我的需求是无止尽的。它感到自己很脆弱，容易受到威胁，所以他一直生活在一种恐惧和缺乏的状态中。</li>
+<li>小我喜欢将各种各样的的问题都转化为复杂的个人问题，它喜欢将自己与你的问题联系在一起，通过这种依托关系以便于加强它虚幻的自我感。所以，小我喜欢你无意识的大量地投资在痛苦和苦难中。</li>
+<li>一旦认识到无意识的根本原因是思维认同和情感认同，你就可以逐步走出这个阴影了。你可以进入当下，这时，你就会允许思维的存在而不陷思维的陷阱中了。思维本身是个很好的工具，但不要从大脑思维中寻找自己，并认为它就是我自己，如果那样的话，他就会变成一种小我的思维，并且控制你的整个生活。</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="终结时间的幻象"><a href="#终结时间的幻象" class="headerlink" title="终结时间的幻象"></a>终结时间的幻象</h2><ul>
+<li><p>时间和思维是密不可分的，从思维中去除时间，思维就会停止————除非你运用它。</p>
+</li>
+<li><p>当你与思维认同时，你就陷入了时间的陷阱，你会不由自主的完全生活在对过去的回忆和对未来的期待或恐惧之中。这样你的心思就会完全被过去和未来占据，而不愿意接收当下的时刻。实际上这两者都是幻象。</p>
+</li>
+<li><p>时间一点也不珍贵，因为他只是一种幻象。珍贵的东西不是时间，而是不在时间内的那一点，即当下。当下才是唯一珍贵的东西，因为作为生物来说，整个生命都是在这个永恒当下空间中展开的。</p>
+</li>
+<li><p>当下这一刻，当时间缺席时，你所有的问题都会消失。苦难只有在时间中才能存在，在当下它无法存活。</p>
+</li>
+</ul>
+<h2 id="任何事物都不可能存在于当下时刻之外"><a href="#任何事物都不可能存在于当下时刻之外" class="headerlink" title="任何事物都不可能存在于当下时刻之外"></a>任何事物都不可能存在于当下时刻之外</h2><ul>
+<li><p>没有任何事情可以发生在过去，也没有任何事情可以发生在未来，所有事情只能发生在当下。过去发生的事情是一个记忆的痕迹，它存储在大脑中，是过去的当下。当你记起过去发生的那件事，你就重新激活了那个记忆————而你是在当下做的这件事情。未来也只是一个幻象的当下，是思维对未来的投射。当未来来临时，它也是以当下的形式到来。当你思考未来时，你也是在当下做这件事。</p>
+</li>
+<li><p>过去和未来都没有现实性，就像月亮本来就不会发光一样，他只能反射太阳光，所有过去和未来仅是永恒当下的光线，力量和现实性的反射。过去和未来的现实性，力量都是从当下借过来的。</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深深的进入当下2</title>
+    <url>/2021/01/14/%E6%B7%B1%E6%B7%B1%E7%9A%84%E8%BF%9B%E5%85%A5%E5%BD%93%E4%B8%8B2/</url>
+    <content><![CDATA[<h2 id="汲取当下的力量"><a href="#汲取当下的力量" class="headerlink" title="汲取当下的力量"></a>汲取当下的力量</h2><ul>
+<li>无时间状态可以转变人类的感知。但是光有体验是不够的，不论他是多么美好或者深刻，。我们需要的和所关注的是意识层面的永久转变。</li>
+<li>把对当下时刻的意识作为一种习惯，当不需要关注过去和未来的时候，请把你的注意力从他们之中解放出来。</li>
+<li>在日常生活中，尽可能的从时间的意识中把自己解放出来。如果发现很难直接进入当下时刻，那么请你观察自己老想要脱离当下时刻的惯性开始。这样你将会体会到，你总是吧未来看的比现在更好或更坏。如果想象的未来比现在好，它会给你希望，或者让你愉悦地期待；如果他比现在更糟糕，则会让你焦虑————其实这二者都是幻象。</li>
+<li>通过自我观察，更多的临在意识会自动的进入你的生活当中。当你意识到自己没有在当下的那一刻起，你就在当下了。</li>
+</ul>
+<a id="more"></a>
+
+<ul>
+<li><p>任何时候，当你有能力观察你的思维时，你就不会再落入时间的陷阱了。这时，另外一个不属于思维的东西就来临了：观察者的临在。</p>
+<ul>
+<li><p>保持临在，随时观察你的思维，想法，情绪以及在各种情况下你的反应。请多关注自己对各种人，事，物的反应。</p>
+</li>
+<li><p>同时关注你的注意力是否常常跑到过去或者未来之中。不要去分析或者判断你所观察到的内容，就只是观察你的想法，感受你的情绪，关注你的反应，而不要把他们变成个人的问题。</p>
+</li>
+<li><p>这样你将会感受到一些比你所有观察到的更为有力量的东西：在思维背后，那个宁静的，观察临在的本身————宁静的观察者。</p>
+</li>
+</ul>
+</li>
+<li><p>思维认同给予了思维更多的能量，对思维的观察却能把能量撤回；思维认同创造了更多的时间，对思维的观察却能开启无时间的领域。而这些从思维中撤回的能量就会转变为临在。</p>
+</li>
+<li><p>这一切实际上就是学会对思维的控制。即，学会了如何向思维注入和收回能量</p>
+</li>
+</ul>
+<h2 id="摆脱心理时间"><a href="#摆脱心理时间" class="headerlink" title="摆脱心理时间"></a>摆脱心理时间</h2><ul>
+<li><p>所谓钟表时间就是在生活中实际事务上的利用时间。钟表时间不仅仅是用来安排约会或者计划任务的。它还包括从过去中吸取经验教训。使我们不会一次又一次的犯相同的错误。包括设定目标向其迈进；还包括以规律，法则，物理数学等方式预测未来并从过去汲取经验教训，同时在预测的基础上采取合适的行动</p>
+</li>
+<li><p>所谓心理时间就是认同过去，并且持续地，强迫地投射到未来</p>
+</li>
+<li><p>开悟的人通常会将注意力集中在当下，但是他们对时间的关注仍然同时在进行着。换句话说，他们会继续利用钟表时间，但是他们会将自己从心理时间上解脱出来。</p>
+</li>
+<li><p>当你设定了目标并且努力的去实现它，那么你是在利用钟表时间。你知道你的目标，但是你也全力地关注你当下时刻采取的行动。然而，若是你过于注重目标，或许因为你在寻找幸福或者成就感，成为一个更圆满的自我感，这时你就没有在关注当下了。当下失去了固有的价值，而沦为通向未来的踏脚石。这样钟表时间就变成了心理时间。</p>
+</li>
+<li><p>如何在利用钟表目标的过程中又不过于关注结果呢？这实际上就是进入临在状态后（进入临在状态是前提，只有处在临在状态下才能控制能量的流转）控制能量的问题。在需要钟表时间的时候向其注入能量，即，对目标思维认同，而查看完成之后观察思维本身收回能量，专注于当下。</p>
+</li>
+</ul>
+<h2 id="消极心态和痛苦根植于时间之中"><a href="#消极心态和痛苦根植于时间之中" class="headerlink" title="消极心态和痛苦根植于时间之中"></a>消极心态和痛苦根植于时间之中</h2><ul>
+<li><p>一般来说，未来是过去的复制品。表面变化是有可能发生的，但是真正的变化却很少发生，这主要依赖于你是否能充分保持临在，并通过汲取当下的力量来解决过去的事情。</p>
+</li>
+<li><p>你对未来的看法是你当下意识状态不可分的一部分。如果你的思维背负着过去的沉重负担，未来你将会体验更多的相同负担。由于缺乏临在，过去还会侵入你的思维。你在当下的时刻的意识的质量影响着你的未来，而未来，当然只能在当下里经历。</p>
+</li>
+<li><p>真正能够发生变化以及瓦解过去的唯一地方就是当下</p>
+</li>
+<li><p>所有的消极心态都是由积累了心理时间以及对当下时刻的拒绝所引起的。焦虑，紧张，不安，压力，烦恼————所有形式的恐惧，都是因为对未来过于关注而对当下关注不够所引起的。愧疚，后悔，悲伤，怨恨，痛苦以及所有形式的不宽恕都是由过于关注过去而很少关注当下时刻引起的。</p>
+</li>
+<li><p>除非解决了大脑不断制造麻烦的功能失调问题，否则所有的麻烦都会换汤不换药的重复出现。如果造成你所有问题，痛苦，不幸的原因都在今天奇迹般的消失，但是你还是没有变得更为临在，更有意识，那你很快就会发现同样的问题或痛苦的原因又会如影随形般的出现在你身边。最终，问题只有一个：被时间所限的思维本身。</p>
+</li>
+<li><p>我无法相信，我有朝一日能从问题中完全的释放出来。其实你是对的，在时间中永远无法达成这种状态，因为你已经在那个时间点上了。那就是现在！在时间中没有救赎。你无法在未来被释放，当下时刻才是你获取自由的关键，所以你只有在当下才能解脱。</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深深的进入当下3</title>
+    <url>/2021/01/20/%E6%B7%B1%E6%B7%B1%E7%9A%84%E8%BF%9B%E5%85%A5%E5%BD%93%E4%B8%8B3/</url>
+    <content><![CDATA[<h2 id="所有问题都是时间的幻象"><a href="#所有问题都是时间的幻象" class="headerlink" title="所有问题都是时间的幻象"></a>所有问题都是时间的幻象</h2><h3 id="“也许我进入了当下，感到一个沉重的负担被卸下来了，顿时浑身轻松。我感觉到很清晰，但是仍然有许多问题在等待着我，不是吗？它们都还没有得到解决，我难道不是在暂时逃避这些问题吗？”"><a href="#“也许我进入了当下，感到一个沉重的负担被卸下来了，顿时浑身轻松。我感觉到很清晰，但是仍然有许多问题在等待着我，不是吗？它们都还没有得到解决，我难道不是在暂时逃避这些问题吗？”" class="headerlink" title="“也许我进入了当下，感到一个沉重的负担被卸下来了，顿时浑身轻松。我感觉到很清晰，但是仍然有许多问题在等待着我，不是吗？它们都还没有得到解决，我难道不是在暂时逃避这些问题吗？”"></a>“也许我进入了当下，感到一个沉重的负担被卸下来了，顿时浑身轻松。我感觉到很清晰，但是仍然有许多问题在等待着我，不是吗？它们都还没有得到解决，我难道不是在暂时逃避这些问题吗？”</h3><ul>
+<li><p>这些与解决你的问题无关，而是要认识到现在没有任何问题。只有一些需要在当下处理掉，或者顺其发展并把它看作是当下本然面目一部分的某些情景，知道他们发生变化或可以处理了，采取采取行动。问题是思维创造的，它们需要时间来生存。在当下时刻的现实情况下，它们是无法生存的。现在把注意力集中在当下，你会发现当下时刻你不会有任何问题</p>
+</li>
+<li><p>一个新的情景出现时，我们要么去应付他，要么就是去接受它，对它说”好的”。为什么要把它转变成一个问题呢？为什么要将任何事情都转变成问题呢？难道生活中的挑战还不够多吗？你需要问题来做什么呢？</p>
+</li>
+<li><p>思维会无意识的喜欢上问题，因为他们给你某种身份的认同。这是正常的同时也是病态的。“问题”的意思是，你在心理上不断地琢磨某种情况，而没有真正地在当下采取行动，并且你还无意识的将它变成你自我感觉的一部分。你被你的生活情境所累倒，以至于丧失了对生命的感觉，存在的感觉。或者，你大脑中背负着100件你在未来将会或必须做的事情的重担，却没有将注意力集中在一件你现在就能做的事情上。</p>
+</li>
+<li><p>如果你曾处于生死关头的紧急情况，你就会知道那不是个问题。思维没有时间来得及使它成为一个问题。在真正的紧急情况下，思维停止了；你完全临在于当下，被一种更为有力的东西接管了。这就是许多普通人突然能够做出令人难以置信的事的原因。在任何紧急情况下，你要么生存，要么死亡。无论何者，他都不是一个问题。简而言之就是Do or Die.</p>
+</li>
+</ul>
+<a id="more"></a>
+
+<ul>
+<li>也许人们会气愤，为什么说问题只是一种幻象。因为他们是谁的感觉受到了威胁。他们将大量时间投入在一种虚假的自我感上。多年以来，他们无意识地将自我认同与他们的问题和痛苦结合起来。如果没有了这些问题和痛苦，他们将会是谁呢？</li>
+<li>人们所说的，所思考的，所做的很多事情实际上都源自于恐惧，当然，这还与他们对未来的关注以及与当下时刻的脱离有关。如果当下没有问题，那么也就没有恐惧。</li>
+<li>如果出现了你现在就需要解决的问题，而你的行动是产生于当下的觉知，那么它们就会很果断，很清晰，并更有效。这种反应不是来源于你过去的思维模式，而是来源于对问题的直觉反应。在其他情况下，如果被时间限制的思维模式做出了反应，你就会发现：什么都不做，在当下归于中心反而更有效。</li>
+</ul>
+<h2 id="本体的喜悦"><a href="#本体的喜悦" class="headerlink" title="本体的喜悦"></a>本体的喜悦</h2><ul>
+<li><p>你可以用一个简单的标准来判断自己是否被心理时间所控制了。问自己：”我现在做的事情是否让我感到喜悦，自在和轻松呢？”如果不是，当下时刻就被时间控制了，并且生命因此被视为一个负担或一种挣扎。</p>
+</li>
+<li><p>如果你正在做的事情无法让你感受到喜悦，自在和轻松，这并不意味着你需要改变你正在做的事情，你需要改变的是你做事的方式。如何做事通常比做什么事更重要。试试看，如果你将注意力更多地放在你正在做的事情上，而不是放在通过做这件事所取得的结果上，你就会发现，只要关注当下时刻，你所有的不快乐和挣扎就会消失，你的生活也会充满喜悦和安逸。只要你以当下的觉知来采取行动，无论你做什么，他都会充满美德，关怀和爱————即使是一个最简单的行动。</p>
+</li>
+<li><p>所以请不要担心你行动的结果————仅仅关注行动本身就好了。行动的结果会自然而然的产生。这是一个非常有效的灵修方法。这在《Bhagavad Gita》中被称为业力瑜伽。它也被描述为”神圣的行动”。</p>
+</li>
+<li><p>当你更深的感觉是来自本体，而你也从心理需求的上瘾症中走出来时，无论你的快乐或自我感都不取决于事情的结果，因此你可以说是从恐惧中解脱了！你不会在一个无常的世界中追求永恒，因为它是一个有形有相，有得有失，有生有死的世界。你不会要求情境，状况，地点或人物让你快乐，如果他们未能达到你的要求你就痛苦。尊重每一件事，却又不在乎这一切。身体形式有生有死，但你意识到了处于形式之下的永恒的东西。当这变为你的存在状态时，你怎么会不取得成功呢？你已经成功了。</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何快速绘制一张PCB板并生产？</title>
+    <url>/2021/01/27/PCB%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<h2 id="创建PCB工程项目"><a href="#创建PCB工程项目" class="headerlink" title="创建PCB工程项目"></a>创建PCB工程项目</h2><p>首先一个PCB文档应该分类准确</p>
+<img src="https://z4a.net/images/2021/01/27/QQ2021012713354421be20835067724c.png" alt="QQ2021012713354421be20835067724c.png" style="zoom:50%;">
+
+<p>然后创建一个PCB工程</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127135429.png" alt="QQ20210127135429.png" style="zoom:50%;">
+
+<p>之后再向PCB工程中添加文件</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127135350.png" alt="QQ20210127135350.png" style="zoom:50%;">
+
+<p>一个PCB工程中需要包括：</p>
+<ul>
+<li>原理图</li>
+<li>PCB</li>
+<li>原理图库</li>
+<li>PCB封装库</li>
+</ul>
+<p>至于PCB库与原理图库可以直接白嫖立创的也可以直接去淘宝上买别人已经创建好的</p>
+<a id="more"></a>
+
+<h2 id="原理图的绘制"><a href="#原理图的绘制" class="headerlink" title="原理图的绘制"></a>原理图的绘制</h2><p>​    这我就不多BB了，直接绘制就好了</p>
+<p>注意一下快捷键的应用就好</p>
+<img src="/2021/01/27/PCB%E5%B0%8F%E7%BB%93/Users\asus\AppData\Roaming\Typora\typora-user-images\1611727063677.png" alt="1611727063677" style="zoom:50%;">
+
+<p>原理图绘制好后需要对元件进行标注，这里直接全部强制标注就好了</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127135938.png" alt="QQ20210127135938.png" style="zoom: 50%;">
+
+<p>之后为原理图中的元件添加封装</p>
+<p>封装管理器：T+G 方便查看是否全部的元件都添加了封装，一般库没问题的话添加封装这方面也不会有问题</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127171446.png" alt="QQ20210127171446.png" style="zoom:50%;">
+
+<p>之后检查无误后进行编译更新到PCB中</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127140055.png" alt="QQ20210127140055.png" style="zoom:50%;">
+
+<p>点击验证变更</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127143840.png" alt="QQ20210127143840.png" style="zoom:50%;">
+
+<p>右方都是绿圈说明没有问题，之后再点击执行变更后就可以导入PCB中了</p>
+<h2 id="PCB的绘制"><a href="#PCB的绘制" class="headerlink" title="PCB的绘制"></a>PCB的绘制</h2><p>首先要放置一个原点</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127143458.png" alt="QQ20210127143458.png" style="zoom:50%;">
+
+<p>然后在机械层绘制出板子的形状后，选中这些线</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127143943.png" alt="QQ20210127143943.png" style="zoom:50%;">
+
+<p>就可以生成你需要的板子形状</p>
+<p>对于需要设置安装孔的地方在机械层绘制出需要打孔的形状</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127144614.png" alt="QQ20210127144614.png" style="zoom:50%;">
+
+<p>即可切除这部分板子</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127144726.png" alt="QQ20210127144726.png" style="zoom:50%;">
+
+<p>接下来就是将元件部分进行布局</p>
+<p>为了更好的进行PCB布局可以将窗口进行平铺，然后开启交叉选择模式在原理图中选择元件的时候PCB也会同时显示出元件的位置，更方便放置</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127171700.png" alt="QQ20210127171700.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127171646.png" alt="QQ20210127171646.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127171654.png" alt="QQ20210127171654.png" style="zoom:50%;">
+
+<p>接下来就可以开始布局了，这是我布局完成的PCB图</p>
+<p>如图</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127145010.png" alt="QQ20210127145010.png" style="zoom:50%;">
+
+<p>点击元器件可以设置改元器件是在板子的正面还是反面</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127152129.png" alt="QQ20210127152129.png" style="zoom:50%;">
+
+<p>为了更方便查看走线趋势，按下L+S可以唤出</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127145137.png" alt="QQ20210127145137.png" style="zoom:50%;">
+
+<p>在这里可以隐藏或显示各个层，由于丝印层（就是黄色的那层）碍眼…我这里就先把它隐藏了</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127145406.png" alt="QQ20210127145406.png" style="zoom:50%;">
+
+<p>之后就可以进行布线操作了</p>
+<p>在布线时，由于电源线与地线是比较多的，这样会显得比较杂乱，不太看得清其他网络的走向趋势所以在这里可以先创建一个类，然后将地线与电源线添加进去，并将它们隐藏起来</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127145601.png" alt="QQ20210127145601.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127145702.png" alt="QQ20210127145702.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127145748.png" alt="QQ20210127145748.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127145801.png" alt="QQ20210127145801.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127150035.png" alt="QQ20210127150035.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127150106.png" alt="QQ20210127150106.png" style="zoom:50%;">
+
+<p>这样的话PCB中所有的地线与电源线都被隐藏了</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127150220.png" alt="QQ20210127150220.png" style="zoom:50%;">
+
+<p>之后就可以进行布线了，可以选择手动布线，也可以选择自动布线</p>
+<p>由于板子电路比较简单，这里就选择自动布线了，但是自动布线需要进行规则设置</p>
+<hr>
+<h3 id="一些在PCB绘制中遇到的小问题"><a href="#一些在PCB绘制中遇到的小问题" class="headerlink" title="一些在PCB绘制中遇到的小问题"></a>一些在PCB绘制中遇到的小问题</h3><p>PCB中元件变灰了怎么办？</p>
+<p>​    使用shift+c可以清除过滤器</p>
+<p>PCB中如何测量元件之间的距离？</p>
+<p>​    利用Ctrl+M可以测量元件之间的距离，并且利用Shift+C可以清除测量后的痕迹</p>
+<p>在PCB中按Ctrl+D可以隐藏文字，覆铜等</p>
+<h2 id="自动布线的规则设置"><a href="#自动布线的规则设置" class="headerlink" title="自动布线的规则设置"></a>自动布线的规则设置</h2><p>这里主要设置三个规则</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127151455.png" alt="QQ20210127151455.png" style="zoom:50%;">
+
+<p>先设置线宽，在规则设置时，使用规则向导可以更方便的进行规则设置</p>
+<p>步骤与参数如图所示</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127150449.png" alt="QQ20210127150449.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127150545.png" alt="QQ20210127150545.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127150806.png" alt="QQ20210127150806.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127150815.png" alt="QQ20210127150815.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127150824.png" alt="QQ20210127150824.png" style="zoom:50%;">
+
+
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127150836.png" alt="QQ20210127150836.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127150844.png" alt="QQ20210127150844.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127150928.png" alt="QQ20210127150928.png" style="zoom:50%;">
+
+<p>之后再在设计-规则一栏中找到</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127151749.png" alt="QQ20210127151749.png" style="zoom: 67%;">
+
+<p>这是电器规则设置</p>
+<p>参数如图</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127151054.png" alt="QQ20210127151054.png" style="zoom:50%;">
+
+<p>之后设置过孔参数</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127151107.png" alt="QQ20210127151107.png" style="zoom:50%;">
+
+<p>这样子的话，对于这张板子就差不多了</p>
+<h2 id="自动走线"><a href="#自动走线" class="headerlink" title="自动走线"></a>自动走线</h2><img src="https://z4a.net/images/2021/01/27/QQ20210127152256.png" alt="QQ20210127152256.png" style="zoom:50%;">
+
+<p>点击Route All即可自动布线</p>
+<p><img src="https://z4a.net/images/2021/01/27/QQ20210127152332.png" alt="QQ20210127152332.png"></p>
+<p>之后只需等待几秒钟系统就会自动走完线，显示0个Failed就说明整个板子成功布完线了</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127152417.png" alt="QQ20210127152417.png" style="zoom:50%;">
+
+<p>如图，是不是有点那味了</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127152706.png" alt="QQ20210127152706.png" style="zoom:50%;">
+
+<p>走完线后看看是否有些线路需要调整，差不多的话就可以进行覆铜操作了</p>
+<h2 id="电路板覆铜"><a href="#电路板覆铜" class="headerlink" title="电路板覆铜"></a>电路板覆铜</h2><p>有时电路板是异形板，所以还是使用覆铜管理器来进行覆铜比较好</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127152859.png" alt="QQ20210127152859.png" style="zoom:50%;">
+
+<p>选择板外形</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127153027.png" alt="QQ20210127153027.png" style="zoom:50%;">
+
+<p>创建后，注意看是顶层还是底层，两层都要创建覆铜，去除死铜和网络一定要选上</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127154202.png" alt="QQ20210127154202.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127154220.png" alt="QQ20210127154220.png" style="zoom:50%;">
+
+<p>点击应用后，铜皮就出来了如图</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127154623.png" alt="QQ20210127154623.png" style="zoom:50%;">
+
+<p>这时还要再设置一下规则，按规定来说铜皮和走线之间的距离要大一些，所以这里设置为10mil，如图</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127154319.png" alt="QQ20210127154319.png" style="zoom:50%;">
+
+<p>最后，再重铺下所有铜，这个板子就大致完成了</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127154954.png" alt="QQ20210127154954.png" style="zoom:50%;">
+
+<p>最后板子就长这样</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127155035.png" alt="QQ20210127155035.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127155046.png" alt="QQ20210127155046.png" style="zoom:50%;">
+
+<p>按下3可以查看下3D状态下的PCB板子，再按2可以切换会PCB绘制状态</p>
+<p>怎么样，是不是有点那味了….</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127155057.png" alt="QQ20210127155057.png" style="zoom:50%;">
+
+<p>这样一张PCB板子就大致完成了，之后还需要再进行下电气规则检查</p>
+<h2 id="电气规则检查"><a href="#电气规则检查" class="headerlink" title="电气规则检查"></a>电气规则检查</h2><img src="https://z4a.net/images/2021/01/27/QQ20210127170841.png" alt="QQ20210127170841.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127170942.png" alt="QQ20210127170942.png" style="zoom:50%;">
+
+<p>之后会出来一个窗口，如果板子有设计错误的话，你可以在上面看到错误信息然后进行修改</p>
+<p>如图，我这张板子没有问题，那么接下来在输出Gerber文件后就可以把板子交给厂家进行生产了</p>
+<p><img src="https://z4a.net/images/2021/01/27/QQ20210127171027.png" alt="QQ20210127171027.png"></p>
+<h2 id="Gerber文件的输出"><a href="#Gerber文件的输出" class="headerlink" title="Gerber文件的输出"></a>Gerber文件的输出</h2><p>跟着图来进行配置即可</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127155512.png" alt="QQ20210127155512.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127155529.png" alt="QQ20210127155529.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127155608.png" alt="QQ20210127155608.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127155618.png" alt="QQ20210127155618.png" style="zoom:50%;">
+
+<p>光圈参数保持默认就好</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127155632.png" alt="QQ20210127155632.png" style="zoom:50%;">
+
+<p>这里注意下，在原来参数之后都加上一个0之后点确定</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127155709.png" alt="QQ20210127155709.png" style="zoom:50%;">
+
+<p>之后在输出钻孔文件</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127155730.png" alt="QQ20210127155730.png" style="zoom:50%;">
+
+<p>一定要勾上钻孔文件，否则之后生成不了钻孔文件</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127155802.png" alt="QQ20210127155802.png" style="zoom:50%;">
+
+<p>这里参数保持默认就好</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127155811.png" alt="QQ20210127155811.png" style="zoom:67%;">
+
+<p>这就是你的PCB板钻孔文件了，如图。<img src="https://z4a.net/images/2021/01/27/QQ20210127155836.png" alt="QQ20210127155836.png"></p>
+<p>回到原来的PCB目录下你会发现一个Project Outputs for XXXX的文件夹，里面就是重要的PCB生产文件了</p>
+<p>生成的GERBER小文件在 project Outputs for XXXX这里面找<br>小文件如下：<br>GTL顶层线路 top<br>GBL底层线路 bottom<br>GTS顶层阻焊 top solder<br>GBS底层阻焊 bottom solder<br>GTO顶层字符 top overlay<br>GBO底层字符 bottom overlay<br>DRL钻孔层<br>GKO禁止布线层（边框） keepout<br>GDD一般不用，是分孔图，用来标注和分辨孔的大小位置  </p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127161246.png" alt="QQ20210127161246.png" style="zoom:50%;">
+
+<p>然后将这个Project Outputs for XXXX文件夹压缩成一个压缩包形式，发送给厂家就可以进行下单了</p>
+<h2 id="嘉立创下单步骤"><a href="#嘉立创下单步骤" class="headerlink" title="嘉立创下单步骤"></a>嘉立创下单步骤</h2><p>由于现在嘉立创10*10之内的双层板就5元，还是比价实惠的所以就先选择在嘉立创进行打板了</p>
+<p>先在嘉立创官网下载一个嘉立创下单助手吧，这样会更方便些</p>
+<p><img src="https://z4a.net/images/2021/01/27/QQ20210127161619.png" alt="QQ20210127161619.png"></p>
+<p>打开后找到在线下单</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127161635.png" alt="QQ20210127161635.png" style="zoom:50%;">
+
+<img src="https://z4a.net/images/2021/01/27/QQ20210127161731.png" alt="QQ20210127161731.png" style="zoom:50%;">
+
+<p>上传之前压缩好的Gerber文件</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127161716.png" alt="QQ20210127161716.png" style="zoom:50%;">
+
+<p>等待几秒钟后系统会自动帮你分析好文件，之后需要填写板子的层数和需要打板的板子数量</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127161840.png" alt="QQ20210127161840.png" style="zoom:50%;">
+
+<p>填写好之后点击下一步继续</p>
+<p>PCB工艺如图</p>
+<p>阻焊颜色可以随便选，不过绿色的生产要快些，板子厚度2.0与0.4都需要加钱，一般情况下就选1.2或者1.6就好，阻焊选择过孔盖油，焊盘喷漆的话选择选择有铅喷锡就好，沉金需要加钱，其余默认</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127161931.png" alt="QQ20210127161931.png" style="zoom:50%;">
+
+<p>SMT贴片的话看个人情况，如果需要SMT贴片的话还需要生成贴片文件，这里先选择不需要</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127161942.png" alt="QQ20210127161942.png" style="zoom:50%;">
+
+<p>这里保持默认就好</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127161957.png" alt="QQ20210127161957.png" style="zoom:50%;">
+
+<p>看个人情况选择是否需要钢网，这里先选择不需要了</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127162018.png" alt="QQ20210127162018.png" style="zoom:50%;">
+
+<p>发票同样看个人情况</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127162044.png" alt="QQ20210127162044.png" style="zoom:50%;">
+
+<p>再填好地址与送货选项，最后确认无误后付钱就好了</p>
+<img src="https://z4a.net/images/2021/01/27/QQ20210127162137.png" alt="QQ20210127162137.png" style="zoom:50%;">
+
+<hr>
+<p>至此这样一张PCB板制作就完成了</p>
+<p>一般2~3天板子就到手了</p>
+<p>芜湖<del>~</del></p>
+]]></content>
+      <tags>
+        <tag>PCB</tag>
+      </tags>
+  </entry>
 </search>
