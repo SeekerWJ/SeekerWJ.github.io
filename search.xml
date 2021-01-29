@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>通过CUBEMX来创建STM32工程并点亮一个LED灯</title>
+      <link href="2021/01/29/%E4%BD%BF%E7%94%A8CUBEMX%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B7%A5%E7%A8%8B%E5%B9%B6%E7%82%B9%E4%BA%AE%E7%AC%AC%E4%B8%80%E4%B8%AALED/"/>
+      <url>2021/01/29/%E4%BD%BF%E7%94%A8CUBEMX%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B7%A5%E7%A8%8B%E5%B9%B6%E7%82%B9%E4%BA%AE%E7%AC%AC%E4%B8%80%E4%B8%AALED/</url>
+      
+        <content type="html"><![CDATA[<p>CubeMX可以在ST的官方进行下载，下载最新版本的就好</p><h2 id="HAL固件库文件的放置"><a href="#HAL固件库文件的放置" class="headerlink" title="HAL固件库文件的放置"></a>HAL固件库文件的放置</h2><p>下载好CubeMX之后将他打开，它的界面是这样的</p><img src="https://z4a.net/images/2021/01/29/QQ20210129150802.png" alt="QQ20210129150802.png" style="zoom:67%;"><p>点击Help后可以设置下载的固件包文件的位置，最好自己添加一个新的文件夹来专门存储，不要放置在C盘</p><a id="more"></a><p><img src="https://z4a.net/images/2021/01/29/QQ20210129151218.png" alt="QQ20210129151218.png"></p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129151233.png" alt="QQ20210129151233.png"></p><h2 id="创建一个新的工程"><a href="#创建一个新的工程" class="headerlink" title="创建一个新的工程"></a>创建一个新的工程</h2><p>这里选择第一个就好</p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129151916.png" alt="QQ20210129151916.png"></p><img src="https://z4a.net/images/2021/01/29/QQ20210129151351.png" alt="QQ20210129151351.png" style="zoom:50%;"><p>选择好芯片封装之后双击芯片封装就可以创建一个新的工程了</p><p>如图，这样的话就可以正式的来配置STM32了</p><img src="https://z4a.net/images/2021/01/29/QQ20210129151431.png" alt="QQ20210129151431.png" style="zoom:50%;"><h2 id="配置STM32的GPIO并将LED灯点亮"><a href="#配置STM32的GPIO并将LED灯点亮" class="headerlink" title="配置STM32的GPIO并将LED灯点亮"></a>配置STM32的GPIO并将LED灯点亮</h2><p>我这里用的是野火的指南者开发板，用的是PB5,PB0,PB1来控制LED，所以初始化GPIO的时候应该初始化这几个管脚</p><img src="https://z4a.net/images/2021/01/29/QQ20210129152644.png" alt="QQ20210129152644.png" style="zoom:50%;"><p>在右侧选择相应的管脚号，可以看到这个管脚具有的功能，这里要点亮LED灯，所以应该选择GPIO_Output功能</p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129154240.png" alt="QQ20210129154240.png"></p><p>选择好管脚之后就可以看到GPIO栏中出现了这几个选项，可以根据用户的需要来进行配置</p><p>由于开发板上LED是低电平点亮，所以这里默认不用修改就好</p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129154436.png" alt="QQ20210129154436.png"></p><p>这里要注意的是，系统配置那里Debug要选则成串行模式，否则程序只可以下载一次</p><img src="https://z4a.net/images/2021/01/29/QQ20210129155120.png" alt="QQ20210129155120.png" style="zoom: 67%;"><p>系统时钟的话就先默认就可以</p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129155324.png" alt="QQ20210129155324.png"></p><p>工程创建如图所示</p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129160025.png" alt="QQ20210129160025.png"></p><p>代码生成配置如图所示，一般情况下就是这样配置的</p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129160659.png" alt="QQ20210129160659.png"></p><p>优先级设置如图所示</p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129163234.png" alt="QQ20210129163234.png"></p><p>点击生成代码即可</p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129163807.png" alt="QQ20210129163807.png"></p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129163853.png" alt="QQ20210129163853.png"></p><p>可以看到代码以及为我们自动生成了，这比固件库函数编程的要方便许多</p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129163927.png" alt="QQ20210129163927.png"></p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129164722.png" alt="QQ20210129164722.png"></p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129164733.png" alt="QQ20210129164733.png"></p><p>下载到板子后,可以看到LED灯成功亮起</p><img src="https://z4a.net/images/2021/01/29/IMG_20210129_165105.jpg" alt="IMG_20210129_165105.jpg" style="zoom: 25%;"><p>也可以将代码修改,将LED转换为流水灯的形式</p><p>这里HAL库中的延迟函数是HAL_Delay();是1ms延时</p><p><img src="https://z4a.net/images/2021/01/29/QQ20210129165738.png" alt="QQ20210129165738.png"></p><img src="https://z4a.net/images/2021/01/29/VID_20210129_165721.gif" alt="VID_20210129_165721.gif" style="zoom:25%;"><hr><p>这样一个HAL库工程就创建完成了</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> STM32 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>如何快速绘制一张PCB板并生产？</title>
       <link href="2021/01/27/PCB%E5%B0%8F%E7%BB%93/"/>
       <url>2021/01/27/PCB%E5%B0%8F%E7%BB%93/</url>
