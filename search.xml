@@ -719,12 +719,14 @@
       </tags>
   </entry>
   <entry>
-    <title>通过CUBEMX来创建STM32工程并点亮一个LED灯</title>
+    <title>通过CUBEMX来配置TIM定时器中断</title>
     <url>/2021/02/07/%E4%BD%BF%E7%94%A8CubeMX%E6%9D%A5%E9%85%8D%E7%BD%AETIM%E5%AE%9A%E6%97%B6%E5%99%A8%E4%B8%AD%E6%96%AD/</url>
     <content><![CDATA[<h1 id="CubeMX配置"><a href="#CubeMX配置" class="headerlink" title="CubeMX配置"></a>CubeMX配置</h1><p>首先是时钟的配置，这里选择外部晶振</p>
 <p><img src="https://z4a.net/images/2021/02/07/QQ20210207005753.png" alt="QQ20210207005753.png"></p>
 <p>然后是系统，要选择Debug形式，然后时钟源这里选择系统的滴答定时器</p>
 <p><img src="https://z4a.net/images/2021/02/07/QQ20210207005800.png" alt="QQ20210207005800.png"></p>
+<a id="more"></a>
+
 <p>之后是TIM定时器的时钟源选择，这里就先选择内部时钟源，通道的话不用打开</p>
 <p><img src="https://z4a.net/images/2021/02/07/QQ20210207005817.png" alt="QQ20210207005817.png"></p>
 <p>之后配置分频系数，计数模式与计时周期.这里的一次计时周期就是1ms</p>
@@ -746,6 +748,217 @@
 <p>所以我们需要在tim.c文件下自己创建一个TIM2相关的中断回调函数 </p>
 <p>在中断回调函数中就可以添加用户自己相应的代码了</p>
 <p><img src="https://z4a.net/images/2021/02/07/QQ20210207011015.png" alt="QQ20210207011015.png"></p>
+]]></content>
+      <tags>
+        <tag>STM32</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>利用CubeMX初始化TIM与串口并测试FreeRTOS的中断管理函数</title>
+    <url>/2021/02/09/%E5%88%A9%E7%94%A8CubeMX%E5%88%9D%E5%A7%8B%E5%8C%96TIM%E4%B8%8E%E4%B8%B2%E5%8F%A3%E5%B9%B6%E6%B5%8B%E8%AF%95FreeRTOS%E7%9A%84%E4%B8%AD%E6%96%AD%E7%AE%A1%E7%90%86%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>创建两个任务start_task()与interrupt_task(), 这两个任务的功能如下：</p>
+<p>start_task()：创建另一个任务</p>
+<p>interrupt_task()：中断测试任务，任务中会调用FreeRTOS的关中断函数portDISABLE_INTERRUPTS()来将中断关闭一段时间</p>
+<h1 id="CubeMX的配置"><a href="#CubeMX的配置" class="headerlink" title="CubeMX的配置"></a>CubeMX的配置</h1><h2 id="首先是FreeRTOS的配置"><a href="#首先是FreeRTOS的配置" class="headerlink" title="首先是FreeRTOS的配置"></a>首先是FreeRTOS的配置</h2><p>箭头处是FreeRTOS所能控制的最大和最低的优先级，高于或者低于这两个优先级的中断无法被FreeRTOS的中断控制函数控制</p>
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209162857.png" alt="QQ20210209162857.png"></p>
+<p>创建好两个任务</p>
+<a id="more"></a>
+
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209163003.png" alt="QQ20210209163003.png"></p>
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209163010.png" alt="QQ20210209163010.png"></p>
+<p>这样一来FreeRTOS基本配置完成</p>
+<h2 id="STM32外设的配置"><a href="#STM32外设的配置" class="headerlink" title="STM32外设的配置"></a>STM32外设的配置</h2><p>这里先确定好几个LED用作测设</p>
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209162421.png" alt="QQ20210209162421.png"></p>
+<p>时钟源的配置</p>
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209163550.png" alt="QQ20210209163550.png"></p>
+<p>这一要把Debug的模式改一下否则程序只能下载一次，然后我这里的时钟源选择是TIM1</p>
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209163602.png" alt="QQ20210209163602.png"></p>
+<p>初始化TIM2和TIM3，二者我都是初始化为1ms产生一次中断计数，时钟源都要选择为内部时钟源，记得要开启自动重装载，向上计数</p>
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209163654.png" alt="QQ20210209163654.png"></p>
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209163710.png" alt="QQ20210209163710.png"></p>
+<p>这里要把TIM2和TIM3的中断都使能</p>
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209163702.png" alt="QQ20210209163702.png"></p>
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209163715.png" alt="QQ20210209163715.png"></p>
+<p>在这里我把中断优先级分组设成了第四组。为了要测试FreeRTOS的中断控制函数，我就把TIM2的抢占优先级设置成了2，为了不影响串口的收发我把它的抢占优先级设置为了3。</p>
+<p>需要注意的是，在FreeRTOS所控制的优先级之外的中断中是不可以使用FreeRTOS内置的API函数的，就算是带有IRQ后缀的函数也不可以，所以这里可以把是否使用FreeRTOS函数的选项给取消了</p>
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209163750.png" alt="QQ20210209163750.png"></p>
+<p>串口模式选择收发，并且使能它的中断</p>
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209163816.png" alt="QQ20210209163816.png"></p>
+<p>这里就是时钟树的配置，输入频率要和自己单片机实际使用的晶振一样，然后后面的HCLK频率配置只需要写好系统会自动配置</p>
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209163856.png" alt="QQ20210209163856.png"></p>
+<p>这里注意下函数是否为静态的，然后就可以生成代码了</p>
+<p><img src="https://z4a.net/images/2021/02/09/QQ20210209163914.png" alt="QQ20210209163914.png"></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><h2 id="定时中断"><a href="#定时中断" class="headerlink" title="定时中断"></a>定时中断</h2><pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* 中断回调函数 1s 一次中断 输出测试语句 并且LED闪烁 */</span>
+<span class="token keyword">void</span> <span class="token function">HAL_TIM_PeriodElapsedCallback</span><span class="token punctuation">(</span>TIM_HandleTypeDef <span class="token operator">*</span>htim<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* USER CODE BEGIN Callback 0 */</span>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> time2<span class="token punctuation">,</span>time3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/* USER CODE END Callback 0 */</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>htim<span class="token operator">-></span>Instance <span class="token operator">==</span> TIM1<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token function">HAL_IncTick</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* USER CODE BEGIN Callback 1 */</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>htim <span class="token operator">==</span> <span class="token punctuation">(</span><span class="token operator">&amp;</span>htim2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        time2<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>time2 <span class="token operator">==</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+        <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            time2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"TIM2_OK\r\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">HAL_GPIO_TogglePin</span><span class="token punctuation">(</span>LED_B_GPIO_Port<span class="token punctuation">,</span>LED_B_Pin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>htim <span class="token operator">==</span> <span class="token punctuation">(</span><span class="token operator">&amp;</span>htim3<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        time3<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>time3 <span class="token operator">==</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+        <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            time3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"TIM3_OK\r\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">HAL_GPIO_TogglePin</span><span class="token punctuation">(</span>LED_R_GPIO_Port<span class="token punctuation">,</span>LED_R_Pin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>    
+  <span class="token comment" spellcheck="true">/* USER CODE END Callback 1 */</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<h1 id="延迟函数"><a href="#延迟函数" class="headerlink" title="延迟函数"></a>延迟函数</h1><p>这里用的是正点原子的延迟函数,记录一下方便以后移植使用</p>
+<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"delay.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"cmsis_os.h"</span></span>
+
+<span class="token keyword">static</span> u32 fac_us<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span> u16 fac_ms<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token keyword">extern</span> <span class="token keyword">void</span> <span class="token function">xPortSysTickHandler</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/* 参数为倍频后的HCLK 我这里是100MHz */</span>
+<span class="token keyword">void</span> <span class="token function">delay_init</span><span class="token punctuation">(</span>u8 SYSCLK<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    u32 reload<span class="token punctuation">;</span>
+      <span class="token function">HAL_SYSTICK_CLKSourceConfig</span><span class="token punctuation">(</span>SYSTICK_CLKSOURCE_HCLK<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//SysTick频率为HCLK</span>
+    fac_us<span class="token operator">=</span>SYSCLK<span class="token punctuation">;</span>                            <span class="token comment" spellcheck="true">//不论是否使用OS,fac_us都需要使用</span>
+    reload<span class="token operator">=</span>SYSCLK<span class="token punctuation">;</span>                            <span class="token comment" spellcheck="true">//每秒钟的计数次数 单位为K       </span>
+    reload<span class="token operator">*</span><span class="token operator">=</span><span class="token number">1000000</span><span class="token operator">/</span>configTICK_RATE_HZ<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//根据configTICK_RATE_HZ设定溢出时间</span>
+                                            <span class="token comment" spellcheck="true">//reload为24位寄存器,最大值:16777216,在180M下,约合0.745s左右    </span>
+    fac_ms<span class="token operator">=</span><span class="token number">1000</span><span class="token operator">/</span>configTICK_RATE_HZ<span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">//代表OS可以延时的最少单位        </span>
+      SysTick<span class="token operator">-></span>CTRL<span class="token operator">|</span><span class="token operator">=</span>SysTick_CTRL_TICKINT_Msk<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//开启SYSTICK中断</span>
+    SysTick<span class="token operator">-></span>LOAD<span class="token operator">=</span>reload<span class="token punctuation">;</span>                     <span class="token comment" spellcheck="true">//每1/configTICK_RATE_HZ断一次    </span>
+    SysTick<span class="token operator">-></span>CTRL<span class="token operator">|</span><span class="token operator">=</span>SysTick_CTRL_ENABLE_Msk<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//开启SYSTICK</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">delay_us</span><span class="token punctuation">(</span>u32 nus<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>        
+    u32 ticks<span class="token punctuation">;</span>
+    u32 told<span class="token punctuation">,</span>tnow<span class="token punctuation">,</span>tcnt<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    u32 reload<span class="token operator">=</span>SysTick<span class="token operator">-></span>LOAD<span class="token punctuation">;</span>                <span class="token comment" spellcheck="true">//LOAD的值             </span>
+    ticks<span class="token operator">=</span>nus<span class="token operator">*</span>fac_us<span class="token punctuation">;</span>                         <span class="token comment" spellcheck="true">//需要的节拍数 </span>
+    told<span class="token operator">=</span>SysTick<span class="token operator">-></span>VAL<span class="token punctuation">;</span>                        <span class="token comment" spellcheck="true">//刚进入时的计数器值</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        tnow<span class="token operator">=</span>SysTick<span class="token operator">-></span>VAL<span class="token punctuation">;</span>    
+        <span class="token keyword">if</span><span class="token punctuation">(</span>tnow<span class="token operator">!=</span>told<span class="token punctuation">)</span>
+        <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>        
+            <span class="token keyword">if</span><span class="token punctuation">(</span>tnow<span class="token operator">&lt;</span>told<span class="token punctuation">)</span>tcnt<span class="token operator">+</span><span class="token operator">=</span>told<span class="token operator">-</span>tnow<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//这里注意一下SYSTICK是一个递减的计数器就可以了.</span>
+            <span class="token keyword">else</span> tcnt<span class="token operator">+</span><span class="token operator">=</span>reload<span class="token operator">-</span>tnow<span class="token operator">+</span>told<span class="token punctuation">;</span>        
+            told<span class="token operator">=</span>tnow<span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>tcnt<span class="token operator">>=</span>ticks<span class="token punctuation">)</span><span class="token keyword">break</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">//时间超过/等于要延迟的时间,则退出.</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>  
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>                                        
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">delay_ms</span><span class="token punctuation">(</span>u32 nms<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>    
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">xTaskGetSchedulerState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!=</span>taskSCHEDULER_NOT_STARTED<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//系统已经运行</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>        
+        <span class="token keyword">if</span><span class="token punctuation">(</span>nms<span class="token operator">>=</span>fac_ms<span class="token punctuation">)</span>                        <span class="token comment" spellcheck="true">//延时的时间大于OS的最少时间周期 </span>
+        <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> 
+               <span class="token function">vTaskDelay</span><span class="token punctuation">(</span>nms<span class="token operator">/</span>fac_ms<span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment" spellcheck="true">//FreeRTOS延时</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        nms<span class="token operator">%</span><span class="token operator">=</span>fac_ms<span class="token punctuation">;</span>                        <span class="token comment" spellcheck="true">//OS已经无法提供这么小的延时了,采用普通方式延时    </span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token function">delay_us</span><span class="token punctuation">(</span><span class="token punctuation">(</span>u32<span class="token punctuation">)</span><span class="token punctuation">(</span>nms<span class="token operator">*</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                <span class="token comment" spellcheck="true">//普通方式延时</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/* 不会引起任务调度的延迟函数 */</span>
+<span class="token keyword">void</span> <span class="token function">delay_xms</span><span class="token punctuation">(</span>u32 nms<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    u32 i<span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>nms<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token function">delay_us</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<h1 id="串口收发函数"><a href="#串口收发函数" class="headerlink" title="串口收发函数"></a>串口收发函数</h1><p>在usart.c文件中添加，这样就可以使用printf()函数了</p>
+<pre class=" language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">fputc</span><span class="token punctuation">(</span><span class="token keyword">int</span> ch<span class="token punctuation">,</span> FILE <span class="token operator">*</span>f<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token function">HAL_UART_Transmit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>huart1<span class="token punctuation">,</span> <span class="token punctuation">(</span>uint8_t <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>ch<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0xffff</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> ch<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">fgetc</span><span class="token punctuation">(</span>FILE <span class="token operator">*</span>f<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  uint8_t ch <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token function">HAL_UART_Receive</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>huart1<span class="token punctuation">,</span> <span class="token operator">&amp;</span>ch<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0xffff</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> ch<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<p>注意在main.h文件中</p>
+<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span>    </span></code></pre>
+<p>在main.c文件中定义两个数组</p>
+<pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* 定义两个数组 */</span>
+u8 aRxBuffer<span class="token punctuation">[</span>RXBUFFERSIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">//HAL库使用的串口接收缓冲</span>
+u8 USART_RX_BUF<span class="token punctuation">[</span>USART_REC_LEN<span class="token punctuation">]</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//接收缓冲,最大USART_REC_LEN个字节.</span></code></pre>
+<pre class=" language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">HAL_UART_RxCpltCallback</span><span class="token punctuation">(</span>UART_HandleTypeDef <span class="token operator">*</span>huart<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>huart<span class="token operator">-></span>Instance<span class="token operator">==</span>USART1<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//如果是串口1</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token function">HAL_UART_Transmit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>huart1<span class="token punctuation">,</span>aRxBuffer<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// 接收到数据马上使用串口1发送出去</span>
+        <span class="token function">HAL_UART_Receive_IT</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>huart1<span class="token punctuation">,</span>aRxBuffer<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">// 重新使能串口1接收中断</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<p>最后使能这几个用到的中断</p>
+<pre class=" language-c"><code class="language-c"><span class="token function">HAL_TIM_Base_Start_IT</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>htim2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">HAL_TIM_Base_Start_IT</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>htim3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">HAL_UART_Receive_IT</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>huart1<span class="token punctuation">,</span> <span class="token punctuation">(</span>uint8_t <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>aRxBuffer<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h1 id="任务函数"><a href="#任务函数" class="headerlink" title="任务函数"></a>任务函数</h1><pre class=" language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">StartDefaultTask</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token keyword">const</span> <span class="token operator">*</span> argument<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* USER CODE BEGIN StartDefaultTask */</span>
+
+    <span class="token function">taskENTER_CRITICAL</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">/* 进入临界区 */</span>
+
+  <span class="token comment" spellcheck="true">/* definition and creation of interrupt_task */</span>
+  <span class="token function">osThreadDef</span><span class="token punctuation">(</span>interrupt_task<span class="token punctuation">,</span> Start_interrupt_task<span class="token punctuation">,</span> osPriorityNormal<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">128</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  interrupt_taskHandle <span class="token operator">=</span> <span class="token function">osThreadCreate</span><span class="token punctuation">(</span><span class="token function">osThread</span><span class="token punctuation">(</span>interrupt_task<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">vTaskDelete</span><span class="token punctuation">(</span>Start_TaskHandle<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* 删除开始任务 */</span> 
+
+    <span class="token function">taskEXIT_CRITICAL</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">/* 退出临界区 */</span>
+
+  <span class="token comment" spellcheck="true">/* USER CODE END StartDefaultTask */</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<pre class=" language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Start_interrupt_task</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token keyword">const</span> <span class="token operator">*</span> argument<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* USER CODE BEGIN Start_interrupt_task */</span>
+    <span class="token keyword">static</span> u32 num <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        num<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>num <span class="token operator">==</span> <span class="token number">5</span><span class="token punctuation">)</span>
+        <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            num <span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"中断关闭.......\r\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">portDISABLE_INTERRUPTS</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">delay_xms</span><span class="token punctuation">(</span><span class="token number">5000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"打开中断.......\r\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">portENABLE_INTERRUPTS</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token function">HAL_GPIO_TogglePin</span><span class="token punctuation">(</span>LED_G_GPIO_Port<span class="token punctuation">,</span>LED_G_Pin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">vTaskDelay</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/* USER CODE END Start_interrupt_task */</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<h1 id="几个需要注意的"><a href="#几个需要注意的" class="headerlink" title="几个需要注意的"></a>几个需要注意的</h1><ol>
+<li>CubeMX生成的代码最好不要乱修改，用户自己的代码最好写在CubeMX规定的代码区域</li>
+<li>某些需要在多个文件中用到的变量或者数组，可以在main.c文件中定义，然后在main.h文件中extern</li>
+<li>中断处理函数集中在stm32f4xx_it.c这个文件中，中断处理函数一般集中在main.c文件下，这样方便管理</li>
+</ol>
 ]]></content>
       <tags>
         <tag>STM32</tag>
