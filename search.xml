@@ -1205,7 +1205,7 @@ SemaphoreHandle_t <span class="token function">xSemaphoreCreateBinary</span><spa
     <content><![CDATA[<h2 id="小练习"><a href="#小练习" class="headerlink" title="小练习"></a>小练习</h2><p>利用 STM32 驱动 AD9833 并调整它的频率</p>
 <p>由于我没有电源，所以不能再外接运放来调整它的幅值，暂时先调整频率</p>
 <p>再利用STM32的ADC去采集AD9833的输出信号，并存储在数组中做一次4096点的FFT变换</p>
-<p><img src="https://gitee.com/seekerwj/pic/raw/master/QQ%E6%88%AA%E5%9B%BE20210513185912.png" alt="123"></p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/QQ%E6%88%AA%E5%9B%BE20210513185912.png" alt="QQ23.png"></p>
 ]]></content>
       <tags>
         <tag>STM32</tag>
