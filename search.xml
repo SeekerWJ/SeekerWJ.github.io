@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>图床测试</title>
+      <link href="2021/05/24/%E5%B0%8F%E7%BB%83%E4%B9%A0/"/>
+      <url>2021/05/24/%E5%B0%8F%E7%BB%83%E4%B9%A0/</url>
+      
+        <content type="html"><![CDATA[<h2 id="小练习"><a href="#小练习" class="headerlink" title="小练习"></a>小练习</h2><p>利用 STM32 驱动 AD9833 并调整它的频率</p><p>由于我没有电源，所以不能再外接运放来调整它的幅值，暂时先调整频率</p><p>再利用STM32的ADC去采集AD9833的输出信号，并存储在数组中做一次4096点的FFT变换</p><p><img src="https://i.loli.net/2021/05/22/APKmQMbhI7BVYOy.png" alt="QQ23.png"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> STM32 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>FreeRTOS信号量与信号量函数</title>
       <link href="2021/02/19/FreeRTOS%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%87%BD%E6%95%B0/"/>
       <url>2021/02/19/FreeRTOS%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%87%BD%E6%95%B0/</url>
@@ -66,25 +85,6 @@
       <url>2021/02/07/%E4%BD%BF%E7%94%A8CubeMX%E6%9D%A5%E9%85%8D%E7%BD%AETIM%E5%AE%9A%E6%97%B6%E5%99%A8%E4%B8%AD%E6%96%AD/</url>
       
         <content type="html"><![CDATA[<h1 id="CubeMX配置"><a href="#CubeMX配置" class="headerlink" title="CubeMX配置"></a>CubeMX配置</h1><p>首先是时钟的配置，这里选择外部晶振</p><p><img src="https://z4a.net/images/2021/02/07/QQ20210207005753.png" alt="QQ20210207005753.png"></p><p>然后是系统，要选择Debug形式，然后时钟源这里选择系统的滴答定时器</p><p><img src="https://z4a.net/images/2021/02/07/QQ20210207005800.png" alt="QQ20210207005800.png"></p><a id="more"></a><p>之后是TIM定时器的时钟源选择，这里就先选择内部时钟源，通道的话不用打开</p><p><img src="https://z4a.net/images/2021/02/07/QQ20210207005817.png" alt="QQ20210207005817.png"></p><p>之后配置分频系数，计数模式与计时周期.这里的一次计时周期就是1ms</p><p><img src="https://z4a.net/images/2021/02/07/QQ20210207005841.png" alt="QQ20210207005841.png"></p><p>为TIM2配置中断是否开启以及它的优先级</p><p><img src="https://z4a.net/images/2021/02/07/QQ20210207005854.png" alt="QQ20210207005854.png"></p><p>在内核配置中可以配置中断优先级的分组，这里就选择第四组了，在这里也可以看到全部的中断源配置</p><p><img src="https://z4a.net/images/2021/02/07/QQ20210207005909.png" alt="QQ20210207005909.png"></p><p>之后是时钟树的配置，需要注意的是外部时钟源需要与板子实际使用的一致，其他的如果没有需求就不用管了，然后HCLK处我习惯100MHz直接傻瓜式配置，系统会自动帮你计算</p><p><img src="https://z4a.net/images/2021/02/07/QQ20210207005947.png" alt="QQ20210207005947.png"></p><p>之后配置好相关文件路径就可以生成代码了</p><h1 id="一些相关的函数"><a href="#一些相关的函数" class="headerlink" title="一些相关的函数"></a>一些相关的函数</h1><p>一进入主函数，首先需要用</p><pre class=" language-c"><code class="language-c">HAL_StatusTypeDef <span class="token function">HAL_TIM_Base_Start_IT</span><span class="token punctuation">(</span>TIM_HandleTypeDef <span class="token operator">*</span>htim<span class="token punctuation">)</span></code></pre><p>来开启TIM2的中断。参数就是中断源的句柄，可以在tim.c文件中看到</p><p><img src="https://z4a.net/images/2021/02/07/QQ20210207010946.png" alt="QQ20210207010946.png"></p><p>之后在stm32f4xx_it.c文件下会看到自动生成了TIM2的中断处理函数</p><p><img src="https://z4a.net/images/2021/02/07/QQ20210207011003.png" alt="QQ20210207011003.png"></p><p>需要注意的是在HAL库中，每进行完一个中断，并不会立刻退出，而是会进入到中断回调函数中</p><p>所以我们需要在tim.c文件下自己创建一个TIM2相关的中断回调函数 </p><p>在中断回调函数中就可以添加用户自己相应的代码了</p><p><img src="https://z4a.net/images/2021/02/07/QQ20210207011015.png" alt="QQ20210207011015.png"></p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> STM32 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>图床测试</title>
-      <link href="2021/02/07/%E5%B0%8F%E7%BB%83%E4%B9%A0/"/>
-      <url>2021/02/07/%E5%B0%8F%E7%BB%83%E4%B9%A0/</url>
-      
-        <content type="html"><![CDATA[<h2 id="小练习"><a href="#小练习" class="headerlink" title="小练习"></a>小练习</h2><p>利用 STM32 驱动 AD9833 并调整它的频率</p><p>由于我没有电源，所以不能再外接运放来调整它的幅值，暂时先调整频率</p><p>再利用STM32的ADC去采集AD9833的输出信号，并存储在数组中做一次4096点的FFT变换</p><p><img src="https://gitee.com/seekerwj/pic/raw/master/QQ%E6%88%AA%E5%9B%BE20210513185912.png" alt="QQ23.png"></p>]]></content>
       
       
       
