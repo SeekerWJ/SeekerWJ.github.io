@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="STM32," />
+  <meta name="keywords" content="电赛," />
 
 
 
@@ -79,22 +79,27 @@
 
 
 
-<meta name="description" content="什么是信号量​    信号量是操作系统中重要的一部分，信号量一般用来进行资源管理和任务同步，FreeRTOS中信号量又分为二值信号量，计数型信号量，互斥信号量和递归互斥信号量。不同信号量其应用场景不同，但有些应用场景是可以互换着使用的。 ​    信号量的重要作用其中就有任务的同步，用于任务与任务之间的同步，用于中断与任务之间的同步。在执行中断服务函数的时候可以通过向任务发送信号量来通知它所期待的">
+<meta name="description" content="​    最近赶上电赛，为了驱动串口屏，同时方便调试，所以尝试着用串口2来为串口屏发送数据，串口1用于显示数据来进行调试 如图是STM32F407的串口引脚分布图  F407 系统控制器有四个 USART 和两个 UART，其中USART1和USART2时钟来源于 APB2 总线时钟，其最大频率为 84MHz，其他四个的时钟来源于 APB1 总线时钟，其最大频率为 42MHz。UART 只是异步传">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FreeRTOS信号量与信号量函数">
-<meta property="og:url" content="https://seekerwj.github.io/2021/02/19/FreeRTOS%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:title" content="CubeMX F407串口以及串口中断的使用">
+<meta property="og:url" content="https://seekerwj.github.io/2021/05/26/CubeMX%20F407%E4%B8%B2%E5%8F%A32%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="什么是信号量​    信号量是操作系统中重要的一部分，信号量一般用来进行资源管理和任务同步，FreeRTOS中信号量又分为二值信号量，计数型信号量，互斥信号量和递归互斥信号量。不同信号量其应用场景不同，但有些应用场景是可以互换着使用的。 ​    信号量的重要作用其中就有任务的同步，用于任务与任务之间的同步，用于中断与任务之间的同步。在执行中断服务函数的时候可以通过向任务发送信号量来通知它所期待的">
+<meta property="og:description" content="​    最近赶上电赛，为了驱动串口屏，同时方便调试，所以尝试着用串口2来为串口屏发送数据，串口1用于显示数据来进行调试 如图是STM32F407的串口引脚分布图  F407 系统控制器有四个 USART 和两个 UART，其中USART1和USART2时钟来源于 APB2 总线时钟，其最大频率为 84MHz，其他四个的时钟来源于 APB1 总线时钟，其最大频率为 42MHz。UART 只是异步传">
 <meta property="og:locale">
-<meta property="og:image" content="https://z4a.net/images/2021/02/18/QQ20210218003010.png">
-<meta property="og:image" content="https://z4a.net/images/2021/02/18/QQ20210218003037.png">
-<meta property="og:image" content="https://z4a.net/images/2021/02/18/QQ20210218003047.png">
-<meta property="article:published_time" content="2021-02-19T04:14:39.000Z">
-<meta property="article:modified_time" content="2021-02-19T04:14:57.564Z">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210524224325.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210524224926.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210524225026.png">
+<meta property="og:image" content="https://seekerwj.github.io/2021/05/26/CubeMX%20F407%E4%B8%B2%E5%8F%A32%E7%9A%84%E4%BD%BF%E7%94%A8/Users/asus/AppData/Roaming/Typora/typora-user-images/1621867844892.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210524225435.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210524225500.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210526201529.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210526201747.png">
+<meta property="article:published_time" content="2021-05-26T12:20:01.000Z">
+<meta property="article:modified_time" content="2021-05-26T12:20:57.415Z">
 <meta property="article:author" content="WJ">
-<meta property="article:tag" content="STM32">
+<meta property="article:tag" content="电赛">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://z4a.net/images/2021/02/18/QQ20210218003010.png">
+<meta name="twitter:image" content="https://gitee.com/seekerwj/pic/raw/master/20210524224325.png">
 
 
 
@@ -124,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="https://SeekerWJ.github.io/2021/02/19/FreeRTOS信号量与信号量函数/"/>
+  <link rel="canonical" href="https://SeekerWJ.github.io/2021/05/26/CubeMX F407串口2的使用/"/>
 
 
 
 
 
-  <title>FreeRTOS信号量与信号量函数 | Hexo</title>
+  <title>CubeMX F407串口以及串口中断的使用 | Hexo</title>
   
 
 
@@ -291,7 +296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://SeekerWJ.github.io/2021/02/19/FreeRTOS%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%87%BD%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="https://SeekerWJ.github.io/2021/05/26/CubeMX%20F407%E4%B8%B2%E5%8F%A32%E7%9A%84%E4%BD%BF%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -308,7 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">FreeRTOS信号量与信号量函数</h1>
+          <h1 class="post-title" itemprop="name headline">CubeMX F407串口以及串口中断的使用</h1>
         
 
         <div class="post-meta">
@@ -320,8 +325,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-19T12:14:39+08:00">
-                2021-02-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-26T20:20:01+08:00">
+                2021-05-26
               </time>
             
 
@@ -357,7 +362,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.8k
+                  413
                 </span>
               
 
@@ -373,7 +378,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6
+                  1
                 </span>
               
             </div>
@@ -394,72 +399,40 @@
       
 
       
-        <h1 id="什么是信号量"><a href="#什么是信号量" class="headerlink" title="什么是信号量"></a>什么是信号量</h1><p>​    信号量是操作系统中重要的一部分，信号量一般用来进行资源管理和任务同步，FreeRTOS中信号量又分为二值信号量，计数型信号量，互斥信号量和递归互斥信号量。不同信号量其应用场景不同，但有些应用场景是可以互换着使用的。</p>
-<p>​    信号量的重要作用其中就有任务的同步，用于任务与任务之间的同步，用于中断与任务之间的同步。在执行中断服务函数的时候可以通过向任务发送信号量来通知它所期待的事情发生了，当退出中断服务函数以后在任务调度器的调度下同步的任务回去执行。</p>
-<p>​    在编写中断服务函数的时候一定是要快进快出的，中断服务函数中一般都不能放入太多的代码，否则就会影响系统的实时性。在裸机编写代码的时候一般都只是在中断服务函数中打一个标记，然后在其他的地方根据标记的值来进行具体的处理过程。而这些在RTOS中就可以借助信号量来进行实现。</p>
-<p>​    当中断发生的时候就释放信号量，但在中断服务函数中不做具体的处理。具体的处理过程做成一个任务，这个任务会获取信号量，如果获取到信号量就说明中断发生了，需要进行相应的处理，这样做的好处就是中断的时间会非常短。当然任务与任务之间也可以通过信号量来进行同步。</p>
+        <p>​    最近赶上电赛，为了驱动串口屏，同时方便调试，所以尝试着用串口2来为串口屏发送数据，串口1用于显示数据来进行调试</p>
+<p>如图是STM32F407的串口引脚分布图</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210524224325.png" alt="STM32F407串口分布图"></p>
+<p>F407 系统控制器有四个 USART 和两个 UART，其中USART1和USART2时钟来源于 APB2 总线时钟，其最大频率为 84MHz，其他四个的时钟来源于 APB1 总线时钟，其最大频率为 42MHz。UART 只是异步传输功能，所以没有 SCLK、nCTS 和 nRTS 功能引脚。</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210524224926.png" alt="##"></p>
 <a id="more"></a>
 
-<h1 id="二值信号量"><a href="#二值信号量" class="headerlink" title="二值信号量"></a>二值信号量</h1><p>​    二值信号量通常用于互斥访问或同步。互斥信号量拥有优先级继承机制，二值信号量没有优先级继承。因此二值信号量更适合用于同步任务与中断或者任务与任务，而互斥信号量更适合用于简单的互斥访问。</p>
-<p>​    和队列一样，信号量API函数允许设置一个阻塞时间，阻塞时间是当任务获取信号量的时候由于信号量无效从而导致任务进入阻塞态的最大时钟节拍数。如果多个任务同时阻塞在同一个信号量上的话那么哪个任务的优先级高，哪个任务就优先获得信号量，这样当信号量有效的时候高优先级的任务就会解除阻塞状态。</p>
-<p>​    二值信号量其实就是只有一个队列项的队列，这个特殊的队列要么是满的，要么是空的，所以其被称之为二值信号量。只需要知道这个队列项是空的还是满的，就可以利用这个机制来完成任务与中断之间的同步。</p>
-<p>​    在实际应用中通常会使用一个任务来处理MCU的某个外设，比如在网络应用中，一般最简单的方法就是使用一个任务去轮询的查询MCU的ETH外设是否有数据，当有数据的时候就处理这个网络数据。这样使用轮询的方式是很浪费CPU资源的，而且也阻止了其他任务的运行。最理想的方法就是当没有网络数据的时候该任务进入阻塞态，把CPU让给其他任务，当有数据的时候采取执行。</p>
-<p>​    现在通过信号量就可完成这样的目标任务通过获取二值信号量来判断是否有网络数据，没有的话就进入阻塞状态，当网络中断发生了，就会在中断服务函数中释放信号量来通知任务可以去处理数据了。</p>
-<h2 id="获取二值信号量的过程"><a href="#获取二值信号量的过程" class="headerlink" title="获取二值信号量的过程"></a>获取二值信号量的过程</h2><p><img src="https://z4a.net/images/2021/02/18/QQ20210218003010.png" alt="QQ20210218003010.png"></p>
-<p>图14.2.1.1中任务Task通过函数xSemaphoreTake()获取信号量，但是此时二值信号量无效，所以任务Task进入阻塞状态</p>
-<p><img src="https://z4a.net/images/2021/02/18/QQ20210218003037.png" alt="QQ20210218003037.png"></p>
-<p>此时中断发生了，在中断服务函数中通过函数xSemaphoreGiveFromISR()释放信号量，因此信号量变为有效</p>
-<p><img src="https://z4a.net/images/2021/02/18/QQ20210218003047.png" alt="QQ20210218003047.png"></p>
-<p>由于信号量已经有效了，所以任务Task获取信号量成功，任务从阻塞态解除，开始执行相关的处理过程</p>
-<ol start="4">
-<li><p>任务再次进入阻塞态</p>
-<p>由于任务函数一般都是一个大循环，所以在任务做完相关的处理之后就会再次调用函数xSemaphoreTake()获取信号量。在执行完第三步以后二值信号量就已经变为无效的了，所以任务将再次进入阻塞状态，和以第一步一样直到中断再次发生并调用函数xSemaphoreGiveFromISR()释放信号量</p>
-</li>
-</ol>
-<h2 id="二值信号量相关函数"><a href="#二值信号量相关函数" class="headerlink" title="二值信号量相关函数"></a>二值信号量相关函数</h2><h3 id="二值信号量创建函数"><a href="#二值信号量创建函数" class="headerlink" title="二值信号量创建函数"></a>二值信号量创建函数</h3><p>此函数创建的二值信号量的话信号量所需的RAM是由FreeRTOS的内存管理部分来动态分配的。此函数创建好的二值信号量默认是空的，也就是说刚创建好的二值信号量使用函数xSemaphoreTake()是获取不到的。</p>
-<pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* 创建二值信号量 */</span>
-SemaphoreHandle_t <span class="token function">xSemaphoreCreateBinary</span><span class="token punctuation">(</span> <span class="token keyword">void</span> <span class="token punctuation">)</span></code></pre>
-<p><strong>参数</strong></p>
-<p>无</p>
-<p><strong>返回值</strong></p>
-<p>NULL: 二值信号量创建失败</p>
-<p>其他值: 创建成功的二值信号量的句柄</p>
-<hr>
-<h3 id="释放信号量函数"><a href="#释放信号量函数" class="headerlink" title="释放信号量函数"></a>释放信号量函数</h3><p>此函数用于释放二值信号量，计数型信号量或互斥信号量。</p>
-<pre class=" language-c"><code class="language-c">BaseType_t <span class="token function">xSemaphoreGive</span><span class="token punctuation">(</span> xSemaphore <span class="token punctuation">)</span></code></pre>
-<p><strong>参数</strong></p>
-<p>xSemaphore: 要释放的信号量句柄</p>
-<p><strong>返回值</strong></p>
-<p>pdPASS: 释放信号量成功</p>
-<p>errQUEUE_FULL: 释放信号量失败。</p>
-<p>xSemaphoreGiveFromISR这是它的中断版本</p>
-<pre class=" language-c"><code class="language-c">BaseType_t <span class="token function">xSemaphoreGiveFromISR</span><span class="token punctuation">(</span> SemaphoreHandle_t xSemaphore<span class="token punctuation">,</span> 
-                                 BaseType_t <span class="token operator">*</span> pxHigherPriorityTaskWoken<span class="token punctuation">)</span></code></pre>
-<p><strong>参数</strong></p>
-<p>xSemaphore: 要释放的信号量句柄</p>
-<p>pxHigherPriorityTaskWoken: 标记退出此函数以后是否进行任务切换，这个变量的值由标记退出此函数以后是否进行任务切换，这个变量的值由三个函数来设置的，用户不用进行设置，用户只需要提供一个变量来保存这个值就行了。当此值为pdTRUE的时候在退出中断服务函数之前一定要进行一次任务切换</p>
-<p><strong>返回值</strong></p>
-<p>pdPASS: 释放信号量成功</p>
-<p>errQUEUE_FULL: 释放信号量失败。</p>
-<hr>
-<h3 id="获取信号量函数"><a href="#获取信号量函数" class="headerlink" title="获取信号量函数"></a>获取信号量函数</h3><p>此函数用于获取二值信号量，计数型信号量或互斥信号量</p>
-<pre class=" language-c"><code class="language-c">BaseType_t <span class="token function">xSemaphoreTake</span><span class="token punctuation">(</span>SemaphoreHandle_t xSemaphore<span class="token punctuation">,</span> 
-                          ickType_t xBlockTime<span class="token punctuation">)</span></code></pre>
-<p><strong>参数</strong></p>
-<p>xSemaphore: 要获取的信号量句柄</p>
-<p>xBlockTime: 阻塞时间</p>
-<p><strong>返回值</strong></p>
-<p>pdPASS: 获取信号量成功</p>
-<p>pdFALSE: 超时，获取信号量失败。</p>
-<p>xSemaphoreTakeFromISR是他的中断版本</p>
-<pre class=" language-c"><code class="language-c">BaseType_t <span class="token function">xSemaphoreTakeFromISR</span><span class="token punctuation">(</span>SemaphoreHandle_t xSemaphore<span class="token punctuation">,</span> 
-                                 BaseType_t <span class="token operator">*</span> pxHigherPriorityTaskWoken<span class="token punctuation">)</span></code></pre>
-<p><strong>参数</strong></p>
-<p>xSemaphore: 要获取的信号量句柄</p>
-<p>xBlockTipxHigherPriorityTaskWoken：标记退出此函数以后是否进行任务切换，这个变量的值由标记退出此函数以后是否进行任务切换，这个变量的值由三个函数来设置的，用户不用进行设置，用户只需要提供一个变量来保存这个值就行了。当此值为pdTRUE的时候在退出中断服务函数之前一定要进行一次任务切换</p>
-<p><strong>返回值</strong></p>
-<p>pdPASS: 获取信号量成功</p>
-<p>pdFALSE: 超时，获取信号量失败。</p>
+<h2 id="工程的建立"><a href="#工程的建立" class="headerlink" title="工程的建立"></a>工程的建立</h2><p>这里我选择了串口1,2并且都将他们的通讯方式都设置为了<code>Asynchronous</code>异步通讯</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210524225026.png" style="zoom:67%;">
+
+<img src="/2021/05/26/CubeMX%20F407%E4%B8%B2%E5%8F%A32%E7%9A%84%E4%BD%BF%E7%94%A8/Users\asus\AppData\Roaming\Typora\typora-user-images\1621867844892.png" alt="1621867844892" style="zoom:67%;">
+
+<p>并且将他们的串口中断都打开</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210524225435.png"></p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210524225500.png"></p>
+<p>接着生成代码即可</p>
+<h2 id="串口发送代码"><a href="#串口发送代码" class="headerlink" title="串口发送代码"></a>串口发送代码</h2><p>由于我这里是为了在串口屏幕上画曲线，而每个数据的结尾是以三个0xff来结尾的，这里就可以先把三个0xff定义为一个数组</p>
+<pre class=" language-c"><code class="language-c">  <span class="token comment" spellcheck="true">/* USER CODE BEGIN 2 */</span>
+    uint8_t HexEnd<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token number">0xff</span><span class="token punctuation">,</span> <span class="token number">0xff</span><span class="token punctuation">,</span> <span class="token number">0xff</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+    uint8_t aTxBuffer<span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"add 1,0,100"</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* USER CODE END 2 */</span></code></pre>
+<p>之后可以利用串口2来显示我发送的字符串，利用串口1来为串口屏传输数据</p>
+<pre class=" language-c"><code class="language-c"><span class="token function">HAL_UART_Transmit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>huart1<span class="token punctuation">,</span>aTxBuffer<span class="token punctuation">,</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span>aTxBuffer<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">0xFFFF</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">HAL_UART_Transmit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>huart1<span class="token punctuation">,</span>HexEnd<span class="token punctuation">,</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span>HexEnd<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">0xFFFF</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">HAL_UART_Transmit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>huart2<span class="token punctuation">,</span>aTxBuffer<span class="token punctuation">,</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span>aTxBuffer<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">0xFFFF</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">HAL_UART_Transmit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>huart2<span class="token punctuation">,</span>HexEnd<span class="token punctuation">,</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span>HexEnd<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">0xFFFF</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">HAL_Delay</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p><em>这里的格式已经较标准了，以后可以利用此来作为参考</em></p>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>串口助手已经正确的显示出来了</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210526201529.png" alt="串口助手"></p>
+<p>串口屏也已经正确的显示出来了</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210526201747.png" alt="串口屏显示"></p>
+<p><em>之后再利用DAC输出正弦波来采集吧</em></p>
 
       
     </div>
@@ -477,7 +450,7 @@ SemaphoreHandle_t <span class="token function">xSemaphoreCreateBinary</span><spa
       
         <div class="post-tags">
           
-            <a href="/tags/STM32/" rel="tag"># STM32</a>
+            <a href="/tags/%E7%94%B5%E8%B5%9B/" rel="tag"># 电赛</a>
           
         </div>
       
@@ -490,8 +463,8 @@ SemaphoreHandle_t <span class="token function">xSemaphoreCreateBinary</span><spa
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/02/17/FreeRTOS%E9%98%9F%E5%88%97%E4%B8%8E%E9%98%9F%E5%88%97%E5%87%BD%E6%95%B0/" rel="next" title="FreeRTOS队列与队列函数">
-                <i class="fa fa-chevron-left"></i> FreeRTOS队列与队列函数
+              <a href="/2021/05/24/%E5%B0%8F%E7%BB%83%E4%B9%A0/" rel="next" title="图床测试">
+                <i class="fa fa-chevron-left"></i> 图床测试
               </a>
             
           </div>
@@ -499,10 +472,6 @@ SemaphoreHandle_t <span class="token function">xSemaphoreCreateBinary</span><spa
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/05/24/%E5%B0%8F%E7%BB%83%E4%B9%A0/" rel="prev" title="图床测试">
-                图床测试 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -629,7 +598,7 @@ SemaphoreHandle_t <span class="token function">xSemaphoreCreateBinary</span><spa
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">什么是信号量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E5%80%BC%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">二值信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E4%BA%8C%E5%80%BC%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">获取二值信号量的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%80%BC%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">二值信号量相关函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E5%80%BC%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.1.</span> <span class="nav-text">二值信号量创建函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8A%E6%94%BE%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.2.</span> <span class="nav-text">释放信号量函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.3.</span> <span class="nav-text">获取信号量函数</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E7%A8%8B%E7%9A%84%E5%BB%BA%E7%AB%8B"><span class="nav-number">1.</span> <span class="nav-text">工程的建立</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E5%8F%91%E9%80%81%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">串口发送代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-number">3.</span> <span class="nav-text">结果</span></a></li></ol></div>
             
 
           </div>
