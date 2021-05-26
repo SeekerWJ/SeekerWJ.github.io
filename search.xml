@@ -1254,4 +1254,188 @@ SemaphoreHandle_t <span class="token function">xSemaphoreCreateBinary</span><spa
         <tag>电赛</tag>
       </tags>
   </entry>
+  <entry>
+    <title>CubeMX F407 DAC输出正弦波</title>
+    <url>/2021/05/27/CubeMX%20F407%20DAC%E8%BE%93%E5%87%BA%E6%AD%A3%E5%BC%A6%E6%B3%A2/</url>
+    <content><![CDATA[<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>​    简单说下思路，STM32自带一个两路独立输出的DAC。要输出正弦波，实质是要控制 DAC 以 v=sin(t)的正弦函数关系输出电压，其中 v 为电压输出，t 为时间。 而由于模拟信号连续而数字信号是离散的，所以使用 DAC 产生正弦波时，只能按一定时间间隔输出正弦曲线上的点，在该时间段内输出相同的电压值，若缩短时间间隔，提高单个周期内的输出点数，可以得到逼近连续正弦波的图形，见下图 37-3，若在外部电路加上适当的电容滤波，可得到更完美的图形。</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210526235059.png" alt="正弦波" style="zoom:50%;">
+
+<p>​    由于正弦曲线是周期函数，所以只需要得到单个周期内的数据后按周期重复即可，而单个周期内取样输出的点数又是有限的，所以为了得到呈 v=sin(t)函数关系电压值的数据通常不会实时计算获取，而是预先计算好函数单个周期内的电压数据表，并且转化成以 DAC 寄存器表示的值。 如 sin 函数值的范围为[-1: +1]，而 STM32 的 DAC 输出电压范围为[0~3.3]V，按 12 位 DAC 分辨率表示的方法，可写入寄存器的最大值为 212 = 4096，即范围为[0:4096]。所以，实际输出时，会进行如下处理：</p>
+<blockquote>
+<ol>
+<li>抬升 sin 函数的输出为正值：v = sin(t)+1 ，此时，v 的输出范围为[0:2]；</li>
+<li>扩展输出至 DAC 的全电压范围: v = 3.3*(sin(t)+1)/2 ，此时，v 的输出范围为[0:3.3]， 正是 DAC 的电压输出范围，扩展至全电压范围可以充分利用 DAC 的分辨率；</li>
+<li>把电压值以 DAC 寄存器的形式表示：Reg_val = 212/3.3 * v = 211*(sin(t)+1)，此时，存储到 DAC 寄存器的值范围为[0:4096]；</li>
+<li>实践证明，在 sin(t)的单个周期内，取 32 个点进行电压输出已经能较好地还原正弦波形，所以在 t∈[0:2π]区间内等间距根据上述 Reg_val 公式运算得到 32 个寄存器值，即可得到正弦波表；</li>
+<li>控制 DAC 输出时，每隔一段相同的时间从上述正弦波表中取出一个新数据进行输出，即可输出正弦波。改变间隔时间的单位长度，可以改变正弦波曲线的周期。</li>
+</ol>
+</blockquote>
+<p>所以正弦波表如下</p>
+<pre class=" language-c"><code class="language-c">uint16_t Sine12bit<span class="token punctuation">[</span><span class="token number">32</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token number">2048</span>    <span class="token punctuation">,</span> <span class="token number">2460</span>    <span class="token punctuation">,</span> <span class="token number">2856</span>    <span class="token punctuation">,</span> <span class="token number">3218</span>    <span class="token punctuation">,</span> <span class="token number">3532</span>    <span class="token punctuation">,</span> <span class="token number">3786</span>    <span class="token punctuation">,</span> <span class="token number">3969</span>    <span class="token punctuation">,</span> <span class="token number">4072</span>    <span class="token punctuation">,</span>
+    <span class="token number">4093</span>    <span class="token punctuation">,</span> <span class="token number">4031</span>    <span class="token punctuation">,</span> <span class="token number">3887</span>    <span class="token punctuation">,</span> <span class="token number">3668</span>    <span class="token punctuation">,</span> <span class="token number">3382</span>    <span class="token punctuation">,</span> <span class="token number">3042</span>    <span class="token punctuation">,</span><span class="token number">2661</span>    <span class="token punctuation">,</span> <span class="token number">2255</span>    <span class="token punctuation">,</span> 
+    <span class="token number">1841</span>    <span class="token punctuation">,</span> <span class="token number">1435</span>    <span class="token punctuation">,</span> <span class="token number">1054</span>    <span class="token punctuation">,</span> <span class="token number">714</span>    <span class="token punctuation">,</span> <span class="token number">428</span>    <span class="token punctuation">,</span> <span class="token number">209</span>    <span class="token punctuation">,</span> <span class="token number">65</span>    <span class="token punctuation">,</span> <span class="token number">3</span>        <span class="token punctuation">,</span>
+    <span class="token number">24</span>        <span class="token punctuation">,</span> <span class="token number">127</span>    <span class="token punctuation">,</span> <span class="token number">310</span>    <span class="token punctuation">,</span> <span class="token number">564</span>    <span class="token punctuation">,</span> <span class="token number">878</span>    <span class="token punctuation">,</span> <span class="token number">1240</span>    <span class="token punctuation">,</span> <span class="token number">1636</span>    <span class="token punctuation">,</span> <span class="token number">2048</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span></code></pre>
+<h2 id="CubeMX以及代码的配置"><a href="#CubeMX以及代码的配置" class="headerlink" title="CubeMX以及代码的配置"></a>CubeMX以及代码的配置</h2><h3 id="DAC"><a href="#DAC" class="headerlink" title="DAC"></a>DAC</h3><img src="https://gitee.com/seekerwj/pic/raw/master/20210527000102.png" alt="DAC" style="zoom:67%;">
+
+<ul>
+<li><p><strong>OUT1/2 Configuration</strong>： </p>
+<p>对应着两个输出通道</p>
+</li>
+<li><p><strong>External Trigger</strong>： </p>
+<p>是否使用外部中断触发 <code>外部中断EXTI9 触发</code> 就是使用外部中断来触发DAC。 </p>
+</li>
+<li><p><strong>Output Buffer</strong>： </p>
+<p>使能DAC输出缓存。 </p>
+<blockquote>
+<p>DAC 集成了 2 个输出缓存，可以用来减少输出阻抗，无需外部运放即可直接驱动外部负载。每个 DAC 通道输出缓存可以通过设置 DAC_CR 寄存器的 BOFFx 位来使能或者关闭。如果带载能力还不行，后面就接一个电压跟随器，选择运放一定要选择电流大的型号。<br>使能输出缓冲后，DAC 输出的最小电压为 0.2V，最大电压为 VREF±0.2，而未使能输出缓冲则输出可达到0V。</p>
+</blockquote>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210527000530.png" alt="DACBUFF"></p>
+</li>
+<li><p><strong>Trigger</strong>： </p>
+<p>选择DAC的触发方式</p>
+<p><code>Timer 2/4/5/6/7/8 Trigger Out event</code> 定时器触发，利用这种方式可以输出特定的波形。在这里我们选择定时器2。 </p>
+<p><code>Software trigger</code> 软件触发，在本模式下，向 DAC_SWTRIGR 寄存器写入配置即可触发信号进行转换。 </p>
+</li>
+<li><p><strong>Wave generation mode</strong>：</p>
+<p>波形发生器的选择，有三角波，和噪声，由于这里我们要输出正弦波，所以就不选择了</p>
+</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="DMA的配置"><a href="#DMA的配置" class="headerlink" title="DMA的配置"></a>DMA的配置</h3><img src="/2021/05/27/CubeMX%20F407%20DAC%E8%BE%93%E5%87%BA%E6%AD%A3%E5%BC%A6%E6%B3%A2/Users\asus\AppData\Roaming\Typora\typora-user-images\1622045759594.png" alt="1622045759594" style="zoom:67%;">
+
+<ul>
+<li><p><strong>Priority</strong>： </p>
+<p>当发生多个 DMA 通道请求时，就意味着有先后响应处理的顺序问题，这个就由仲裁器也管理。仲裁器管理 DMA 通道请求分为两个阶段。第一阶段属于软件阶段，可以在 DMA_CCRx 寄存器中设置，有 4 个等级：非常高、高、中和低四个优先级。第二阶段属于硬件阶段，如果两个或以上的 DMA 通道请求设置的优先级一样，则他们优先级取决于通 道编号，编号越低优先权越高，比如通道 0 高于通道 1。在大容量产品和互联型产品中，DMA1 控制器拥有高于 DMA2 控制器的优先级。</p>
+</li>
+<li><p><strong>Mode</strong>： </p>
+<p><code>Normal</code> 表示单次传输，传输一次后终止传输。<br><code>Circular</code> 表示循环传输，传输完成后又重新开始继续传输，不断循环永不停止。（还是从内存的首地址）</p>
+</li>
+<li><p><strong>Increment Address</strong>： </p>
+<p><code>Peripheral</code> 表示外设地址自增。</p>
+<p><code>Memory</code> 表示内存地址自增。 </p>
+</li>
+<li><p><strong>Data Width</strong>： </p>
+<p><code>Byte</code> 一个字节。 </p>
+<p><code>Half Word</code> 半个字，等于两字节。 </p>
+<p><code>Word</code> 一个字，等于四字节。 </p>
+</li>
+</ul>
+<h3 id="TIM"><a href="#TIM" class="headerlink" title="TIM"></a>TIM</h3><img src="https://gitee.com/seekerwj/pic/raw/master/20210527000802.png" alt="TIM" style="zoom:67%;">
+
+<ul>
+<li><strong>Prescaler（时钟预分频数）：</strong><code>则驱动计数器的时钟 CK_CNT = CK_INT(即84MHz)/(0+1) = 84MHz</code> 即不分频</li>
+<li><strong>Counter Mode（计数模式）：Up（向上计数模式）</strong></li>
+<li><strong>Counter Period（自动重装载值）：525-1</strong></li>
+<li><strong>auto-reload-preload（自动重装载）：Disable（不使能）</strong>（PWM时使用）</li>
+<li><strong>TRGO Parameters（触发输出）：Update Event（更新事件）</strong> <code>在定时器的定时时间到达的时候输出一个信号(如：定时器更新产生TRGO信号来触发ADC的同步转换)</code></li>
+</ul>
+<h3 id="关于DAC输出的频率计算"><a href="#关于DAC输出的频率计算" class="headerlink" title="关于DAC输出的频率计算"></a>关于DAC输出的频率计算</h3><img src="https://gitee.com/seekerwj/pic/raw/master/20210527003519.png" alt="HZ" style="zoom:67%;">
+
+<p>参考野火STM32F103手册来计算</p>
+<p>STM32F407时钟如图</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210527003755.png" alt="clock" style="zoom:67%;">
+
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210527004202.png" alt="TIMCLOCK" style="zoom:67%;">
+
+<p>f = 84000000/1 * 525 * 32 = 5000 Hz</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* Private typedef -----------------------------------------------------------*/</span>
+<span class="token comment" spellcheck="true">/* USER CODE BEGIN PTD */</span>
+
+uint16_t Sine12bit<span class="token punctuation">[</span><span class="token number">32</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token number">2048</span>    <span class="token punctuation">,</span> <span class="token number">2460</span>    <span class="token punctuation">,</span> <span class="token number">2856</span>    <span class="token punctuation">,</span> <span class="token number">3218</span>    <span class="token punctuation">,</span> <span class="token number">3532</span>    <span class="token punctuation">,</span> <span class="token number">3786</span>    <span class="token punctuation">,</span> <span class="token number">3969</span>    <span class="token punctuation">,</span> <span class="token number">4072</span>    <span class="token punctuation">,</span>
+    <span class="token number">4093</span>    <span class="token punctuation">,</span> <span class="token number">4031</span>    <span class="token punctuation">,</span> <span class="token number">3887</span>    <span class="token punctuation">,</span> <span class="token number">3668</span>    <span class="token punctuation">,</span> <span class="token number">3382</span>    <span class="token punctuation">,</span> <span class="token number">3042</span>    <span class="token punctuation">,</span><span class="token number">2661</span>    <span class="token punctuation">,</span> <span class="token number">2255</span>    <span class="token punctuation">,</span> 
+    <span class="token number">1841</span>    <span class="token punctuation">,</span> <span class="token number">1435</span>    <span class="token punctuation">,</span> <span class="token number">1054</span>    <span class="token punctuation">,</span> <span class="token number">714</span>    <span class="token punctuation">,</span> <span class="token number">428</span>    <span class="token punctuation">,</span> <span class="token number">209</span>    <span class="token punctuation">,</span> <span class="token number">65</span>    <span class="token punctuation">,</span> <span class="token number">3</span>        <span class="token punctuation">,</span>
+    <span class="token number">24</span>        <span class="token punctuation">,</span> <span class="token number">127</span>    <span class="token punctuation">,</span> <span class="token number">310</span>    <span class="token punctuation">,</span> <span class="token number">564</span>    <span class="token punctuation">,</span> <span class="token number">878</span>    <span class="token punctuation">,</span> <span class="token number">1240</span>    <span class="token punctuation">,</span> <span class="token number">1636</span>    <span class="token punctuation">,</span> <span class="token number">2048</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/* USER CODE END PTD */</span>
+
+<span class="token comment" spellcheck="true">/* Private define ------------------------------------------------------------*/</span>
+<span class="token comment" spellcheck="true">/* USER CODE BEGIN PD */</span>
+<span class="token comment" spellcheck="true">/* USER CODE END PD */</span>
+
+<span class="token comment" spellcheck="true">/* Private macro -------------------------------------------------------------*/</span>
+<span class="token comment" spellcheck="true">/* USER CODE BEGIN PM */</span>
+
+<span class="token comment" spellcheck="true">/* USER CODE END PM */</span>
+
+<span class="token comment" spellcheck="true">/* Private variables ---------------------------------------------------------*/</span>
+
+<span class="token comment" spellcheck="true">/* USER CODE BEGIN PV */</span>
+
+<span class="token comment" spellcheck="true">/* USER CODE END PV */</span>
+
+<span class="token comment" spellcheck="true">/* Private function prototypes -----------------------------------------------*/</span>
+<span class="token keyword">void</span> <span class="token function">SystemClock_Config</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">/* USER CODE BEGIN PFP */</span>
+
+<span class="token comment" spellcheck="true">/* USER CODE END PFP */</span>
+
+<span class="token comment" spellcheck="true">/* Private user code ---------------------------------------------------------*/</span>
+<span class="token comment" spellcheck="true">/* USER CODE BEGIN 0 */</span>
+
+<span class="token comment" spellcheck="true">/* USER CODE END 0 */</span>
+
+<span class="token comment" spellcheck="true">/**
+  * @brief  The application entry point.
+  * @retval int
+  */</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* USER CODE BEGIN 1 */</span>
+
+  <span class="token comment" spellcheck="true">/* USER CODE END 1 */</span>
+
+  <span class="token comment" spellcheck="true">/* MCU Configuration--------------------------------------------------------*/</span>
+
+  <span class="token comment" spellcheck="true">/* Reset of all peripherals, Initializes the Flash interface and the Systick. */</span>
+  <span class="token function">HAL_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/* USER CODE BEGIN Init */</span>
+
+  <span class="token comment" spellcheck="true">/* USER CODE END Init */</span>
+
+  <span class="token comment" spellcheck="true">/* Configure the system clock */</span>
+  <span class="token function">SystemClock_Config</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/* USER CODE BEGIN SysInit */</span>
+
+  <span class="token comment" spellcheck="true">/* USER CODE END SysInit */</span>
+
+  <span class="token comment" spellcheck="true">/* Initialize all configured peripherals */</span>
+  <span class="token function">MX_GPIO_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">MX_DMA_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">MX_USART1_UART_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">MX_USART2_UART_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">MX_DAC_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">MX_TIM2_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* USER CODE BEGIN 2 */</span>
+<span class="token comment" spellcheck="true">//    uint8_t HexEnd[] = &amp;#123;0xff, 0xff, 0xff&amp;#125;;</span>
+
+
+<span class="token comment" spellcheck="true">//    uint8_t aTxBuffer[100] = "add 1,0,100";</span>
+
+  <span class="token function">HAL_TIM_Base_Start</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>htim2<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//开启DAC</span>
+  <span class="token function">HAL_DAC_Start_DMA</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>hdac<span class="token punctuation">,</span> DAC_CHANNEL_1<span class="token punctuation">,</span> <span class="token punctuation">(</span>uint32_t <span class="token operator">*</span><span class="token punctuation">)</span>Sine12bit<span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> DAC_ALIGN_12B_R<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//使能DAC——DMA方式</span>
+
+  <span class="token comment" spellcheck="true">/* USER CODE END 2 */</span></code></pre>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p><img src="https://gitee.com/seekerwj/pic/raw/master/20210527004805.png" alt="LOTO"></p>
+<h2 id="一点小总结"><a href="#一点小总结" class="headerlink" title="一点小总结"></a>一点小总结</h2><ol>
+<li><p>DAC的DMA模式其实就是每当触发源触发一次，DMA就像DAC的DHRX寄存器更新一次数据，DAC也将DHRX中的数据再传输到DORX寄存器中，转换为电压输出</p>
+<pre class=" language-c"><code class="language-c"><span class="token function">HAL_DAC_Start_DMA</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>hdac<span class="token punctuation">,</span> DAC_CHANNEL_1<span class="token punctuation">,</span> <span class="token punctuation">(</span>uint32_t <span class="token operator">*</span><span class="token punctuation">)</span>Sine12bit<span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> DAC_ALIGN_12B_R<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//使能DAC——DMA方式</span></code></pre>
+<p>实际上32就是以<code>Sine12bit</code>数组的首地址为首地址，依次向后的32组数据，每次触发源触发一次DMA就传输一组数据，直到32组数据都传输完成，这时再从头开始传输数据，这样循环下去，就可以配合TIM来实现输出正弦波的功能</p>
+</li>
+<li><img src="https://gitee.com/seekerwj/pic/raw/master/20210527005511.png" alt="DAC寄存器" style="zoom:67%;">
+</li>
+<li><p>通过这次实验，以后也可以尝试利用TIM来作为触发其他外设启动的一个触发源（ADC同理）</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>电赛</tag>
+      </tags>
+  </entry>
 </search>
