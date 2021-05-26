@@ -89,7 +89,7 @@
 <meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210526235059.png">
 <meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210527000102.png">
 <meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210527000530.png">
-<meta property="og:image" content="https://seekerwj.github.io/2021/05/27/CubeMX%20F407%20DAC%E8%BE%93%E5%87%BA%E6%AD%A3%E5%BC%A6%E6%B3%A2/Users/asus/AppData/Roaming/Typora/typora-user-images/1622045759594.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210527011819.png">
 <meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210527000802.png">
 <meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210527003519.png">
 <meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210527003755.png">
@@ -97,7 +97,7 @@
 <meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210527004805.png">
 <meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210527005511.png">
 <meta property="article:published_time" content="2021-05-26T17:00:13.000Z">
-<meta property="article:modified_time" content="2021-05-26T17:00:49.890Z">
+<meta property="article:modified_time" content="2021-05-26T17:19:04.972Z">
 <meta property="article:author" content="WJ">
 <meta property="article:tag" content="电赛">
 <meta name="twitter:card" content="summary">
@@ -448,8 +448,7 @@
 </ul>
 <a id="more"></a>
 
-<h3 id="DMA的配置"><a href="#DMA的配置" class="headerlink" title="DMA的配置"></a>DMA的配置</h3><img src="/2021/05/27/CubeMX%20F407%20DAC%E8%BE%93%E5%87%BA%E6%AD%A3%E5%BC%A6%E6%B3%A2/Users\asus\AppData\Roaming\Typora\typora-user-images\1622045759594.png" alt="1622045759594" style="zoom:67%;">
-
+<h3 id="DMA的配置"><a href="#DMA的配置" class="headerlink" title="DMA的配置"></a>DMA的配置</h3><p><img src="https://gitee.com/seekerwj/pic/raw/master/20210527011819.png" alt="DACDMA"></p>
 <ul>
 <li><p><strong>Priority</strong>： </p>
 <p>当发生多个 DMA 通道请求时，就意味着有先后响应处理的顺序问题，这个就由仲裁器也管理。仲裁器管理 DMA 通道请求分为两个阶段。第一阶段属于软件阶段，可以在 DMA_CCRx 寄存器中设置，有 4 个等级：非常高、高、中和低四个优先级。第二阶段属于硬件阶段，如果两个或以上的 DMA 通道请求设置的优先级一样，则他们优先级取决于通 道编号，编号越低优先权越高，比如通道 0 高于通道 1。在大容量产品和互联型产品中，DMA1 控制器拥有高于 DMA2 控制器的优先级。</p>
