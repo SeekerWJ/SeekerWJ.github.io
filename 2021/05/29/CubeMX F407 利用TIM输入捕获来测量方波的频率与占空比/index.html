@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="电赛," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="思路主要是利用到了STM32的TIM输入捕获功能 将定时器设置为1MHZ的计数频率，定时计数器增加一就是增加1us  首先设置为上升沿捕获，捕获上升沿记录此刻的时间计数值； 然后切换为下降沿捕获，捕获下降沿记录此刻的时间计数值； 最后设置为上升沿捕获，捕获上升沿记录此刻的时间计数值；  对于16bit定时器，最大可计数0xFFFF，也就是65535us，那么：*高电平持续的时间 &#x3D; 定时器溢出计数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CubeMX F407 利用TIM输入捕获来测量方波的频率与占空比">
+<meta property="og:url" content="https://seekerwj.github.io/2021/05/29/CubeMX%20F407%20%E5%88%A9%E7%94%A8TIM%E8%BE%93%E5%85%A5%E6%8D%95%E8%8E%B7%E6%9D%A5%E6%B5%8B%E9%87%8F%E6%96%B9%E6%B3%A2%E7%9A%84%E9%A2%91%E7%8E%87%E4%B8%8E%E5%8D%A0%E7%A9%BA%E6%AF%94/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="思路主要是利用到了STM32的TIM输入捕获功能 将定时器设置为1MHZ的计数频率，定时计数器增加一就是增加1us  首先设置为上升沿捕获，捕获上升沿记录此刻的时间计数值； 然后切换为下降沿捕获，捕获下降沿记录此刻的时间计数值； 最后设置为上升沿捕获，捕获上升沿记录此刻的时间计数值；  对于16bit定时器，最大可计数0xFFFF，也就是65535us，那么：*高电平持续的时间 &#x3D; 定时器溢出计数">
+<meta property="og:locale">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210528013704.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210528013756.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210528013859.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210529005541.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210528014619.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210528014619.png">
+<meta property="article:published_time" content="2021-05-28T16:58:53.000Z">
+<meta property="article:modified_time" content="2021-05-28T16:59:39.851Z">
+<meta property="article:author" content="WJ">
+<meta property="article:tag" content="电赛">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/seekerwj/pic/raw/master/20210528013704.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://SeekerWJ.github.io/2021/05/29/CubeMX F407 利用TIM输入捕获来测量方波的频率与占空比/"/>
+
+
+
+
+
+  <title>CubeMX F407 利用TIM输入捕获来测量方波的频率与占空比 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://SeekerWJ.github.io/2021/05/29/CubeMX%20F407%20%E5%88%A9%E7%94%A8TIM%E8%BE%93%E5%85%A5%E6%8D%95%E8%8E%B7%E6%9D%A5%E6%B5%8B%E9%87%8F%E6%96%B9%E6%B3%A2%E7%9A%84%E9%A2%91%E7%8E%87%E4%B8%8E%E5%8D%A0%E7%A9%BA%E6%AF%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1610055064437.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CubeMX F407 利用TIM输入捕获来测量方波的频率与占空比</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-29T00:58:53+08:00">
+                2021-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>主要是利用到了STM32的TIM输入捕获功能</p>
+<p>将定时器设置为1MHZ的计数频率，定时计数器增加一就是增加1us</p>
+<ol>
+<li>首先设置为上升沿捕获，捕获上升沿记录此刻的时间计数值；</li>
+<li>然后切换为下降沿捕获，捕获下降沿记录此刻的时间计数值；</li>
+<li>最后设置为上升沿捕获，捕获上升沿记录此刻的时间计数值；</li>
+</ol>
+<p>对于16bit定时器，最大可计数0xFFFF，也就是65535us，那么：*<em>高电平持续的时间 = 定时器溢出计数 * 0xFFFF + 当前计数值*</em><br>对于32bit定时器，最大可计数0xFFFFFFFF，也就是4294.967295s，这个时间足够测量脉冲宽度的了，那么：<strong>高电平持续的时间 = 当前计数值</strong></p>
+<p><strong>高电平持续的时间 = ② - ①</strong><br><strong>周期 = ③ - ①</strong> </p>
+<a id="more"></a>
+
+<h2 id="CubeMX以及代码的配置"><a href="#CubeMX以及代码的配置" class="headerlink" title="CubeMX以及代码的配置"></a>CubeMX以及代码的配置</h2><h3 id="TIM"><a href="#TIM" class="headerlink" title="TIM"></a>TIM</h3><p><img src="https://gitee.com/seekerwj/pic/raw/master/20210528013704.png" alt="TIM配置"></p>
+<ul>
+<li><p><strong>Clock Source: 时钟源，这里选择内部时钟</strong></p>
+</li>
+<li><p><strong>Channl1: 通道功能，这里就选择<code>Input Capture direct mode</code>直接输入捕获模式</strong></p>
+</li>
+<li><p><strong>Prescale: 分频这里就选择83，计算下来正好就是1us一次计数</strong></p>
+</li>
+<li><p><strong>Count Perid: 计数器，这里就设置成最大值就好，由于TIM3是16bits的所以最大就是65335还需要考虑一下定时器溢出的问题，之后可以采用TIM5，那是32bits的计数器，几乎可以不用考虑计数溢出的问题</strong></p>
+</li>
+<li><p><strong>Polarity Selection: 捕获极性设置，这里选择上升沿捕获</strong></p>
+</li>
+<li><p><strong>Input Filter: 滤波器系数，这里暂时先不滤波</strong></p>
+</li>
+</ul>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210528013756.png" alt="NVIC"></p>
+<p>这里注意开启TIM3的中断，因为之后需要使用输入捕获中断（就是每捕获到一次目标就会进入一次中断）</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210528013859.png" alt="GPIO"></p>
+<p>这里需要将GPIO配置下，将GPIO设置为下拉输入，目的就是为了确保当没有信号输入的时候IO口的电平保持稳定</p>
+<h3 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h3><h4 id="在tim-c中"><a href="#在tim-c中" class="headerlink" title="在tim.c中"></a>在tim.c中</h4><pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* USER CODE BEGIN 0 */</span>
+
+__IO uint32_t TIM3_TIMEOUT_COUNT <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">///&lt; 定时器3定时溢出计数</span>
+uint32_t TIM3_CAPTURE_BUF<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>   <span class="token operator">=</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">///&lt; 分别存储上升沿计数、下降沿计数、下个上升沿计数</span>
+__IO uint8_t TIM3_CAPTURE_STA <span class="token operator">=</span> <span class="token number">0xFF</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">///&lt; 状态标记,默认是不测量的状态</span>
+
+<span class="token comment" spellcheck="true">/* USER CODE END 0 */</span>
+
+<span class="token comment" spellcheck="true">/* USER CODE BEGIN 1 */</span>
+
+<span class="token comment" spellcheck="true">/**
+ * 设置TIM3输入捕获极性
+ * @param TIM_ICPolarity：
+ *        TIM_INPUTCHANNELPOLARITY_RISING  ：上升沿捕获
+ *        TIM_INPUTCHANNELPOLARITY_FALLING ：下降沿捕获
+ *        TIM_INPUTCHANNELPOLARITY_BOTHEDGE：上升沿和下降沿都捕获
+ */</span>
+<span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">TIM3_SetCapturePolarity</span><span class="token punctuation">(</span>uint32_t TIM_ICPolarity<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    htim3<span class="token punctuation">.</span>Instance<span class="token operator">-></span>CCER <span class="token operator">&amp;</span><span class="token operator">=</span> <span class="token operator">~</span><span class="token punctuation">(</span>TIM_CCER_CC1P <span class="token operator">|</span> TIM_CCER_CC1NP<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    htim3<span class="token punctuation">.</span>Instance<span class="token operator">-></span>CCER <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>TIM_ICPolarity <span class="token operator">&amp;</span> <span class="token punctuation">(</span>TIM_CCER_CC1P <span class="token operator">|</span> TIM_CCER_CC1NP<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 定时器3时间溢出回调函数</span>
+<span class="token keyword">void</span> <span class="token function">HAL_TIM_PeriodElapsedCallback</span><span class="token punctuation">(</span>TIM_HandleTypeDef <span class="token operator">*</span>htim<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>htim<span class="token operator">-></span>Instance <span class="token operator">==</span> htim3<span class="token punctuation">.</span>Instance<span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        TIM3_TIMEOUT_COUNT<span class="token operator">++</span><span class="token punctuation">;</span>                                        <span class="token comment" spellcheck="true">// 溢出次数计数</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">///&lt; 输入捕获回调函数</span>
+<span class="token keyword">void</span> <span class="token function">HAL_TIM_IC_CaptureCallback</span><span class="token punctuation">(</span>TIM_HandleTypeDef <span class="token operator">*</span>htim<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>htim<span class="token operator">-></span>Instance <span class="token operator">==</span> htim3<span class="token punctuation">.</span>Instance<span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">switch</span> <span class="token punctuation">(</span>TIM3_CAPTURE_STA<span class="token punctuation">)</span>
+        <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
+        <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//printf("准备捕获下降沿...\r\n");</span>
+            TIM3_CAPTURE_BUF<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">HAL_TIM_ReadCapturedValue</span><span class="token punctuation">(</span>htim<span class="token punctuation">,</span> TIM_CHANNEL_1<span class="token punctuation">)</span> <span class="token operator">+</span> TIM3_TIMEOUT_COUNT <span class="token operator">*</span> <span class="token number">0xFFFF</span><span class="token punctuation">;</span>
+            <span class="token function">TIM3_SetCapturePolarity</span><span class="token punctuation">(</span>TIM_INPUTCHANNELPOLARITY_FALLING<span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment" spellcheck="true">// 设置为下降沿触发</span>
+            TIM3_CAPTURE_STA<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token number">2</span><span class="token punctuation">:</span>
+        <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//printf("准备捕获下个上升沿...\r\n");</span>
+            TIM3_CAPTURE_BUF<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">HAL_TIM_ReadCapturedValue</span><span class="token punctuation">(</span>htim<span class="token punctuation">,</span> TIM_CHANNEL_1<span class="token punctuation">)</span> <span class="token operator">+</span> TIM3_TIMEOUT_COUNT <span class="token operator">*</span> <span class="token number">0xFFFF</span><span class="token punctuation">;</span>
+            <span class="token function">TIM3_SetCapturePolarity</span><span class="token punctuation">(</span>TIM_INPUTCHANNELPOLARITY_RISING<span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment" spellcheck="true">// 设置为上升沿触发</span>
+            TIM3_CAPTURE_STA<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>
+        <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//printf("捕获结束...\r\n");</span>
+            <span class="token comment" spellcheck="true">//printf("# end ----------------------------------------------------\r\n");</span>
+            TIM3_CAPTURE_BUF<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">HAL_TIM_ReadCapturedValue</span><span class="token punctuation">(</span>htim<span class="token punctuation">,</span> TIM_CHANNEL_1<span class="token punctuation">)</span> <span class="token operator">+</span> TIM3_TIMEOUT_COUNT <span class="token operator">*</span> <span class="token number">0xFFFF</span><span class="token punctuation">;</span>
+            <span class="token function">HAL_TIM_IC_Stop_IT</span><span class="token punctuation">(</span>htim<span class="token punctuation">,</span> TIM_CHANNEL_1<span class="token punctuation">)</span><span class="token punctuation">;</span>                                    <span class="token comment" spellcheck="true">// 停止捕获</span>
+            <span class="token function">HAL_TIM_Base_Stop_IT</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>htim3<span class="token punctuation">)</span><span class="token punctuation">;</span>                                                <span class="token comment" spellcheck="true">// 停止定时器更新中断</span>
+            TIM3_CAPTURE_STA<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token keyword">default</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//&lt; TIM3轮训状态切换</span>
+<span class="token keyword">void</span> <span class="token function">TIM3_Poll</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>TIM3_CAPTURE_STA<span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token number">0</span><span class="token punctuation">:</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//printf("# start ----------------------------------------------------\r\n");</span>
+        <span class="token comment" spellcheck="true">//printf("准备捕获上升沿...\r\n");</span>
+        TIM3_TIMEOUT_COUNT <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token function">__HAL_TIM_SET_COUNTER</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>htim3<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                                            <span class="token comment" spellcheck="true">// 清除定时器2现有计数</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>TIM3_CAPTURE_BUF<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>TIM3_CAPTURE_BUF<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                        <span class="token comment" spellcheck="true">// 清除捕获计数</span>
+        <span class="token function">TIM3_SetCapturePolarity</span><span class="token punctuation">(</span>TIM_INPUTCHANNELPOLARITY_RISING<span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment" spellcheck="true">// 设置为上升沿触发</span>
+        <span class="token function">HAL_TIM_Base_Start_IT</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>htim3<span class="token punctuation">)</span><span class="token punctuation">;</span>                                                <span class="token comment" spellcheck="true">// 启动定时器更新中断</span>
+        <span class="token function">HAL_TIM_IC_Start_IT</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>htim3<span class="token punctuation">,</span> TIM_CHANNEL_1<span class="token punctuation">)</span><span class="token punctuation">;</span>                                    <span class="token comment" spellcheck="true">// 启动捕获中断</span>
+        TIM3_CAPTURE_STA<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">case</span> <span class="token number">4</span><span class="token punctuation">:</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        uint32_t high  <span class="token operator">=</span> TIM3_CAPTURE_BUF<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> TIM3_CAPTURE_BUF<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        uint32_t cycle <span class="token operator">=</span> TIM3_CAPTURE_BUF<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">-</span> TIM3_CAPTURE_BUF<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">double</span> frq <span class="token operator">=</span> <span class="token number">1.0</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span>cycle<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1000000.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        TIM3_CAPTURE_STA<span class="token operator">++</span><span class="token punctuation">;</span>
+
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\r\n\r\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"################################# START #########################################\r\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"高电平持续时间：%dms\r\n"</span><span class="token punctuation">,</span> high <span class="token operator">/</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"周期          ：%dms\r\n"</span><span class="token punctuation">,</span> cycle <span class="token operator">/</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"频率          ：%fHz\r\n"</span><span class="token punctuation">,</span> frq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"################################## END ######################################\r\n\r\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/* USER CODE END 1 */</span></code></pre>
+<p>基本思路就是</p>
+<ol>
+<li><p>为了在之后的捕获中断中改变捕获的极性但是HAL库是通过配置结构体进而配置寄存器来实现的，这里最好自己先定义一个函数，函数中就是<code>TIM3_SetCapturePolarity(uint32_t TIM_ICPolarity)</code></p>
+<pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/**
+ * 设置TIM3输入捕获极性
+ * @param TIM_ICPolarity：
+ *        TIM_INPUTCHANNELPOLARITY_RISING  ：上升沿捕获
+ *        TIM_INPUTCHANNELPOLARITY_FALLING ：下降沿捕获
+ *        TIM_INPUTCHANNELPOLARITY_BOTHEDGE：上升沿和下降沿都捕获
+ */</span>
+<span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">TIM3_SetCapturePolarity</span><span class="token punctuation">(</span>uint32_t TIM_ICPolarity<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    htim3<span class="token punctuation">.</span>Instance<span class="token operator">-></span>CCER <span class="token operator">&amp;</span><span class="token operator">=</span> <span class="token operator">~</span><span class="token punctuation">(</span>TIM_CCER_CC1P <span class="token operator">|</span> TIM_CCER_CC1NP<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    htim3<span class="token punctuation">.</span>Instance<span class="token operator">-></span>CCER <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>TIM_ICPolarity <span class="token operator">&amp;</span> <span class="token punctuation">(</span>TIM_CCER_CC1P <span class="token operator">|</span> TIM_CCER_CC1NP<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+</li>
+<li><p>在输入捕获中断中分三步来实现</p>
+<ol>
+<li>第一次捕获到上升沿后将此时的计数器的值存入<code>TIM3_CAPTURE_BUF[0]</code>并改变捕获极性(下降沿捕获)</li>
+<li>捕获到下降沿后将此时的计数器的值存入<code>TIM3_CAPTURE_BUF[1]</code>（此时的TIM3_CAPTURE_BUF[1]-TIM3_CAPTURE_BUF[0]的值就是信号高电平的时间了），再次改变捕获极性（上升沿捕获）</li>
+<li>第二次捕获到上升沿后将此时的计数器的值存入<code>TIM3_CAPTURE_BUF[2]</code>（此时TIM3_CAPTURE_BUF[2]-TIM3_CAPTURE_BUF[0]就是信号的周期时间了）</li>
+</ol>
+</li>
+<li><p>建立一个捕获开启函数（状态机）</p>
+<ol>
+<li><p>首先判断<code>TIM3_CAPTURE_STA</code>即是频率测量是否开启状态位，同时也是状态机的步骤位</p>
+<p>开启后需要清零<code>TIM3_TIMEOUT_COUNT</code>计数器变量的值</p>
+</li>
+<li><p>清零<code>TIM3_TIMEOUT_COUNT</code>计数器变量，清零TIM3现有的计数<code>__HAL_TIM_SET_COUNTER(&amp;htim3, 0);</code>各个状态和标记位,清零捕获计数的数组<code>memset(TIM3_CAPTURE_BUF, 0, sizeof(TIM3_CAPTURE_BUF));</code>，设置为<code> TIM3_SetCapturePolarity(TIM_INPUTCHANNELPOLARITY_RISING);</code>上升沿触发,<code>HAL_TIM_Base_Start_IT(&amp;htim3);</code>启动定时器更新中断,<code>HAL_TIM_IC_Start_IT(&amp;htim3, TIM_CHANNEL_1);</code>启动捕获中断。</p>
+</li>
+</ol>
+</li>
+<li><p>执行完以上步骤后<code>TIM3_CAPTURE_STA</code>加1，进而会执行捕获中断中的程序</p>
+</li>
+<li><p>待到<code>TIM3_CAPTURE_STA</code>置4后（即是已经完成了周期的测量），计算出频率值与高电平持续时间，占空比即可</p>
+</li>
+</ol>
+<h2 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h2><p>这是一个250kHz的方波信号</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210529005541.png" alt="输出"></p>
+<p>通过串口输出结果</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210528014619.png" alt="频2率"></p>
+<h2 id="一些总结"><a href="#一些总结" class="headerlink" title="一些总结"></a>一些总结</h2><ol>
+<li><p>在利用TIM输入捕获测高电平时间时，因为频繁的在进入捕获中断所以不能有任何中断或者其他事件干扰这个过程。！！比如说不能利用串口发送数据等，总之不能通过CPU再进行其他的一系列操作，只能等待这个捕获过程完成后才可进行其他操作，所以我这里是使用串口发送特定字符使测频程序启动的。</p>
+<p>这也是这个TIM输入捕获测频率的一个缺点——占用CPU的频率太高了…不过在没有干扰的情况下测量得到的频率准确性很高几乎没有误差，最高可以测250kHz的方波输出</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210528014619.png" alt="频率"></p>
+</li>
+<li><p>利用状态机的思维来编程，即是设置轮询步骤位，根据不同的步骤位来进行不同的操作，这种状态机思维常用于某个功能需要多外设或者多模块函数按照特定的顺序来共同完成，通过设置不同模块对应的步骤位可以协调这些模块按步骤顺序来执行。</p>
+<p>当需要开启系统中的某个功能时，只需要将步骤位置为相应的起始位，各个模块就可以按照相应的顺序执行。并在最后将步骤位置”END”状态，方便我们在下次需要再次使用带该功能时再将步骤位置起始位。</p>
+</li>
+<li><p>利用到的函数</p>
+<pre class=" language-c"><code class="language-c"><span class="token function">__HAL_TIM_SET_COUNTER</span><span class="token punctuation">(</span> 定时器地址 <span class="token punctuation">,</span> 设置的数值 <span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//设置某定时器的计数器值</span>
+<span class="token function">TIM2_SetCapturePolarity</span><span class="token punctuation">(</span>捕获触发模式）<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//设置输入捕获的触发方式</span>
+<span class="token function">HAL_TIM_ReadCapturedValue</span><span class="token punctuation">(</span>htim<span class="token punctuation">,</span> TIM_CHANNEL_1<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//从捕获比较单元读出当前的捕获值</span></code></pre>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E7%94%B5%E8%B5%9B/" rel="tag"># 电赛</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/05/27/CubeMX%20F407%20DAC%E8%BE%93%E5%87%BA%E6%AD%A3%E5%BC%A6%E6%B3%A2/" rel="next" title="CubeMX F407 DAC输出正弦波">
+                <i class="fa fa-chevron-left"></i> CubeMX F407 DAC输出正弦波
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/1610055064437.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CubeMX%E4%BB%A5%E5%8F%8A%E4%BB%A3%E7%A0%81%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">CubeMX以及代码的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TIM"><span class="nav-number">2.1.</span> <span class="nav-text">TIM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86"><span class="nav-number">2.2.</span> <span class="nav-text">代码部分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8tim-c%E4%B8%AD"><span class="nav-number">2.2.1.</span> <span class="nav-text">在tim.c中</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C"><span class="nav-number">3.</span> <span class="nav-text">最终结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">一些总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WJ</span>
+
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+-->
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
