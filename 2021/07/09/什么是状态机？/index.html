@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="STM32," />
+  <meta name="keywords" content="FPGA," />
 
 
 
@@ -79,29 +79,22 @@
 
 
 
-<meta name="description" content="CubeMX配置首先是时钟的配置，这里选择外部晶振  然后是系统，要选择Debug形式，然后时钟源这里选择系统的滴答定时器">
+<meta name="description" content="状态机​    对于FPGA而言，它的编程语言是Verilog，这是一款硬件描述语言硬件电路是并行执行的，当需要按照流程或者步骤来完成某个功能时，代码中通常会使用很多个if嵌套语句来实现，这样就增加了代码的复杂度，以及降低了代码的可读性，这个时候就可以使用状态机来编写代码。 ​    状态机相当于一个控制器，它将一项功能的完成分解为若干步，每一步对应于二进制的一个状态，通过预先设计的顺序在各状态之">
 <meta property="og:type" content="article">
-<meta property="og:title" content="通过CUBEMX来配置TIM定时器中断">
-<meta property="og:url" content="https://seekerwj.github.io/2021/02/07/%E4%BD%BF%E7%94%A8CubeMX%E6%9D%A5%E9%85%8D%E7%BD%AETIM%E5%AE%9A%E6%97%B6%E5%99%A8%E4%B8%AD%E6%96%AD/index.html">
+<meta property="og:title" content="状态机">
+<meta property="og:url" content="https://seekerwj.github.io/2021/07/09/%E4%BB%80%E4%B9%88%E6%98%AF%E7%8A%B6%E6%80%81%E6%9C%BA%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="CubeMX配置首先是时钟的配置，这里选择外部晶振  然后是系统，要选择Debug形式，然后时钟源这里选择系统的滴答定时器">
+<meta property="og:description" content="状态机​    对于FPGA而言，它的编程语言是Verilog，这是一款硬件描述语言硬件电路是并行执行的，当需要按照流程或者步骤来完成某个功能时，代码中通常会使用很多个if嵌套语句来实现，这样就增加了代码的复杂度，以及降低了代码的可读性，这个时候就可以使用状态机来编写代码。 ​    状态机相当于一个控制器，它将一项功能的完成分解为若干步，每一步对应于二进制的一个状态，通过预先设计的顺序在各状态之">
 <meta property="og:locale">
-<meta property="og:image" content="https://z4a.net/images/2021/02/07/QQ20210207005753.png">
-<meta property="og:image" content="https://z4a.net/images/2021/02/07/QQ20210207005800.png">
-<meta property="og:image" content="https://z4a.net/images/2021/02/07/QQ20210207005817.png">
-<meta property="og:image" content="https://z4a.net/images/2021/02/07/QQ20210207005841.png">
-<meta property="og:image" content="https://z4a.net/images/2021/02/07/QQ20210207005854.png">
-<meta property="og:image" content="https://z4a.net/images/2021/02/07/QQ20210207005909.png">
-<meta property="og:image" content="https://z4a.net/images/2021/02/07/QQ20210207005947.png">
-<meta property="og:image" content="https://z4a.net/images/2021/02/07/QQ20210207010946.png">
-<meta property="og:image" content="https://z4a.net/images/2021/02/07/QQ20210207011003.png">
-<meta property="og:image" content="https://z4a.net/images/2021/02/07/QQ20210207011015.png">
-<meta property="article:published_time" content="2021-02-06T17:17:12.000Z">
-<meta property="article:modified_time" content="2021-02-09T09:42:49.888Z">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210709012010.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210709012557.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210709014655.png">
+<meta property="article:published_time" content="2021-07-08T17:51:29.000Z">
+<meta property="article:modified_time" content="2021-07-08T17:52:08.553Z">
 <meta property="article:author" content="WJ">
-<meta property="article:tag" content="STM32">
+<meta property="article:tag" content="FPGA">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://z4a.net/images/2021/02/07/QQ20210207005753.png">
+<meta name="twitter:image" content="https://gitee.com/seekerwj/pic/raw/master/20210709012010.png">
 
 
 
@@ -131,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="https://SeekerWJ.github.io/2021/02/07/使用CubeMX来配置TIM定时器中断/"/>
+  <link rel="canonical" href="https://SeekerWJ.github.io/2021/07/09/什么是状态机？/"/>
 
 
 
 
 
-  <title>通过CUBEMX来配置TIM定时器中断 | Hexo</title>
+  <title>状态机 | Hexo</title>
   
 
 
@@ -298,7 +291,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://SeekerWJ.github.io/2021/02/07/%E4%BD%BF%E7%94%A8CubeMX%E6%9D%A5%E9%85%8D%E7%BD%AETIM%E5%AE%9A%E6%97%B6%E5%99%A8%E4%B8%AD%E6%96%AD/">
+    <link itemprop="mainEntityOfPage" href="https://SeekerWJ.github.io/2021/07/09/%E4%BB%80%E4%B9%88%E6%98%AF%E7%8A%B6%E6%80%81%E6%9C%BA%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -315,7 +308,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">通过CUBEMX来配置TIM定时器中断</h1>
+          <h1 class="post-title" itemprop="name headline">状态机</h1>
         
 
         <div class="post-meta">
@@ -327,8 +320,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-07T01:17:12+08:00">
-                2021-02-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-09T01:51:29+08:00">
+                2021-07-09
               </time>
             
 
@@ -364,7 +357,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  416
+                  1.4k
                 </span>
               
 
@@ -380,7 +373,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  5
                 </span>
               
             </div>
@@ -401,33 +394,71 @@
       
 
       
-        <h1 id="CubeMX配置"><a href="#CubeMX配置" class="headerlink" title="CubeMX配置"></a>CubeMX配置</h1><p>首先是时钟的配置，这里选择外部晶振</p>
-<p><img src="https://z4a.net/images/2021/02/07/QQ20210207005753.png" alt="QQ20210207005753.png"></p>
-<p>然后是系统，要选择Debug形式，然后时钟源这里选择系统的滴答定时器</p>
-<p><img src="https://z4a.net/images/2021/02/07/QQ20210207005800.png" alt="QQ20210207005800.png"></p>
+        <h2 id="状态机"><a href="#状态机" class="headerlink" title="状态机"></a>状态机</h2><p>​    对于FPGA而言，它的编程语言是Verilog，这是一款硬件描述语言硬件电路是并行执行的，当需要按照流程或者步骤来完成某个功能时，代码中通常会使用很多个if嵌套语句来实现，这样就增加了代码的复杂度，以及降低了代码的可读性，这个时候就可以使用状态机来编写代码。</p>
+<p>​    状态机相当于一个控制器，它将一项功能的完成分解为若干步，每一步对应于二进制的一个状态，通过预先设计的顺序在各状态之间进行转换，状态转换的过程就是实现逻辑功能的过程。</p>
+<h3 id="有限状态机-Finite-State-Machine-FSM"><a href="#有限状态机-Finite-State-Machine-FSM" class="headerlink" title="有限状态机(Finite State Machine/FSM)"></a>有限状态机(Finite State Machine/FSM)</h3><p>​    在有限个状态之间按一定规律转化的<em>时序电路</em></p>
+<h3 id="状态机的种类"><a href="#状态机的种类" class="headerlink" title="状态机的种类"></a>状态机的种类</h3><p>​    根据状态机的输出是否与输入条件相关，可将状态机分为两大类，即摩尔(Moore)型状态机和米勒(Mealy)型状态机。</p>
 <a id="more"></a>
 
-<p>之后是TIM定时器的时钟源选择，这里就先选择内部时钟源，通道的话不用打开</p>
-<p><img src="https://z4a.net/images/2021/02/07/QQ20210207005817.png" alt="QQ20210207005817.png"></p>
-<p>之后配置分频系数，计数模式与计时周期.这里的一次计时周期就是1ms</p>
-<p><img src="https://z4a.net/images/2021/02/07/QQ20210207005841.png" alt="QQ20210207005841.png"></p>
-<p>为TIM2配置中断是否开启以及它的优先级</p>
-<p><img src="https://z4a.net/images/2021/02/07/QQ20210207005854.png" alt="QQ20210207005854.png"></p>
-<p>在内核配置中可以配置中断优先级的分组，这里就选择第四组了，在这里也可以看到全部的中断源配置</p>
-<p><img src="https://z4a.net/images/2021/02/07/QQ20210207005909.png" alt="QQ20210207005909.png"></p>
-<p>之后是时钟树的配置，需要注意的是外部时钟源需要与板子实际使用的一致，其他的如果没有需求就不用管了，然后HCLK处我习惯100MHz直接傻瓜式配置，系统会自动帮你计算</p>
-<p><img src="https://z4a.net/images/2021/02/07/QQ20210207005947.png" alt="QQ20210207005947.png"></p>
-<p>之后配置好相关文件路径就可以生成代码了</p>
-<h1 id="一些相关的函数"><a href="#一些相关的函数" class="headerlink" title="一些相关的函数"></a>一些相关的函数</h1><p>一进入主函数，首先需要用</p>
-<pre class=" language-c"><code class="language-c">HAL_StatusTypeDef <span class="token function">HAL_TIM_Base_Start_IT</span><span class="token punctuation">(</span>TIM_HandleTypeDef <span class="token operator">*</span>htim<span class="token punctuation">)</span></code></pre>
-<p>来开启TIM2的中断。参数就是中断源的句柄，可以在tim.c文件中看到</p>
-<p><img src="https://z4a.net/images/2021/02/07/QQ20210207010946.png" alt="QQ20210207010946.png"></p>
-<p>之后在stm32f4xx_it.c文件下会看到自动生成了TIM2的中断处理函数</p>
-<p><img src="https://z4a.net/images/2021/02/07/QQ20210207011003.png" alt="QQ20210207011003.png"></p>
-<p>需要注意的是在HAL库中，每进行完一个中断，并不会立刻退出，而是会进入到中断回调函数中</p>
-<p>所以我们需要在tim.c文件下自己创建一个TIM2相关的中断回调函数 </p>
-<p>在中断回调函数中就可以添加用户自己相应的代码了</p>
-<p><img src="https://z4a.net/images/2021/02/07/QQ20210207011015.png" alt="QQ20210207011015.png"></p>
+<h4 id="Mealy状态机"><a href="#Mealy状态机" class="headerlink" title="Mealy状态机"></a>Mealy状态机</h4><p>​    组合逻辑的输出不仅取决于当前状态，还取决于输入状态。</p>
+<p>​    Mealy状态机的模型如下图所示，模型中第一个方框是指产生下一状态的组合逻辑F，F是当前状态和输入信号的函数，状态是否改变、如何改变，取决于组合逻辑F的输出；第二框图是指状态寄存器，其由一组触发器组成，用来记忆状态机当前所处的状态，状态的改变只发生在时钟的跳边沿；第三个框图是指产生输出的组合逻辑G，状态机的输出是由输出组合逻辑G提供的，G也是当前状态和输入信号的函数。</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210709012010.png"></p>
+<h4 id="Moore状态机"><a href="#Moore状态机" class="headerlink" title="Moore状态机"></a>Moore状态机</h4><p>​    组合逻辑的输出只取决于当前状态。</p>
+<p>​    摩尔状态机的模型如下图所示，对比米勒状态机的模型可以发现，其区别在于米勒状态机的输出由当前状态和输入条件决定的，而摩尔状态机的输出只取决于当前状态。</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210709012557.png"></p>
+<hr>
+<h2 id="三段式状态机"><a href="#三段式状态机" class="headerlink" title="三段式状态机"></a>三段式状态机</h2><p>​    使用三个always模块，一个always模块采用同步时序描述状态转移，一个always采用组合逻辑判断状态转移条件，描述状态转移规律，另一个always模块描述状态输出(可以用组合电路输出，也可以时序电路输出)。</p>
+<h2 id="设计状态机有这么四个步骤"><a href="#设计状态机有这么四个步骤" class="headerlink" title="设计状态机有这么四个步骤"></a>设计状态机有这么四个步骤</h2><h3 id="1-状态空间的定义"><a href="#1-状态空间的定义" class="headerlink" title="1.状态空间的定义"></a>1.状态空间的定义</h3><p>​    <strong>状态空间：</strong>即是各个状态的集合</p>
+<p>在定义状态空间的时候，还需要额外定义两个寄存器，即current_state(过去的状态)以及next_state(下一个状态)。</p>
+<p>并且在定义状态空间的时候，也可以使用独热码（即每个状态只有一个寄存器位置）类似于FreeRTOS中的信号组，这种定义方式译码更简单。</p>
+<pre class=" language-verilog"><code class="language-verilog"><span class="token keyword">parameter</span> S0 <span class="token operator">=</span> <span class="token number">7'b0000001</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//独热码定义方式</span>
+<span class="token keyword">parameter</span> S1 <span class="token operator">=</span> <span class="token number">7'b0000010</span><span class="token punctuation">;</span>
+<span class="token keyword">parameter</span> S2 <span class="token operator">=</span> <span class="token number">7'b0000100</span><span class="token punctuation">;</span>
+<span class="token keyword">parameter</span> S3 <span class="token operator">=</span> <span class="token number">7'b0001000</span><span class="token punctuation">;</span>
+<span class="token keyword">parameter</span> S4 <span class="token operator">=</span> <span class="token number">7'b0010000</span><span class="token punctuation">;</span>
+<span class="token keyword">parameter</span> S5 <span class="token operator">=</span> <span class="token number">7'b0100000</span><span class="token punctuation">;</span>
+<span class="token keyword">parameter</span> S6 <span class="token operator">=</span> <span class="token number">7'b1000000</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//由于是7位的位宽，所以用于存储状态的寄存器也要定义为7位的位宽</span>
+<span class="token keyword">reg</span> <span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> curr_st <span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//当前状态</span>
+<span class="token keyword">reg</span> <span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> next_st <span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//下一个状态</span></code></pre>
+<h3 id="2-状态的跳转（时序逻辑）"><a href="#2-状态的跳转（时序逻辑）" class="headerlink" title="2. 状态的跳转（时序逻辑）"></a>2. 状态的跳转（时序逻辑）</h3><p>​    即满足了当前条件后用来控制当前状态的变化，主要是控制当前状态的变化，并且检测但满足复位条件时将当前状态复位为初始状态。（下一个状态是什么由“下个状态的判断模块来实现”）</p>
+<pre class=" language-verilog"><code class="language-verilog"><span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword">posedge</span> sys_clk <span class="token keyword">or</span> <span class="token keyword">negedge</span> sys_rst_n<span class="token punctuation">)</span> <span class="token keyword">begin</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>sys_rst_n<span class="token punctuation">)</span>
+        curr_st <span class="token operator">&lt;=</span> S0<span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        curr_st <span class="token operator">&lt;=</span> next_st<span class="token punctuation">;</span>
+<span class="token keyword">end</span></code></pre>
+<h3 id="3-下个状态的判断"><a href="#3-下个状态的判断" class="headerlink" title="3. 下个状态的判断"></a>3. 下个状态的判断</h3><p>​    用来根据当前的状态判断下个状态是什么</p>
+<pre class=" language-verilog"><code class="language-verilog"><span class="token comment" spellcheck="true">//状态机的第二段采用组合逻辑判断状态转移条件</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">begin</span>
+    <span class="token keyword">case</span> <span class="token punctuation">(</span>curr_st<span class="token punctuation">)</span>
+        S0<span class="token punctuation">:</span> next_st <span class="token operator">=</span> S1<span class="token punctuation">;</span>
+        S1<span class="token punctuation">:</span> next_st <span class="token operator">=</span> S2<span class="token punctuation">;</span>
+        S2<span class="token punctuation">:</span> next_st <span class="token operator">=</span> S3<span class="token punctuation">;</span>
+        S3<span class="token punctuation">:</span> next_st <span class="token operator">=</span> S4<span class="token punctuation">;</span>
+        S4<span class="token punctuation">:</span> next_st <span class="token operator">=</span> S5<span class="token punctuation">;</span>
+        S5<span class="token punctuation">:</span> next_st <span class="token operator">=</span> S6<span class="token punctuation">;</span>
+        S6<span class="token punctuation">:</span> next_st <span class="token operator">=</span> S0<span class="token punctuation">;</span>
+        <span class="token keyword">default</span><span class="token punctuation">:</span> next_st <span class="token operator">=</span> S0<span class="token punctuation">;</span>
+    <span class="token keyword">endcase</span>
+<span class="token keyword">end</span></code></pre>
+<h3 id="4-各个状态下的工作"><a href="#4-各个状态下的工作" class="headerlink" title="4. 各个状态下的工作"></a>4. 各个状态下的工作</h3><p>​    这里举的例子是时序逻辑电路，但实际上，各个状态下的工作也可以用组合逻辑电路来实现</p>
+<p>​    状态机的第三段可以使用组合逻辑电路输出，也可以使用时序逻辑电路输出，一般推荐使用时序电路输出，因为状态机的设计和其它设计一样，最好使用同步时序方式设计，以提高设计的稳定性，消除毛刺。</p>
+<pre class=" language-verilog"><code class="language-verilog"><span class="token comment" spellcheck="true">//状态机的第三段描述状态输出（这里采用时序电路输出）</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword">posedge</span> sys_clk <span class="token keyword">or</span> <span class="token keyword">negedge</span> sys_rst_n<span class="token punctuation">)</span> <span class="token keyword">begin</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>sys_rst_n<span class="token punctuation">)</span>
+        clk_divide_7 <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>curr_st <span class="token operator">==</span> S0<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>curr_st <span class="token operator">==</span> S1<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>curr_st <span class="token operator">==</span> S2<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>curr_st <span class="token operator">==</span> S3<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        clk_divide_7 <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>curr_st <span class="token operator">==</span> S4<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>curr_st <span class="token operator">==</span> S5<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>curr_st <span class="token operator">==</span> S6<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        clk_divide_7 <span class="token operator">&lt;=</span> <span class="token number">1'b1</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        <span class="token punctuation">;</span>
+<span class="token keyword">end</span></code></pre>
+<h4 id="状态机采用时序逻辑输出的状态机模型如下图所示："><a href="#状态机采用时序逻辑输出的状态机模型如下图所示：" class="headerlink" title="状态机采用时序逻辑输出的状态机模型如下图所示："></a>状态机采用时序逻辑输出的状态机模型如下图所示：</h4><p><img src="https://gitee.com/seekerwj/pic/raw/master/20210709014655.png"></p>
+<p>​    采用这种描述方法虽然代码结构复杂了一些，但是这样做的好处是可以有效地滤去组合逻辑输出的毛刺，同时也可以更好的进行时序计算与约束，另外对于总线形式的输出信号来说，容易使总线数据对齐，减小总线数据间的偏移，从而降低接收端数据采样出错的频率。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>​    事实上状态机不仅仅在FPGA上适用，利用状态机的思想也可用于STM32等嵌入式的程序编写。特别适用于多级菜单这类人机交互界面。</p>
 
       
     </div>
@@ -445,7 +476,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/STM32/" rel="tag"># STM32</a>
+            <a href="/tags/FPGA/" rel="tag"># FPGA</a>
           
         </div>
       
@@ -458,8 +489,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/01/29/%E4%BD%BF%E7%94%A8CUBEMX%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B7%A5%E7%A8%8B%E5%B9%B6%E7%82%B9%E4%BA%AE%E7%AC%AC%E4%B8%80%E4%B8%AALED/" rel="next" title="通过CUBEMX来创建STM32工程并点亮一个LED灯">
-                <i class="fa fa-chevron-left"></i> 通过CUBEMX来创建STM32工程并点亮一个LED灯
+              <a href="/2021/05/29/CubeMX%20F407%20%E5%88%A9%E7%94%A8TIM%E8%BE%93%E5%85%A5%E6%8D%95%E8%8E%B7%E6%9D%A5%E6%B5%8B%E9%87%8F%E6%96%B9%E6%B3%A2%E7%9A%84%E9%A2%91%E7%8E%87%E4%B8%8E%E5%8D%A0%E7%A9%BA%E6%AF%94/" rel="next" title="CubeMX F407 利用TIM输入捕获来测量方波的频率与占空比">
+                <i class="fa fa-chevron-left"></i> CubeMX F407 利用TIM输入捕获来测量方波的频率与占空比
               </a>
             
           </div>
@@ -467,10 +498,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/02/09/%E5%88%A9%E7%94%A8CubeMX%E5%88%9D%E5%A7%8B%E5%8C%96TIM%E4%B8%8E%E4%B8%B2%E5%8F%A3%E5%B9%B6%E6%B5%8B%E8%AF%95FreeRTOS%E7%9A%84%E4%B8%AD%E6%96%AD%E7%AE%A1%E7%90%86%E5%87%BD%E6%95%B0/" rel="prev" title="利用CubeMX初始化TIM与串口并测试FreeRTOS的中断管理函数">
-                利用CubeMX初始化TIM与串口并测试FreeRTOS的中断管理函数 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -597,7 +624,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CubeMX%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">CubeMX配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E7%9B%B8%E5%85%B3%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">一些相关的函数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">状态机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA-Finite-State-Machine-FSM"><span class="nav-number">1.1.</span> <span class="nav-text">有限状态机(Finite State Machine&#x2F;FSM)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">状态机的种类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Mealy%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">1.2.1.</span> <span class="nav-text">Mealy状态机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Moore%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">1.2.2.</span> <span class="nav-text">Moore状态机</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E6%AE%B5%E5%BC%8F%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">三段式状态机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%8A%B6%E6%80%81%E6%9C%BA%E6%9C%89%E8%BF%99%E4%B9%88%E5%9B%9B%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">设计状态机有这么四个步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B4%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">3.1.</span> <span class="nav-text">1.状态空间的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%8A%B6%E6%80%81%E7%9A%84%E8%B7%B3%E8%BD%AC%EF%BC%88%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">2. 状态的跳转（时序逻辑）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%8B%E4%B8%AA%E7%8A%B6%E6%80%81%E7%9A%84%E5%88%A4%E6%96%AD"><span class="nav-number">3.3.</span> <span class="nav-text">3. 下个状态的判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%90%84%E4%B8%AA%E7%8A%B6%E6%80%81%E4%B8%8B%E7%9A%84%E5%B7%A5%E4%BD%9C"><span class="nav-number">3.4.</span> <span class="nav-text">4. 各个状态下的工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%9C%BA%E9%87%87%E7%94%A8%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E8%BE%93%E5%87%BA%E7%9A%84%E7%8A%B6%E6%80%81%E6%9C%BA%E6%A8%A1%E5%9E%8B%E5%A6%82%E4%B8%8B%E5%9B%BE%E6%89%80%E7%A4%BA%EF%BC%9A"><span class="nav-number">3.4.1.</span> <span class="nav-text">状态机采用时序逻辑输出的状态机模型如下图所示：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number"></span> <span class="nav-text">小结</span></a></div>
             
 
           </div>
