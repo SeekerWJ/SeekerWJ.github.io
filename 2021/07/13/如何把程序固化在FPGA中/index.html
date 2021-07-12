@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="FPGA," />
 
 
 
@@ -79,15 +79,31 @@
 
 
 
-<meta name="description" content="工农区战神">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://seekerwj.github.io/tags/%E7%94%B5%E8%B5%9B/index.html">
+<meta name="description" content="​    在之前的LED流水灯测试中使用的是“.sof”文件格式，这种烧录方式在开发板断电后程序会丢失。如果想在开发板掉电后程序不丢失的话那么就要利用JTAG 烧写“.jic”文件实现程序掉电不丢失。 ​    但是.jic文件的生成需要使用.sof来进行转化，手动生成 代码配置以及芯片的选择存储芯片的选择（ROM）​    要掉电不丢失代码，代码就要存储在ROM 里，FPGA Cyclone 芯">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何把程序固化在FPGA中">
+<meta property="og:url" content="https://seekerwj.github.io/2021/07/13/%E5%A6%82%E4%BD%95%E6%8A%8A%E7%A8%8B%E5%BA%8F%E5%9B%BA%E5%8C%96%E5%9C%A8FPGA%E4%B8%AD/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="工农区战神">
+<meta property="og:description" content="​    在之前的LED流水灯测试中使用的是“.sof”文件格式，这种烧录方式在开发板断电后程序会丢失。如果想在开发板掉电后程序不丢失的话那么就要利用JTAG 烧写“.jic”文件实现程序掉电不丢失。 ​    但是.jic文件的生成需要使用.sof来进行转化，手动生成 代码配置以及芯片的选择存储芯片的选择（ROM）​    要掉电不丢失代码，代码就要存储在ROM 里，FPGA Cyclone 芯">
 <meta property="og:locale">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210713021147.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210713020945.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210713021413.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210713021952.png">
+<meta property="og:image" content="https://seekerwj.github.io/2021/07/13/%E5%A6%82%E4%BD%95%E6%8A%8A%E7%A8%8B%E5%BA%8F%E5%9B%BA%E5%8C%96%E5%9C%A8FPGA%E4%B8%AD/Users/asus/AppData/Roaming/Typora/typora-user-images/1626114110508.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210713022842.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210713023010.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210713023048.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210713025326.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210713025411.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210713025435.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/VID_20210713_025950.gif">
+<meta property="article:published_time" content="2021-07-12T19:10:13.000Z">
+<meta property="article:modified_time" content="2021-07-12T19:10:38.725Z">
 <meta property="article:author" content="WJ">
+<meta property="article:tag" content="FPGA">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/seekerwj/pic/raw/master/20210713021147.png">
 
 
 
@@ -117,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="https://SeekerWJ.github.io/tags/电赛/"/>
+  <link rel="canonical" href="https://SeekerWJ.github.io/2021/07/13/如何把程序固化在FPGA中/"/>
 
 
 
 
 
-  <title>标签: 电赛 | Hexo</title>
+  <title>如何把程序固化在FPGA中 | Hexo</title>
   
 
 
@@ -142,7 +158,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -270,110 +286,229 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>电赛<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://SeekerWJ.github.io/2021/07/13/%E5%A6%82%E4%BD%95%E6%8A%8A%E7%A8%8B%E5%BA%8F%E5%9B%BA%E5%8C%96%E5%9C%A8FPGA%E4%B8%AD/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1610055064437.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2021/05/29/CubeMX%20F407%20%E5%88%A9%E7%94%A8TIM%E8%BE%93%E5%85%A5%E6%8D%95%E8%8E%B7%E6%9D%A5%E6%B5%8B%E9%87%8F%E6%96%B9%E6%B3%A2%E7%9A%84%E9%A2%91%E7%8E%87%E4%B8%8E%E5%8D%A0%E7%A9%BA%E6%AF%94/" itemprop="url">
-              
-                <span itemprop="name">CubeMX F407 利用TIM输入捕获来测量方波的频率与占空比</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">如何把程序固化在FPGA中</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-05-29T00:58:53+08:00"
-              content="2021-05-29" >
-          05-29
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-13T03:10:13+08:00">
+                2021-07-13
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  719
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/05/27/CubeMX%20F407%20DAC%E8%BE%93%E5%87%BA%E6%AD%A3%E5%BC%A6%E6%B3%A2/" itemprop="url">
-              
-                <span itemprop="name">CubeMX F407 DAC输出正弦波</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-05-27T01:00:13+08:00"
-              content="2021-05-27" >
-          05-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
+        <p>​    在之前的LED流水灯测试中使用的是“<code>.sof</code>”文件格式，这种烧录方式在开发板断电后程序会丢失。如果想在开发板掉电后程序不丢失的话那么就要利用JTAG 烧写“<code>.jic</code>”文件实现程序掉电不丢失。</p>
+<p>​    但是<code>.jic</code>文件的生成需要使用<code>.sof</code>来进行转化，手动生成</p>
+<h2 id="代码配置以及芯片的选择"><a href="#代码配置以及芯片的选择" class="headerlink" title="代码配置以及芯片的选择"></a>代码配置以及芯片的选择</h2><h3 id="存储芯片的选择（ROM）"><a href="#存储芯片的选择（ROM）" class="headerlink" title="存储芯片的选择（ROM）"></a>存储芯片的选择（ROM）</h3><p>​    要掉电不丢失代码，代码就要存储在ROM 里，<strong>FPGA Cyclone 芯片本身是没有带ROM的，需要外挂这样的存储芯片。</strong>由于外挂怎样的存储芯片和FPGA芯片以及FPGA程序设计有关，因此FPGA软件需要根据外围配置的存储芯片进行选择。</p>
+<p>​    凌智电子的FPGA开发板采用的是EPCS4配置芯片， 有时候Quartus II 软件可以自动识别该芯片，为了识别不出错，在使用下载前进行配置选择，并在下载后，先给开发板断电再拔掉下载线，否则代码可能无法生效。</p>
+<a id="more"></a>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/05/26/CubeMX%20F407%E4%B8%B2%E5%8F%A32%E7%9A%84%E4%BD%BF%E7%94%A8/" itemprop="url">
-              
-                <span itemprop="name">CubeMX F407串口以及串口中断的使用</span>
-              
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-05-26T20:20:01+08:00"
-              content="2021-05-26" >
-          05-26
-        </time>
-      </div>
+<hr>
+<p>​    首先在菜单栏的<code>Assignments</code>中选择<code>Device</code>，如图</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210713021147.png" style="zoom:80%;">
 
-    </header>
-  </article>
+<p>​    之后选择外设和管脚<code>Device and Pin Options</code></p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210713020945.png" style="zoom:80%;">
 
+<p>​    在<code>Configuartion</code>中将<code>Use configuration device</code>的选项打勾，然后选择配置芯片为EPCS4，之后点击OK完成芯片的配置</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210713021413.png" style="zoom:80%;">
+
+
+
+<h3 id="文件的转换"><a href="#文件的转换" class="headerlink" title="文件的转换"></a>文件的转换</h3><p>​    首先打开File选项中的Convert Programming Files，如图</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210713021952.png" style="zoom:80%;">
+
+<p>​    接着在<code>Programming file type</code>里选择要转换输出的文件格式，这里要选择为<code>.jic</code>格式的。接着在<code>Configuration device </code>里选择外部的配置芯片，这里需要选择EPCS4（因为开发板上的的外部配置芯片就是EPCS4）。接着在<code>File name</code>里命名你要输出的文件名和文件存储的目录。（建议选择在Output文件夹中，文件名称建议和工程名称一样，方便辨认）</p>
+<img src="/2021/07/13/%E5%A6%82%E4%BD%95%E6%8A%8A%E7%A8%8B%E5%BA%8F%E5%9B%BA%E5%8C%96%E5%9C%A8FPGA%E4%B8%AD/Users\asus\AppData\Roaming\Typora\typora-user-images\1626114110508.png" alt="1626114110508" style="zoom: 67%;">
+
+<p>​    之后选择开发板上的芯片：Cyclone IV E EP4CE10，然后点击“OK”，回到“sof 文件转换为jic 文件”的界面。然后选中“SOF Data”，点击右边的按钮“Add File”，如下图所示。</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210713022842.png" style="zoom:67%;">
+
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210713023010.png" style="zoom:67%;">
+
+<p>完成所有配置之后，点击Generate即可生成文件</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210713023048.png" style="zoom:67%;">
+
+
+
+<h3 id="AS-程序下载（程序的固化）"><a href="#AS-程序下载（程序的固化）" class="headerlink" title="AS 程序下载（程序的固化）"></a>AS 程序下载（程序的固化）</h3><p>​    其下载过程与<code>.sop</code>文件的下载类似。</p>
+<p>​    首先先将下载文件中的<code>.sop</code>删去</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210713025326.png" style="zoom:67%;">
+
+<p>​    之后也是点击添加文件</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210713025411.png" style="zoom:67%;">
+
+<p>​    添加完成之后，需要在“Program/Configure”方框下面点击打勾，否则“Start”将不能被点击。在这之后点击“Start”，便可开始烧录程序，程序烧录完成后需要先关掉电源，之后拔掉下载器，重新开启电源，即可看到程序已经可以运行了。</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210713025435.png"></p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/VID_20210713_025950.gif"></p>
+<p>同理的，想要将原来下载到FLASH中的程序删除，即选中文件的Erase选项，然后点击Start即可等待擦除完成~</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FPGA/" rel="tag"># FPGA</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/07/12/FPGA%E6%B5%81%E6%B0%B4%E7%81%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/" rel="next" title="FPGA流水灯的实现">
+                <i class="fa fa-chevron-left"></i> FPGA流水灯的实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -381,6 +516,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -401,8 +540,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -457,6 +605,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%85%8D%E7%BD%AE%E4%BB%A5%E5%8F%8A%E8%8A%AF%E7%89%87%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">1.</span> <span class="nav-text">代码配置以及芯片的选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%8A%AF%E7%89%87%E7%9A%84%E9%80%89%E6%8B%A9%EF%BC%88ROM%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">存储芯片的选择（ROM）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.2.</span> <span class="nav-text">文件的转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AS-%E7%A8%8B%E5%BA%8F%E4%B8%8B%E8%BD%BD%EF%BC%88%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%9B%BA%E5%8C%96%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">AS 程序下载（程序的固化）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -617,6 +781,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
