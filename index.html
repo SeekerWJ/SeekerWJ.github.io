@@ -386,8 +386,7 @@
 
       
         
-          
-            <h2 id="手册中的一些重要信息"><a href="#手册中的一些重要信息" class="headerlink" title="手册中的一些重要信息"></a>手册中的一些重要信息</h2><h3 id="供电电压"><a href="#供电电压" class="headerlink" title="供电电压"></a>供电电压</h3><img src="https://gitee.com/seekerwj/pic/raw/master/20210906155600.png" style="zoom:50%;">
+          <h2 id="手册中的一些重要信息"><a href="#手册中的一些重要信息" class="headerlink" title="手册中的一些重要信息"></a>手册中的一些重要信息</h2><h3 id="供电电压"><a href="#供电电压" class="headerlink" title="供电电压"></a>供电电压</h3><img src="https://gitee.com/seekerwj/pic/raw/master/20210906155600.png" style="zoom:50%;">
 
 
 
@@ -396,108 +395,13 @@
 
 
 <p>​    WR信号可以看作触发器的时钟信号，只有WR为低电位时被A0、A1选中的段才会改变，否则显示之前的字符，这样就可以同时控制多个HPDL 1414了，A0、A1、D0~D6都可以复用只要单独控制WR即可。 </p>
-<h3 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h3><p>​    这个字符表即是ASCII码表的后7个bit</p>
-<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210906171512.png"></p>
-<p>ASCII表具体如图</p>
-<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210906171727.png"></p>
-<h3 id="真值表"><a href="#真值表" class="headerlink" title="真值表"></a>真值表</h3><p>​    D0<del>D6使用来控制字符的显示，A1,A0用来控制时哪一个数码管来显示，并且可以通过WR位来控制多个HPDL_1414,这也说明了A0，A1，D0</del>D6是可以复用的（WR要被拉低了才能控制HPDL1414）。</p>
-<img src="https://gitee.com/seekerwj/pic/raw/master/20210906172112.png" style="zoom:67%;">
-
-
-
-<h3 id="相关代码"><a href="#相关代码" class="headerlink" title="相关代码"></a>相关代码</h3><pre class=" language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token keyword">int</span> add<span class="token punctuation">,</span><span class="token keyword">char</span> data<span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//add即是A0，A1，用来控制字符显示的位置，data即是D0~D6，用来控制对应位显示的字符</span>
-  <span class="token keyword">switch</span> <span class="token punctuation">(</span>add<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>                   <span class="token comment" spellcheck="true">//字符显示的位置</span>
-      <span class="token keyword">case</span> <span class="token number">0</span><span class="token punctuation">:</span>
-        <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">break</span><span class="token punctuation">;</span>
-      <span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
-        <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">break</span><span class="token punctuation">;</span>
-    <span class="token keyword">case</span> <span class="token number">2</span><span class="token punctuation">:</span>
-        <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">break</span><span class="token punctuation">;</span>
-    <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>
-        <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">break</span><span class="token punctuation">;</span>
-      <span class="token keyword">default</span><span class="token punctuation">:</span>
-        <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">break</span><span class="token punctuation">;</span>
-  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-
-  <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>data<span class="token operator">>></span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//获取char的各个bit，即ASCii的后7个bits，将其分配至各自的引脚</span>
-  <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>data<span class="token operator">>></span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>data<span class="token operator">>></span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>data<span class="token operator">>></span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>data<span class="token operator">>></span><span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>data<span class="token operator">>></span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>data<span class="token operator">>></span><span class="token number">6</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-  <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment" spellcheck="true">//拉低WR引脚，改变状态</span>
-  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                           <span class="token comment" spellcheck="true">//holdtime，使得触发器能够正确的采样各个引脚的电平（并不用这么久，实际只用200ns）</span>
-  <span class="token function">digitalWrite</span><span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment" spellcheck="true">//拉高WR引脚，防止已经成功保存的状态再次改变</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-
-
-<span class="token keyword">void</span> <span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-  <span class="token comment" spellcheck="true">// put your setup code here, to run once:</span>
-  <span class="token function">pinMode</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span>OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//D0 8 HPDL_ 1414的管脚功能 HPDL_1414的管脚编号</span>
-  <span class="token function">pinMode</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span>OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//D1 9</span>
-  <span class="token function">pinMode</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span>OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//D2 10</span>
-  <span class="token function">pinMode</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span>OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//D3 11</span>
-  <span class="token function">pinMode</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">,</span>OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//D4 2</span>
-  <span class="token function">pinMode</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span>OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//D5 1</span>
-  <span class="token function">pinMode</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span>OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//D6 12</span>
-
-  <span class="token function">pinMode</span><span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">,</span>OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//WR 3</span>
-  <span class="token function">pinMode</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span>OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//A0 5</span>
-  <span class="token function">pinMode</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">,</span>OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//A1 4</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-
-<span class="token keyword">void</span> <span class="token function">loop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//  // put your main code here, to run repeatedly:</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'3'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'3'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'2'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'4'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'4'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'6'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'5'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'3'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'9'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'8'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'7'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'6'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'3'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'2'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'5'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'8'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'7'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">dispchar</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'9'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
-<p>慢慢来，准备的是先弄一个HPDL1414的驱动测试板来做些测试，要不然用洞洞板和Arduino来测试的话太鸡肋了。</p>
-<p>后期将原驱动一个HPDL_1414的驱动函数改为驱动两个HPDL_1414的驱动函数</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/09/06/%E7%82%B9%E4%BA%AEHPDL-1414/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
