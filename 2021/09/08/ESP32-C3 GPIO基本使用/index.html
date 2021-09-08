@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ESP32-C3," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="关于ESP32-C3工程的建立​    目前为止，我仍然采用的ESPIDF中的example作为一个最基本的工程，然后在此基础上在加以修改（比较笨，之后找到好的办法再说） ​    Ctrl + shift + p可以打开VSCODE的交互界面   之后便可以在这其中选择一个作为工程来创建如图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ESP32 GPIO基本使用">
+<meta property="og:url" content="https://seekerwj.github.io/2021/09/08/ESP32-C3%20GPIO%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="关于ESP32-C3工程的建立​    目前为止，我仍然采用的ESPIDF中的example作为一个最基本的工程，然后在此基础上在加以修改（比较笨，之后找到好的办法再说） ​    Ctrl + shift + p可以打开VSCODE的交互界面   之后便可以在这其中选择一个作为工程来创建如图">
+<meta property="og:locale">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210908152804.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210908152843.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210908162034.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210908161927.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210908162144.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210908163405.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210908163643.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210908164909.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210908154320.png">
+<meta property="og:image" content="https://z4a.net/images/2021/09/08/VID_20210908_160947.gif">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210908161348.png">
+<meta property="og:image" content="https://z4a.net/images/2021/09/08/VID_20210908_170948.gif">
+<meta property="og:image" content="https://z4a.net/images/2021/09/08/VID_20210908_220746.gif">
+<meta property="article:published_time" content="2021-09-08T15:19:29.000Z">
+<meta property="article:modified_time" content="2021-09-08T15:20:01.991Z">
+<meta property="article:author" content="WJ">
+<meta property="article:tag" content="ESP32-C3">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/seekerwj/pic/raw/master/20210908152804.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://SeekerWJ.github.io/2021/09/08/ESP32-C3 GPIO基本使用/"/>
+
+
+
+
+
+  <title>ESP32 GPIO基本使用 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://SeekerWJ.github.io/2021/09/08/ESP32-C3%20GPIO%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1610055064437.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ESP32 GPIO基本使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-08T23:19:29+08:00">
+                2021-09-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="关于ESP32-C3工程的建立"><a href="#关于ESP32-C3工程的建立" class="headerlink" title="关于ESP32-C3工程的建立"></a>关于ESP32-C3工程的建立</h2><p>​    目前为止，我仍然采用的ESPIDF中的example作为一个最基本的工程，然后在此基础上在加以修改（比较笨，之后找到好的办法再说）</p>
+<p>​    <code>Ctrl + shift + p</code>可以打开VSCODE的交互界面</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210908152804.png" style="zoom: 67%;">
+
+<p>之后便可以在这其中选择一个作为工程来创建如图</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210908152843.png" style="zoom:67%;">
+
+
+
+<a id="more"></a>
+
+
+
+<h2 id="GPIO接口的使用"><a href="#GPIO接口的使用" class="headerlink" title="GPIO接口的使用"></a>GPIO接口的使用</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>​    ESP32-C3 芯片有22 个物理通用输入输出管脚(GPIO Pin)。每个管脚都可用作一个通用IO，或连接一个内部的外设信号。利用GPIO 交换矩阵和IO MUX，可配置外设模块的输入信号来源于任何的IO 管脚，并且外设模块的输出信号也可连接到任意IO 管脚。这些模块共同组成了芯片的IO 控制。</p>
+<h3 id="关于IO-MUX-以及GPIO-交换矩阵的理解"><a href="#关于IO-MUX-以及GPIO-交换矩阵的理解" class="headerlink" title="关于IO MUX 以及GPIO 交换矩阵的理解"></a>关于IO MUX 以及GPIO 交换矩阵的理解</h3><p>结合IO MUX 以及 GPIO交换矩阵的主要特性，配合着二者的工作流程图不难看出</p>
+<p>GPIO交换矩阵主要起一个中继的作用，外部的输入信号，以及内部的输出信号可以通过GPIO交换矩阵来配置，从而达到外设模块的输入信号可以来源于任何的IO管脚，通过内部信号也可以通过交换矩阵配置从而可以从任意一个PIN脚输出。十分灵活（不同于STM32这类，硬件I2C或者硬件SPI就必须是某几个固定的PIN脚）？</p>
+<p>IO MUX的主要作用就是为每个GPIO管脚提供一个寄存器的作用，用来配置各个管脚功能。</p>
+<p>并且为了实现更好的高频特性，SPI，UART等相关外设也可以不通过GPIO交换矩阵，直接通过IO MUX与PIN脚相连接。</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210908162034.png"></p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210908161927.png"></p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210908162144.png"></p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210908163405.png"></p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210908163643.png"></p>
+<h3 id="关于GPIO的电源域"><a href="#关于GPIO的电源域" class="headerlink" title="关于GPIO的电源域"></a>关于GPIO的电源域</h3><p><img src="https://gitee.com/seekerwj/pic/raw/master/20210908164909.png"></p>
+<p>即GPIO0~5都可以作为唤醒引脚</p>
+<h3 id="利用GPIO输出点亮一个LED灯"><a href="#利用GPIO输出点亮一个LED灯" class="headerlink" title="利用GPIO输出点亮一个LED灯"></a>利用GPIO输出点亮一个LED灯</h3><p>我的板子上是利用这么几个IO口来控制LED灯的。可以很明显的看出，当GPIO为高电平的时候，LED灯会被点亮。</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210908154320.png"></p>
+<h4 id="GPIO输出模式的配置过程"><a href="#GPIO输出模式的配置过程" class="headerlink" title="GPIO输出模式的配置过程"></a>GPIO输出模式的配置过程</h4><p>利用ESPIDF配置GPIO口是很简单的。</p>
+<p>过程如下（最简单的方法）</p>
+<pre class=" language-c"><code class="language-c"><span class="token function">gpio_pad_select_gpio</span><span class="token punctuation">(</span>GPIO_NUM_5<span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment" spellcheck="true">// 选择一个GPIO</span>
+<span class="token function">gpio_set_direction</span><span class="token punctuation">(</span>GPIO_NUM_5<span class="token punctuation">,</span> GPIO_MODE_OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// 把这个GPIO作为输出</span>
+<span class="token function">gpio_set_level</span><span class="token punctuation">(</span>GPIO_NUM_5<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                        <span class="token comment" spellcheck="true">// 设置这个GPIO的高低电平</span></code></pre>
+<hr>
+<p>使LED灯闪烁的方法</p>
+<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"freertos/FreeRTOS.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"freertos/task.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"driver/gpio.h"</span></span>
+
+<span class="token keyword">void</span> <span class="token function">app_main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token function">gpio_pad_select_gpio</span><span class="token punctuation">(</span>GPIO_NUM_5<span class="token punctuation">)</span><span class="token punctuation">;</span>                <span class="token comment" spellcheck="true">// 选择一个GPIO</span>
+    <span class="token function">gpio_set_direction</span><span class="token punctuation">(</span>GPIO_NUM_5<span class="token punctuation">,</span> GPIO_MODE_OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 把这个GPIO作为输出</span>
+
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token function">gpio_set_level</span><span class="token punctuation">(</span>GPIO_NUM_5<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment" spellcheck="true">// 把这个GPIO输出低电平</span>
+        <span class="token function">vTaskDelay</span><span class="token punctuation">(</span><span class="token number">1000</span> <span class="token operator">/</span> portTICK_PERIOD_MS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">gpio_set_level</span><span class="token punctuation">(</span>GPIO_NUM_5<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">vTaskDelay</span><span class="token punctuation">(</span><span class="token number">1000</span> <span class="token operator">/</span> portTICK_PERIOD_MS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<p>以上涉及了一些FreeRTOS操作系统的相关函数和库，暂时先不用管，之后会做详细记录</p>
+<p>只需知道<code>vTaskDelay(1000 / portTICK_PERIOD_MS)</code>这个函数是延迟1s就完事了。并且这个函数的使用需要<code>FreeRTOS.h</code>,<code>task.h</code>，这两个库的支持</p>
+<hr>
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><h4 id><a href="#" class="headerlink" title></a><img src="https://z4a.net/images/2021/09/08/VID_20210908_160947.gif" alt="VID_20210908_160947.gif"></h4><hr>
+<h3 id="利用GPIO的输入功能来检测按键是否按下"><a href="#利用GPIO的输入功能来检测按键是否按下" class="headerlink" title="利用GPIO的输入功能来检测按键是否按下"></a>利用GPIO的输入功能来检测按键是否按下</h3><p>我的板子上是使用这么两个IO口来检测按键的输入的。</p>
+<p>GPIO9可以正常作为按键输入的检测。但是CHIP_EN脚是用作于ESP32的使能，失能脚，起到的是复位ESP32的作用。</p>
+<p>所以这里选择的是GPIO9脚来作为按键输入的判断。（检测到低电平为按键按下）</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210908161348.png" style="zoom:67%;">
+
+
+
+<h4 id="GPIO输入模式的配置过程"><a href="#GPIO输入模式的配置过程" class="headerlink" title="GPIO输入模式的配置过程"></a>GPIO输入模式的配置过程</h4><p>同理，过程如下（简单方法）</p>
+<pre class=" language-c"><code class="language-c"><span class="token function">gpio_pad_select_gpio</span><span class="token punctuation">(</span>GPIO_NUM_9<span class="token punctuation">)</span><span class="token punctuation">;</span>                     <span class="token comment" spellcheck="true">// 选择一个GPIO</span>
+<span class="token function">gpio_set_direction</span><span class="token punctuation">(</span>GPIO_NUM_9<span class="token punctuation">,</span> GPIO_MODE_INPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">// 把这个GPIO作为输入</span>
+<span class="token function">gpio_get_level</span><span class="token punctuation">(</span>GPIO_NUM_9<span class="token punctuation">)</span><span class="token punctuation">;</span>                            <span class="token comment" spellcheck="true">//获取GPIO的电平</span></code></pre>
+<hr>
+<p>获取按键是否按下的代码</p>
+<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"freertos/FreeRTOS.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"freertos/task.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"driver/gpio.h"</span></span>
+
+<span class="token keyword">void</span> <span class="token function">app_main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token function">gpio_pad_select_gpio</span><span class="token punctuation">(</span>GPIO_NUM_9<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">gpio_set_direction</span><span class="token punctuation">(</span>GPIO_NUM_9<span class="token punctuation">,</span> GPIO_MODE_INPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">" Current Gpio9 Level is : %d \r\n\r\n"</span><span class="token punctuation">,</span>
+                <span class="token function">gpio_get_level</span><span class="token punctuation">(</span>GPIO_NUM_9<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//获取一次GPIO_NUM_9的电平</span>
+
+        <span class="token function">vTaskDelay</span><span class="token punctuation">(</span><span class="token number">500</span> <span class="token operator">/</span> portTICK_PERIOD_MS<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//每500ms检测一次是否有输入</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<hr>
+<h4 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h4><p><img src="https://z4a.net/images/2021/09/08/VID_20210908_170948.gif" alt="VID_20210908_170948.gif"></p>
+<hr>
+<h3 id="配置GPIO来检测中断"><a href="#配置GPIO来检测中断" class="headerlink" title="配置GPIO来检测中断"></a>配置GPIO来检测中断</h3><h4 id="首先要注意这几个函数"><a href="#首先要注意这几个函数" class="headerlink" title="首先要注意这几个函数"></a>首先要注意这几个函数</h4><pre class=" language-c"><code class="language-c">esp_err_t <span class="token function">gpio_isr_register</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>fn<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                            <span class="token keyword">void</span> <span class="token operator">*</span>arg<span class="token punctuation">,</span> 
+                            <span class="token keyword">int</span> intr_alloc_flags<span class="token punctuation">,</span> 
+                            gpio_isr_handle_t <span class="token operator">*</span>handle<span class="token punctuation">,</span> <span class="token punctuation">)</span></code></pre>
+<p>这个函数是为GPIO中断注册中断处理程序，这个中断程序会在任何GPIO发生中断的时候被调用。（一般情况下就不用这个函数，用下面的方法来配置GPIO的中断）</p>
+<ul>
+<li><strong>Parameters</strong> </li>
+<li><code>fn</code>: 需要调用的中断函数<ul>
+<li><code>intr_alloc_flags</code>: 用于分配中断的标志。</li>
+</ul>
+</li>
+<li><code>arg</code>: 传入中断函数的参数<ul>
+<li><code>handle</code>: 指向中断函数返回的句柄</li>
+</ul>
+</li>
+</ul>
+<pre class=" language-c"><code class="language-c">esp_err_t <span class="token function">gpio_install_isr_service</span><span class="token punctuation">(</span><span class="token keyword">int</span> intr_alloc_flags<span class="token punctuation">)</span></code></pre>
+<p>这个函数用来为GPIO驱动注册中断服务，相当于GPIO中断的总开关。但是这个函数与<code>gpio_isr_register</code>不兼容。这个函数常常与<code>gpio_isr_handler_add </code>这个函数配合着使用。</p>
+<p>其中的参数<code>intr_alloc_flags</code>相当于中断的优先级等级。也就是说，整个GPIO的外部输入中断的优先级都一样。不过仍然可以在GPIO中断处理函数中进行判断其优先级</p>
+<pre class=" language-c"><code class="language-c">esp_err_t <span class="token function">gpio_isr_handler_add</span><span class="token punctuation">(</span>gpio_num_tgpio_num<span class="token punctuation">,</span> 
+                               gpio_isr_tisr_handler<span class="token punctuation">,</span> 
+                               <span class="token keyword">void</span> <span class="token operator">*</span>args<span class="token punctuation">)</span></code></pre>
+<p>这个函数的作用是为某个GPIO口来绑定一个中断回调函数。</p>
+<p>对于中断回调函数而言，不再需要为其声明<code>IRAM_ATTR</code>标志。 除非在<code>gpio_install_isr_service()</code>中分配ISR时传递<code>ESP_INTR_FLAG_IRAM</code>标志。</p>
+<ul>
+<li><strong>Parameters</strong><ul>
+<li><code>gpio_num</code>: GPIO标号</li>
+<li><code>isr_handler</code>: GPIO口的中断回调函数名</li>
+<li><code>args</code>: 传入GPIO口的参数</li>
+</ul>
+</li>
+</ul>
+<h4 id="GPIO中断配置的过程"><a href="#GPIO中断配置的过程" class="headerlink" title="GPIO中断配置的过程"></a>GPIO中断配置的过程</h4><p>首先选定一个GPIO口</p>
+<p>设置其输入/输出方向</p>
+<p>使能其中断</p>
+<p>设置中断的触发类型（见下表）</p>
+<pre class=" language-c"><code class="language-c">GPIO_INTR_DISABLE <span class="token comment" spellcheck="true">//禁用GPIO中断</span>
+GPIO_INTR_POSEDGE <span class="token comment" spellcheck="true">//GPIO中断类型：上升沿</span>
+GPIO_INTR_NEGEDGE <span class="token comment" spellcheck="true">//下降沿</span>
+GPIO_INTR_ANYEDGE <span class="token comment" spellcheck="true">//上升沿和下降沿</span>
+GPIO_INTR_LOW_LEVEL <span class="token comment" spellcheck="true">//输入低电平触发</span>
+GPIO_INTR_HIGH_LEVEL <span class="token comment" spellcheck="true">//输入高电平触发</span></code></pre>
+<p>可选：设置GPIO的上下拉是否使能（上拉后，ESP32可以检测到GPIO的下降沿）。</p>
+<p>相关函数如下</p>
+<pre class=" language-c"><code class="language-c"><span class="token function">gpio_pad_select_gpio</span><span class="token punctuation">(</span>GPIO_NUM_36<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">gpio_set_direction</span><span class="token punctuation">(</span>GPIO_NUM_36<span class="token punctuation">,</span> GPIO_MODE_INPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">gpio_intr_enable</span><span class="token punctuation">(</span>GPIO_NUM_36<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">gpio_set_intr_type</span><span class="token punctuation">(</span>GPIO_NUM_36<span class="token punctuation">,</span> GPIO_INTR_NEGEDGE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">gpio_pullup_en</span><span class="token punctuation">(</span>GPIO_NUM_36<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<hr>
+<p>目的：</p>
+<p>​    利用一个按键通过中断的方式来控制LED的亮灭</p>
+<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"freertos/FreeRTOS.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"freertos/task.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"driver/gpio.h"</span></span>
+
+uint8_t flag<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//按键按下标志位</span>
+
+<span class="token keyword">void</span> IRAM_ATTR <span class="token function">gpio_isr_handler</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> arg<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//GPIO中断回调函数</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>   
+    flag <span class="token operator">=</span> <span class="token operator">~</span>flag<span class="token punctuation">;</span>
+    <span class="token function">gpio_set_level</span><span class="token punctuation">(</span>GPIO_NUM_5<span class="token punctuation">,</span>flag<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//使GPIO5的电平翻转一次</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">app_main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//GPIO5------蓝色LED</span>
+    <span class="token function">gpio_pad_select_gpio</span><span class="token punctuation">(</span>GPIO_NUM_5<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">gpio_set_direction</span><span class="token punctuation">(</span>GPIO_NUM_5<span class="token punctuation">,</span> GPIO_MODE_OUTPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//GPIO9------按键输入中断配置</span>
+    <span class="token function">gpio_pad_select_gpio</span><span class="token punctuation">(</span>GPIO_NUM_9<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">gpio_set_direction</span><span class="token punctuation">(</span>GPIO_NUM_9<span class="token punctuation">,</span> GPIO_MODE_INPUT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">gpio_intr_enable</span><span class="token punctuation">(</span>GPIO_NUM_9<span class="token punctuation">)</span><span class="token punctuation">;</span>                       <span class="token comment" spellcheck="true">//使能GPIO9 上的中断</span>
+    <span class="token function">gpio_set_intr_type</span><span class="token punctuation">(</span>GPIO_NUM_9<span class="token punctuation">,</span> GPIO_INTR_NEGEDGE<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//配置GPIO9 上中断触发源（下降沿）</span>
+    <span class="token function">gpio_pullup_en</span><span class="token punctuation">(</span>GPIO_NUM_9<span class="token punctuation">)</span><span class="token punctuation">;</span>                         <span class="token comment" spellcheck="true">//对GPIO9   上拉以便于检测到下降沿或者说低电平</span>
+
+    <span class="token comment" spellcheck="true">//注册中断服务</span>
+    <span class="token function">gpio_install_isr_service</span><span class="token punctuation">(</span>ESP_INTR_FLAG_LEVEL1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//设置GPIO的中断回调函数</span>
+    <span class="token function">gpio_isr_handler_add</span><span class="token punctuation">(</span>GPIO_NUM_9<span class="token punctuation">,</span>gpio_isr_handler<span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token function">vTaskDelay</span><span class="token punctuation">(</span><span class="token number">1000</span> <span class="token operator">/</span> portTICK_PERIOD_MS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>具体的整个流程就是</p>
+<ol>
+<li>配置GPIO为输入模式</li>
+<li>开启GPIO口中断</li>
+<li>设置其中断触发源</li>
+<li>配置其为上拉模式，以便于检测按键的下降沿</li>
+<li>为GPIO驱动注册中断服务</li>
+<li>编写GPIO的中断回调函数</li>
+<li>设置GPIO的中断回调函数与GPIO口中断绑定</li>
+<li></li>
+</ol>
+<h4 id="测试-2"><a href="#测试-2" class="headerlink" title="测试"></a>测试</h4><p><img src="https://z4a.net/images/2021/09/08/VID_20210908_220746.gif" alt="VID_20210908_220746.gif"></p>
+<hr>
+<h2 id="函数总结-便于查阅"><a href="#函数总结-便于查阅" class="headerlink" title="函数总结(便于查阅)"></a>函数总结(便于查阅)</h2><pre class=" language-c"><code class="language-c"><span class="token function">gpio_pad_select_gpio</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            用于选择需要配置的GPIO口
+
+<span class="token function">gpio_set_direction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            用于设置GPIO的输入输出等模式
+
+<span class="token function">gpio_set_level</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                用于设置GPIO口的电平
+
+<span class="token function">gpio_get_level</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                用于获取指定GPIO口的电平
+
+<span class="token function">gpio_intr_enable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                使能选中的GPIO中断
+
+<span class="token function">gpio_set_intr_type</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            用于配置选定的GPIO口的中断触发方式
+
+<span class="token function">gpio_pullup_en</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                用于使能GPIO口的上拉
+
+<span class="token function">gpio_isr_register</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            用于为GPIO口注册中断<span class="token punctuation">(</span>不常用<span class="token punctuation">)</span>
+
+<span class="token function">gpio_install_isr_service</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        用于为GPIO驱动注册中断
+
+<span class="token function">gpio_isr_handler_add</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            用于为GPIO口注册中断回调函数</code></pre>
+<p><em>更多详细的GPIO相关函数还请参考：<a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.3/esp32c3/api-reference/peripherals/gpio.html?highlight=gpio#gpio-rtc-gpio">https://docs.espressif.com/projects/esp-idf/zh_CN/release-v4.3/esp32c3/api-reference/peripherals/gpio.html?highlight=gpio#gpio-rtc-gpio</a></em></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ESP32-C3/" rel="tag"># ESP32-C3</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/09/06/%E7%82%B9%E4%BA%AEHPDL-1414/" rel="next" title="点亮HPDL-1414">
+                <i class="fa fa-chevron-left"></i> 点亮HPDL-1414
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/1610055064437.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EESP32-C3%E5%B7%A5%E7%A8%8B%E7%9A%84%E5%BB%BA%E7%AB%8B"><span class="nav-number">1.</span> <span class="nav-text">关于ESP32-C3工程的建立</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPIO%E6%8E%A5%E5%8F%A3%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">GPIO接口的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EIO-MUX-%E4%BB%A5%E5%8F%8AGPIO-%E4%BA%A4%E6%8D%A2%E7%9F%A9%E9%98%B5%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">2.2.</span> <span class="nav-text">关于IO MUX 以及GPIO 交换矩阵的理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EGPIO%E7%9A%84%E7%94%B5%E6%BA%90%E5%9F%9F"><span class="nav-number">2.3.</span> <span class="nav-text">关于GPIO的电源域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8GPIO%E8%BE%93%E5%87%BA%E7%82%B9%E4%BA%AE%E4%B8%80%E4%B8%AALED%E7%81%AF"><span class="nav-number">2.4.</span> <span class="nav-text">利用GPIO输出点亮一个LED灯</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GPIO%E8%BE%93%E5%87%BA%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B"><span class="nav-number">2.4.1.</span> <span class="nav-text">GPIO输出模式的配置过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">2.4.2.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.4.3.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8GPIO%E7%9A%84%E8%BE%93%E5%85%A5%E5%8A%9F%E8%83%BD%E6%9D%A5%E6%A3%80%E6%B5%8B%E6%8C%89%E9%94%AE%E6%98%AF%E5%90%A6%E6%8C%89%E4%B8%8B"><span class="nav-number">2.5.</span> <span class="nav-text">利用GPIO的输入功能来检测按键是否按下</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GPIO%E8%BE%93%E5%85%A5%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B"><span class="nav-number">2.5.1.</span> <span class="nav-text">GPIO输入模式的配置过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95-1"><span class="nav-number">2.5.2.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEGPIO%E6%9D%A5%E6%A3%80%E6%B5%8B%E4%B8%AD%E6%96%AD"><span class="nav-number">2.6.</span> <span class="nav-text">配置GPIO来检测中断</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A6%96%E5%85%88%E8%A6%81%E6%B3%A8%E6%84%8F%E8%BF%99%E5%87%A0%E4%B8%AA%E5%87%BD%E6%95%B0"><span class="nav-number">2.6.1.</span> <span class="nav-text">首先要注意这几个函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GPIO%E4%B8%AD%E6%96%AD%E9%85%8D%E7%BD%AE%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">2.6.2.</span> <span class="nav-text">GPIO中断配置的过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95-2"><span class="nav-number">2.6.3.</span> <span class="nav-text">测试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93-%E4%BE%BF%E4%BA%8E%E6%9F%A5%E9%98%85"><span class="nav-number">3.</span> <span class="nav-text">函数总结(便于查阅)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WJ</span>
+
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+-->
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
