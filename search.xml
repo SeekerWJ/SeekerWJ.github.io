@@ -2459,4 +2459,294 @@ int64_t <span class="token function">esp_timer_get_time</span><span class="token
         <tag>ESP32-C3</tag>
       </tags>
   </entry>
+  <entry>
+    <title>EPS32 串口的基本使用</title>
+    <url>/2021/09/11/ESP32_C3%E4%B8%B2%E5%8F%A3%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="使用串口的基本流程"><a href="#使用串口的基本流程" class="headerlink" title="使用串口的基本流程"></a>使用串口的基本流程</h2><ol>
+<li>使用结构体<code>uart_config_t </code>来为串口设置参数（波特率，停止位，是否有奇偶校验等）</li>
+<li>利用函数<code>uart_set_pin</code>来设置串口的引脚映射（没有映射的话就默认为原来的）ESP32的串口管脚可以任意映射到其他管脚上，就是说任意两个PIN脚都可以作为串口的输出输入脚来使用</li>
+<li>利用函数<code>uart_driver_install</code>来为ESP32安装串口驱动</li>
+<li>串口应用函数的使用，即按照用户要求在任务中调用串口的收发函数</li>
+<li>使用串口的中断（可选）</li>
+<li>串口卸载（基本不常用）</li>
+</ol>
+<a id="more"></a>
+
+<h2 id="设置串口参数"><a href="#设置串口参数" class="headerlink" title="设置串口参数"></a>设置串口参数</h2><pre class=" language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> baud_rate<span class="token punctuation">;</span>                      <span class="token comment" spellcheck="true">/*串口波特率*/</span>
+    uart_word_length_t data_bits<span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">/*串口字长*/</span>
+    uart_parity_t parity<span class="token punctuation">;</span>               <span class="token comment" spellcheck="true">/*是否启动串口的奇偶校验*/</span>
+    uart_stop_bits_t stop_bits<span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">/*串口的停止位*/</span>
+    uart_hw_flowcontrol_t flow_ctrl<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">/*是否启动串口的流控位*/</span>
+    uint8_t rx_flow_ctrl_thresh<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">/*UART HW RTS阈值*/</span>不常用
+    <span class="token keyword">union</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        uart_sclk_t source_clk<span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">/*UART源时钟选择*/</span>
+        bool use_ref_tick  <span class="token function">__attribute__</span><span class="token punctuation">(</span><span class="token punctuation">(</span>deprecated<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/*!&lt; Deprecated method to select ref tick clock source, set source_clk field instead */</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> uart_config_t<span class="token punctuation">;</span></code></pre>
+<p>​    利用该结构体为串口配置基本参数，如设置波特率、数据位、停止位等 </p>
+<h2 id="串口配置引脚"><a href="#串口配置引脚" class="headerlink" title="串口配置引脚"></a>串口配置引脚</h2><pre class=" language-c"><code class="language-c">esp_err_t <span class="token function">uart_set_pin</span><span class="token punctuation">(</span>uart_port_tuart_num<span class="token punctuation">,</span> 
+                       <span class="token keyword">int</span> tx_io_num<span class="token punctuation">,</span> 
+                       <span class="token keyword">int</span> rx_io_num<span class="token punctuation">,</span> 
+                       <span class="token keyword">int</span> rts_io_num<span class="token punctuation">,</span>
+                       <span class="token keyword">int</span> cts_io_num<span class="token punctuation">)</span></code></pre>
+<ul>
+<li><p><strong>参数</strong></p>
+<ul>
+<li>uart_num: 是哪个串口</li>
+<li>tx_io_num: UART TX pin GPIO number.</li>
+<li>rx_io_num: UART RX pin GPIO number.</li>
+<li>rts_io_num: UART RTS pin GPIO number.</li>
+<li>cts_io_num: UART CTS pin GPIO number.</li>
+</ul>
+</li>
+</ul>
+<p>如果不需要映射的话，将管脚参数设置为<code>UART_PIN_NO_CHANGE</code>就好</p>
+<h2 id="串口驱动的安装"><a href="#串口驱动的安装" class="headerlink" title="串口驱动的安装"></a>串口驱动的安装</h2><h3 id="函数uart-driver-install"><a href="#函数uart-driver-install" class="headerlink" title="函数uart_driver_install()"></a>函数uart_driver_install()</h3><pre class=" language-c"><code class="language-c">esp_err_t <span class="token function">uart_driver_install</span><span class="token punctuation">(</span>uart_port_t uart_num<span class="token punctuation">,</span> 
+                              <span class="token keyword">int</span> rx_buffer_size<span class="token punctuation">,</span> 
+                              <span class="token keyword">int</span> tx_buffer_size<span class="token punctuation">,</span> 
+                              <span class="token keyword">int</span> queue_size<span class="token punctuation">,</span> 
+                              QueueHandle_t <span class="token operator">*</span>uart_queue<span class="token punctuation">,</span> 
+                              <span class="token keyword">int</span> intr_alloc_flags<span class="token punctuation">)</span></code></pre>
+<ul>
+<li><strong>参数</strong><ul>
+<li>uart_num: 串口号（用的哪个串口就选哪个）</li>
+<li>rx_buffer_size: 串口接收环缓冲区大小 </li>
+<li>tx_buffer_size: 串口发送环缓冲区大小(如果设置为0，驱动程序将不使用TX缓冲区，TX函数将阻塞任务，直到所有数据发送完毕)。</li>
+<li>queue_size: 队列长度。</li>
+<li>uart_queue: 串口事件队列的句柄</li>
+<li>intr_alloc_flags: 分配中断的标志</li>
+</ul>
+</li>
+</ul>
+<h2 id="运行UART通讯"><a href="#运行UART通讯" class="headerlink" title="运行UART通讯"></a>运行UART通讯</h2><p>串行通信由每个UART控制器的有限状态机（FSM）控制。</p>
+<p>发送数据的过程涉及以下步骤：</p>
+<p>将数据写入Tx FIFO缓冲区<br>FSM序列化数据<br>FSM将数据发送出去<br>接收数据的过程类似，但是步骤相反：</p>
+<p>FSM处理传入的串行流并将其并行化<br>FSM将数据写入Rx FIFO缓冲区<br>从Rx FIFO缓冲区读取数据<br>因此，应用程序将被限制为分别使用<code>uart_write_bytes()</code>和从相应的缓冲区写入和读取数据<code>uart_read_bytes()</code>，而FSM将完成其余的工作。</p>
+<h3 id="函数uart-read-bytes"><a href="#函数uart-read-bytes" class="headerlink" title="函数uart_read_bytes()"></a>函数uart_read_bytes()</h3><pre class=" language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">uart_read_bytes</span><span class="token punctuation">(</span>uart_port_t uart_num<span class="token punctuation">,</span> 
+                    <span class="token keyword">void</span> <span class="token operator">*</span>buf<span class="token punctuation">,</span> 
+                    uint32_t length<span class="token punctuation">,</span> 
+                    TickType_t ticks_to_wait<span class="token punctuation">)</span></code></pre>
+<ul>
+<li><strong>参数</strong><ul>
+<li>uart_num: 串口号</li>
+<li>buf: 用于存放读取到数据的缓冲区</li>
+<li>length: 需要读取的长度</li>
+<li>ticks_to_wait: 阻塞时间（在这个时间内任务会阻塞，直到读满长度为length的数据后，或者超时）</li>
+</ul>
+</li>
+<li><strong>返回值</strong><ul>
+<li>(-1): 读取失败</li>
+<li>其他: 返回从串口缓冲区读取到的字节数</li>
+</ul>
+</li>
+</ul>
+<h3 id="函数uart-write-bytes"><a href="#函数uart-write-bytes" class="headerlink" title="函数uart_write_bytes()"></a>函数uart_write_bytes()</h3><pre class=" language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">uart_write_bytes</span><span class="token punctuation">(</span>uart_port_t uart_num<span class="token punctuation">,</span> 
+                     <span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>src<span class="token punctuation">,</span> 
+                     size_t size<span class="token punctuation">)</span></code></pre>
+<ul>
+<li><strong>参数</strong><ul>
+<li>uart_num: 串口号</li>
+<li>src: 需要发送数据的地址</li>
+<li>size: 需要发送的长度</li>
+</ul>
+</li>
+<li><strong>返回值</strong><ul>
+<li>(-1): 发送失败</li>
+<li>其他: 发送到TX FIFO的字节数</li>
+</ul>
+</li>
+</ul>
+<h2 id="串口队列接收"><a href="#串口队列接收" class="headerlink" title="串口队列接收"></a>串口队列接收</h2><pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* UART Events Example
+
+   This example code is in the Public Domain (or CC0 licensed, at your option.)
+
+   Unless required by applicable law or agreed to in writing, this
+   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND, either express or implied.
+*/</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"freertos/FreeRTOS.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"freertos/task.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"freertos/queue.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"driver/uart.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"esp_log.h"</span></span>
+
+<span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>TAG <span class="token operator">=</span> <span class="token string">"uart_events"</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * This example shows how to use the UART driver to handle special UART events.
+ *
+ * It also reads data from UART0 directly, and echoes it to console.
+ *
+ * - Port: UART0
+ * - Receive (Rx) buffer: on
+ * - Transmit (Tx) buffer: off
+ * - Flow control: off
+ * - Event queue: on
+ * - Pin assignment: TxD (default), RxD (default)
+ */</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> EX_UART_NUM UART_NUM_0</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> PATTERN_CHR_NUM    (3)         </span><span class="token comment" spellcheck="true">/*!&lt; Set the number of consecutive and identical characters received by receiver which defines a UART pattern*/</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> BUF_SIZE (1024)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> RD_BUF_SIZE (BUF_SIZE)</span>
+
+<span class="token keyword">static</span> QueueHandle_t uart0_queue<span class="token punctuation">;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">uart_event_task</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>pvParameters<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    uart_event_t event<span class="token punctuation">;</span>
+    size_t buffered_size<span class="token punctuation">;</span>
+    uint8_t<span class="token operator">*</span> dtmp <span class="token operator">=</span> <span class="token punctuation">(</span>uint8_t<span class="token operator">*</span><span class="token punctuation">)</span> <span class="token function">malloc</span><span class="token punctuation">(</span>RD_BUF_SIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//Waiting for UART event.</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">xQueueReceive</span><span class="token punctuation">(</span>uart0_queue<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span> <span class="token punctuation">)</span><span class="token operator">&amp;</span>event<span class="token punctuation">,</span> <span class="token punctuation">(</span>portTickType<span class="token punctuation">)</span>portMAX_DELAY<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token function">bzero</span><span class="token punctuation">(</span>dtmp<span class="token punctuation">,</span> RD_BUF_SIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"uart[%d] event:"</span><span class="token punctuation">,</span> EX_UART_NUM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">switch</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//Event of UART receving data</span>
+                <span class="token comment" spellcheck="true">/*We'd better handler data event fast, there would be much more data events than
+                other types of events. If we take too much time on data event, the queue might
+                be full.*/</span>
+                <span class="token keyword">case</span> UART_DATA<span class="token punctuation">:</span>
+                    <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"[UART DATA]: %d"</span><span class="token punctuation">,</span> event<span class="token punctuation">.</span>size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token function">uart_read_bytes</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">,</span> dtmp<span class="token punctuation">,</span> event<span class="token punctuation">.</span>size<span class="token punctuation">,</span> portMAX_DELAY<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"[DATA EVT]:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token function">uart_write_bytes</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> dtmp<span class="token punctuation">,</span> event<span class="token punctuation">.</span>size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//Event of HW FIFO overflow detected</span>
+                <span class="token keyword">case</span> UART_FIFO_OVF<span class="token punctuation">:</span>
+                    <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"hw fifo overflow"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token comment" spellcheck="true">// If fifo overflow happened, you should consider adding flow control for your application.</span>
+                    <span class="token comment" spellcheck="true">// The ISR has already reset the rx FIFO,</span>
+                    <span class="token comment" spellcheck="true">// As an example, we directly flush the rx buffer here in order to read more data.</span>
+                    <span class="token function">uart_flush_input</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token function">xQueueReset</span><span class="token punctuation">(</span>uart0_queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//Event of UART ring buffer full</span>
+                <span class="token keyword">case</span> UART_BUFFER_FULL<span class="token punctuation">:</span>
+                    <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"ring buffer full"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token comment" spellcheck="true">// If buffer full happened, you should consider encreasing your buffer size</span>
+                    <span class="token comment" spellcheck="true">// As an example, we directly flush the rx buffer here in order to read more data.</span>
+                    <span class="token function">uart_flush_input</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token function">xQueueReset</span><span class="token punctuation">(</span>uart0_queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//Event of UART RX break detected</span>
+                <span class="token keyword">case</span> UART_BREAK<span class="token punctuation">:</span>
+                    <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"uart rx break"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//Event of UART parity check error</span>
+                <span class="token keyword">case</span> UART_PARITY_ERR<span class="token punctuation">:</span>
+                    <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"uart parity error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//Event of UART frame error</span>
+                <span class="token keyword">case</span> UART_FRAME_ERR<span class="token punctuation">:</span>
+                    <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"uart frame error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//UART_PATTERN_DET</span>
+                <span class="token keyword">case</span> UART_PATTERN_DET<span class="token punctuation">:</span>
+                    <span class="token function">uart_get_buffered_data_len</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">,</span> <span class="token operator">&amp;</span>buffered_size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">int</span> pos <span class="token operator">=</span> <span class="token function">uart_pattern_pop_pos</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"[UART PATTERN DETECTED] pos: %d, buffered size: %d"</span><span class="token punctuation">,</span> pos<span class="token punctuation">,</span> buffered_size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>pos <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                        <span class="token comment" spellcheck="true">// There used to be a UART_PATTERN_DET event, but the pattern position queue is full so that it can not</span>
+                        <span class="token comment" spellcheck="true">// record the position. We should set a larger queue size.</span>
+                        <span class="token comment" spellcheck="true">// As an example, we directly flush the rx buffer here.</span>
+                        <span class="token function">uart_flush_input</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                        <span class="token function">uart_read_bytes</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">,</span> dtmp<span class="token punctuation">,</span> pos<span class="token punctuation">,</span> <span class="token number">100</span> <span class="token operator">/</span> portTICK_PERIOD_MS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        uint8_t pat<span class="token punctuation">[</span>PATTERN_CHR_NUM <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                        <span class="token function">memset</span><span class="token punctuation">(</span>pat<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>pat<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token function">uart_read_bytes</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">,</span> pat<span class="token punctuation">,</span> PATTERN_CHR_NUM<span class="token punctuation">,</span> <span class="token number">100</span> <span class="token operator">/</span> portTICK_PERIOD_MS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"read data: %s"</span><span class="token punctuation">,</span> dtmp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"read pat : %s"</span><span class="token punctuation">,</span> pat<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//Others</span>
+                <span class="token keyword">default</span><span class="token punctuation">:</span>
+                    <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"uart event type: %d"</span><span class="token punctuation">,</span> event<span class="token punctuation">.</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token function">free</span><span class="token punctuation">(</span>dtmp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    dtmp <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token function">vTaskDelete</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">app_main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token function">esp_log_level_set</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> ESP_LOG_INFO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/* Configure parameters of an UART driver,
+     * communication pins and install the driver */</span>
+    uart_config_t uart_config <span class="token operator">=</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token punctuation">.</span>baud_rate <span class="token operator">=</span> <span class="token number">115200</span><span class="token punctuation">,</span>
+        <span class="token punctuation">.</span>data_bits <span class="token operator">=</span> UART_DATA_8_BITS<span class="token punctuation">,</span>
+        <span class="token punctuation">.</span>parity <span class="token operator">=</span> UART_PARITY_DISABLE<span class="token punctuation">,</span>
+        <span class="token punctuation">.</span>stop_bits <span class="token operator">=</span> UART_STOP_BITS_1<span class="token punctuation">,</span>
+        <span class="token punctuation">.</span>flow_ctrl <span class="token operator">=</span> UART_HW_FLOWCTRL_DISABLE<span class="token punctuation">,</span>
+        <span class="token punctuation">.</span>source_clk <span class="token operator">=</span> UART_SCLK_APB<span class="token punctuation">,</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//Install UART driver, and get the queue.</span>
+    <span class="token function">uart_driver_install</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">,</span> BUF_SIZE <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">,</span> BUF_SIZE <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>uart0_queue<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">uart_param_config</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">,</span> <span class="token operator">&amp;</span>uart_config<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//Set UART log level</span>
+    <span class="token function">esp_log_level_set</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> ESP_LOG_INFO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//Set UART pins (using UART0 default pins ie no changes.)</span>
+    <span class="token function">uart_set_pin</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">,</span> UART_PIN_NO_CHANGE<span class="token punctuation">,</span> UART_PIN_NO_CHANGE<span class="token punctuation">,</span> UART_PIN_NO_CHANGE<span class="token punctuation">,</span> UART_PIN_NO_CHANGE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//Set uart pattern detect function.</span>
+    <span class="token function">uart_enable_pattern_det_baud_intr</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">,</span> <span class="token string">'+'</span><span class="token punctuation">,</span> PATTERN_CHR_NUM<span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//Reset the pattern queue length to record at most 20 pattern positions.</span>
+    <span class="token function">uart_pattern_queue_reset</span><span class="token punctuation">(</span>EX_UART_NUM<span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//Create a task to handler UART event from ISR</span>
+    <span class="token function">xTaskCreate</span><span class="token punctuation">(</span>uart_event_task<span class="token punctuation">,</span> <span class="token string">"uart_event_task"</span><span class="token punctuation">,</span> <span class="token number">2048</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>​    与普通串口初始化一样，不过串口的队列接收过程中多了队列这个缓冲。</p>
+<p>​    串口的队列接收可以实现串口的不定长接收。并且对于数据处理的方式上更灵活（具体情况具体讨论）</p>
+<p>​    创建一个串口队列，利用串口安装函数将其注册，之后只需要设置一个任务优先级较高的任务利用阻塞检测串口事件的方式就可以知道串口FIFO中是否有消息。当只有消息的时候才读取。这样就相当于一个中断了。</p>
+<p>​    并且可以通过配置串口接收消息数目来达到接收固定数目消息中断的效果</p>
+<p>之后利用该函数为串口注册中断函数也是可以的</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210911151816.png"></p>
+<p>​    </p>
+<h2 id="小结一下"><a href="#小结一下" class="headerlink" title="小结一下"></a>小结一下</h2><p>串口的使用也很简单</p>
+<ol>
+<li>设置串口参数</li>
+<li>设置串口引脚</li>
+<li>安装串口驱动</li>
+<li>使用串口函数</li>
+<li>使用中断（可选）</li>
+<li>删除串口驱动（可选）</li>
+</ol>
+<p>测试下串口的中断使用</p>
+<p>串口的队列接收消息的方式还需要配合事件标志组来进行，这里ESPIDF配合着FreeRTOS在串口方面创建了一个串口事件 uart_event_t  </p>
+<p>创建了一个串口队列（相当于之前的STM32的串口缓冲区），用于缓冲接收到的消息。</p>
+<p>这里有个疑问，使用<code>uart_read_bytes</code>这个函数之后是否串口的FIFO缓冲区就被清除了呢？–&gt;应该是的</p>
+<p>对于ESP32来说，利用队列来接收串口发送的消息也是一种很好的形式。不需要在额外的开中断了。只需要把队列接收的任务的优先级调成最高级的优先级，之后使用<code>xQueueReceive</code>这个队列接收函数来长时间的阻塞接收任务（只有队列中又消息的时候才执行任务）。</p>
+<p>​    之后根据串口事件类型<code>uart_event_t</code> <code>event.type</code>就可以根据不同的队列接收类型来对队列中接收到的消息来进行处理了。</p>
+<p>​    其实这个串口的消息队列也不需要有多长，只需要满足接收消息的最大的值就可以了，并且可以通过<code>event.size</code>来知道此时队列中接收了多少消息    </p>
+<p>懂了，串口协议还要再看下，ESP32是怎么知道串口接收完成的，这里利用了识别串口的结束位的方式才完成这个任务，并且也根据这个原理知道这个串口接收数据的长度。</p>
+<p>ESP32利用这种方式配合着FreeRTOS队列的方式完成了</p>
+<p>但是为什么这个串口只能接收120个字符？虽然也能完成接下来的接收并且能串起来，但为什么是120个字符？还是说限定时间内</p>
+<p>罪魁祸首找到了,再<code>uart_driver_install</code>这个函数中，设置了最大接收数量，但是这个<code>UART_FULL_THRESH_DEFAULT</code>被默认为了120。考虑到这是自带的ESPIDF的库文件，还是不要修改的比较好。但是其实这也无伤大雅。数据小了写，但是仍然可以接收完成一次完成的数据帧。如果之后有需求再想办法就是了… 暂时就先这样吧</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210911141836.png"></p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210911141932.png" style="zoom:50%;">
+
+<p>解决办法</p>
+<p>通过在结构<code>uart_intr_config_t</code>中输入缓冲区长度和超时各自的阈值并调用<code>uart_intr_config()</code>来配置它们   </p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>​    暂时就先这样子吧…</p>
+<p>​    利用ESPIDF编程指南配合着乐鑫官方提供的例程来学习也是蛮不错的….</p>
+<p>​    对于ESP32的串口而言，还可以加入<code>uart_enable_pattern_det_baud_intr</code>这类函数（作用是接收到固定字符进进入中断），这样就能实现类似于AT这样的指令操作了，如果单将ESP32作为一个蓝牙/WIFI模块来配合着其他单片机使用的话这样子是不错的一个选择。</p>
+]]></content>
+      <tags>
+        <tag>ESP32-C3</tag>
+      </tags>
+  </entry>
 </search>
