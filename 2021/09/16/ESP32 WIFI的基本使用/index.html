@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ESP32," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="主要函数解析函数esp_netif_init()esp_err_t esp_netif_init(void) ​    ESP32的WIFI连接是基于TCP服务的。这个函数的作用就是初始化底层的TCP&#x2F;IP堆栈。可以说ESP32的WIFI模块依赖于这个函数。在使用WIFI之前需要先利用这个函数初始化TCP&#x2F;IP。 函数esp_event_loop_create_default()esp_err_t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EPS32 WIFI的基本使用">
+<meta property="og:url" content="https://seekerwj.github.io/2021/09/16/ESP32%20WIFI%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="主要函数解析函数esp_netif_init()esp_err_t esp_netif_init(void) ​    ESP32的WIFI连接是基于TCP服务的。这个函数的作用就是初始化底层的TCP&#x2F;IP堆栈。可以说ESP32的WIFI模块依赖于这个函数。在使用WIFI之前需要先利用这个函数初始化TCP&#x2F;IP。 函数esp_event_loop_create_default()esp_err_t">
+<meta property="og:locale">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210916221438.png">
+<meta property="og:image" content="https://gitee.com/seekerwj/pic/raw/master/20210916222940.png">
+<meta property="article:published_time" content="2021-09-16T15:37:35.000Z">
+<meta property="article:modified_time" content="2021-09-16T15:38:05.325Z">
+<meta property="article:author" content="WJ">
+<meta property="article:tag" content="ESP32">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/seekerwj/pic/raw/master/20210916221438.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://SeekerWJ.github.io/2021/09/16/ESP32 WIFI的基本使用/"/>
+
+
+
+
+
+  <title>EPS32 WIFI的基本使用 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://SeekerWJ.github.io/2021/09/16/ESP32%20WIFI%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1610055064437.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">EPS32 WIFI的基本使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-16T23:37:35+08:00">
+                2021-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="主要函数解析"><a href="#主要函数解析" class="headerlink" title="主要函数解析"></a>主要函数解析</h2><h3 id="函数esp-netif-init"><a href="#函数esp-netif-init" class="headerlink" title="函数esp_netif_init()"></a>函数esp_netif_init()</h3><pre class=" language-c"><code class="language-c">esp_err_t <span class="token function">esp_netif_init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span></code></pre>
+<p>​    ESP32的WIFI连接是基于TCP服务的。这个函数的作用就是初始化底层的TCP/IP堆栈。可以说ESP32的WIFI模块依赖于这个函数。在使用WIFI之前需要先利用这个函数初始化TCP/IP。</p>
+<h3 id="函数esp-event-loop-create-default"><a href="#函数esp-event-loop-create-default" class="headerlink" title="函数esp_event_loop_create_default()"></a>函数esp_event_loop_create_default()</h3><pre class=" language-c"><code class="language-c">esp_err_t <span class="token function">esp_event_loop_create_default</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span></code></pre>
+<p>​    在例程中ESP32的使用是基于esp自带的一个esp-event事件组的。这个函数的作用就是创建一个默认的esp事件组并且不断的循环它。</p>
+<p>​    </p>
+<h3 id="函数esp-netif-create-default-wifi-ap"><a href="#函数esp-netif-create-default-wifi-ap" class="headerlink" title="函数esp_netif_create_default_wifi_ap()"></a>函数esp_netif_create_default_wifi_ap()</h3><pre class=" language-c"><code class="language-c">esp_netif_t <span class="token operator">*</span><span class="token function">esp_netif_create_default_wifi_ap</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span></code></pre>
+<p>​    这个函数的作用就是创建默认的WIIF-AP，就是说创建一个默认的AP模式的WIFI。</p>
+<a id="more"></a>
+
+
+
+<h3 id="函数esp-event-handler-instance-register"><a href="#函数esp-event-handler-instance-register" class="headerlink" title="函数esp_event_handler_instance_register()"></a>函数esp_event_handler_instance_register()</h3><pre class=" language-c"><code class="language-c">esp_err_t <span class="token function">esp_event_handler_instance_register</span><span class="token punctuation">(</span>esp_event_base_t event_base<span class="token punctuation">,</span> 
+                                              int32_t event_id<span class="token punctuation">,</span>
+                                              esp_event_handler_t event_handler<span class="token punctuation">,</span> 
+                                              <span class="token keyword">void</span> <span class="token operator">*</span>event_handler_arg<span class="token punctuation">,</span> 
+                                              esp_event_handler_instance_t <span class="token operator">*</span>instance<span class="token punctuation">)</span></code></pre>
+<p>​    这个函数就是注册一个事件到默认的esp-event循环中。这个event循环很有讲究，可以算的上是魔改版本的FreeRTOS中的事件了。在ESP32就很少调用原FreeRTOS中的事件标志组了。</p>
+<ul>
+<li><strong>参数</strong><ul>
+<li>event_base: 这个参数的意思就相当于是要向哪个事件标志组创建一个什么标志，这个参数就相当于是目标事件标志组</li>
+<li>event_id: 这个参数指代的就是要创建的事件的ID</li>
+<li>event_handler: 此ID对应的回调函数</li>
+<li>event_handler_arg: 要向回调函数中传入的参数在回调函数中会以<code>void* arg</code>的形式来接收</li>
+<li>instance: 与已注册事件处理程序和数据相关的事件处理程序实例对象，可以为NULL。 (暂时还不太理解，没怎么学过C++)</li>
+</ul>
+</li>
+</ul>
+<h3 id="宏定义WIFI-INIT-CONFIG-DEFAULT"><a href="#宏定义WIFI-INIT-CONFIG-DEFAULT" class="headerlink" title="宏定义WIFI_INIT_CONFIG_DEFAULT()"></a>宏定义WIFI_INIT_CONFIG_DEFAULT()</h3><p>​    这个宏定义就是用来初始化默认WIFI参数的，配合着WIFI参数结构体来使用比如这样</p>
+<pre class=" language-c"><code class="language-c">wifi_init_config_t cfg <span class="token operator">=</span> <span class="token function">WIFI_INIT_CONFIG_DEFAULT</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="结构体struct-wifi-init-config-t"><a href="#结构体struct-wifi-init-config-t" class="headerlink" title="结构体struct wifi_init_config_t"></a>结构体struct wifi_init_config_t</h3><p>​    这里面有许多关于WIFI设置的参数详细参考</p>
+<p><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/api-reference/network/esp_wifi.html?highlight=wifi_init_config_t#_CPPv418wifi_init_config_t">https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/api-reference/network/esp_wifi.html?highlight=wifi_init_config_t#_CPPv418wifi_init_config_t</a></p>
+<h3 id="函数esp-wifi-init"><a href="#函数esp-wifi-init" class="headerlink" title="函数esp_wifi_init()"></a>函数esp_wifi_init()</h3><pre class=" language-c"><code class="language-c">esp_err_t <span class="token function">esp_wifi_init</span><span class="token punctuation">(</span><span class="token keyword">const</span> wifi_init_config_t <span class="token operator">*</span>config<span class="token punctuation">)</span></code></pre>
+<p>​    这个就不用多说了，用来配合着之前配置好的WIFI结构体来初始化WIFI底层。</p>
+<h3 id="联合体union-wifi-config-t"><a href="#联合体union-wifi-config-t" class="headerlink" title="联合体union wifi_config_t"></a>联合体union wifi_config_t</h3><p>​    这里面有两个成员</p>
+<p><img src="https://gitee.com/seekerwj/pic/raw/master/20210916221438.png"></p>
+<p>在AP模式下就配置结构体 <strong>wifi_ap_config_t</strong> ，在station模式下就配置 <strong>wifi_sta_config_t</strong> 就好</p>
+<h3 id="结构体wifi-ap-config-t-与-wifi-sta-config-t"><a href="#结构体wifi-ap-config-t-与-wifi-sta-config-t" class="headerlink" title="结构体wifi_ap_config_t 与 wifi_sta_config_t"></a>结构体<strong>wifi_ap_config_t</strong> 与 <strong>wifi_sta_config_t</strong></h3><p>​    其中参数具体参考<a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/api-reference/network/esp_wifi.html?highlight=wifi_config_t#_CPPv413wifi_config_t">https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/api-reference/network/esp_wifi.html?highlight=wifi_config_t#_CPPv413wifi_config_t</a></p>
+<h3 id="函数esp-wifi-set-mode"><a href="#函数esp-wifi-set-mode" class="headerlink" title="函数esp_wifi_set_mode()"></a>函数esp_wifi_set_mode()</h3><pre class=" language-c"><code class="language-c">esp_err_t <span class="token function">esp_wifi_set_mode</span><span class="token punctuation">(</span>wifi_mode_t mode<span class="token punctuation">)</span></code></pre>
+<p>​    这个函数就是设置WIFI的工作模式的。可以设置为AP模式，STA模式，也可以同时设置为STA+AP模式。</p>
+<h3 id="函数esp-wifi-set-config"><a href="#函数esp-wifi-set-config" class="headerlink" title="函数esp_wifi_set_config()"></a>函数esp_wifi_set_config()</h3><pre class=" language-c"><code class="language-c">esp_err_t <span class="token function">esp_wifi_set_config</span><span class="token punctuation">(</span>wifi_interface_t interface<span class="token punctuation">,</span> wifi_config_t <span class="token operator">*</span>conf<span class="token punctuation">)</span></code></pre>
+<p>​    这个函数就是将之前写好的WIFI参数配置好</p>
+<p>​    需要注意的是，这个函数只能在接口已经开启的状态下调用，否则将会失败（配合着之前的esp_wifi_set_mode()）函数吗？</p>
+<h3 id="函数esp-wifi-start"><a href="#函数esp-wifi-start" class="headerlink" title="函数esp_wifi_start()"></a>函数esp_wifi_start()</h3><pre class=" language-c"><code class="language-c">esp_err_t <span class="token function">esp_wifi_start</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span></code></pre>
+<p>​    将之前配置好的WIFI启动（AP或者STA或者AT+STA）</p>
+<h2 id="WIFI-AP模式下的使用流程"><a href="#WIFI-AP模式下的使用流程" class="headerlink" title="WIFI AP模式下的使用流程"></a>WIFI AP模式下的使用流程</h2><p>​    程序参考自乐鑫官方的例程</p>
+<img src="https://gitee.com/seekerwj/pic/raw/master/20210916222940.png" style="zoom:50%;">
+
+<h3 id="WIFI-AP模式的初始化流程"><a href="#WIFI-AP模式的初始化流程" class="headerlink" title="WIFI AP模式的初始化流程"></a>WIFI AP模式的初始化流程</h3><pre class=" language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">wifi_init_softap</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_netif_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//开启TCP/IP堆栈</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_event_loop_create_default</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//开启ESP-EVENT默认事件循环</span>
+    <span class="token function">esp_netif_create_default_wifi_ap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//创建一个默认的AP WIIF</span>
+
+    wifi_init_config_t cfg <span class="token operator">=</span> <span class="token function">WIFI_INIT_CONFIG_DEFAULT</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//默认的WIFI配置</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_wifi_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cfg<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//初始化WIIF底层</span>
+
+    <span class="token comment" spellcheck="true">//向循环事件标志组中创建一个WIIF事件</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_event_handler_instance_register</span><span class="token punctuation">(</span>WIFI_EVENT<span class="token punctuation">,</span>
+                                                        ESP_EVENT_ANY_ID<span class="token punctuation">,</span>
+                                                        <span class="token operator">&amp;</span>wifi_event_handler<span class="token punctuation">,</span>
+                                                        <span class="token constant">NULL</span><span class="token punctuation">,</span>
+                                                        <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//配置WIIF连接（账号，密码等）</span>
+    wifi_config_t wifi_config <span class="token operator">=</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token punctuation">.</span>ap <span class="token operator">=</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token punctuation">.</span>ssid <span class="token operator">=</span> EXAMPLE_ESP_WIFI_SSID<span class="token punctuation">,</span>
+            <span class="token punctuation">.</span>ssid_len <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>EXAMPLE_ESP_WIFI_SSID<span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token punctuation">.</span>channel <span class="token operator">=</span> EXAMPLE_ESP_WIFI_CHANNEL<span class="token punctuation">,</span>
+            <span class="token punctuation">.</span>password <span class="token operator">=</span> EXAMPLE_ESP_WIFI_PASS<span class="token punctuation">,</span>
+            <span class="token punctuation">.</span>max_connection <span class="token operator">=</span> EXAMPLE_MAX_STA_CONN<span class="token punctuation">,</span>
+            <span class="token punctuation">.</span>authmode <span class="token operator">=</span> WIFI_AUTH_WPA_WPA2_PSK
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span>EXAMPLE_ESP_WIFI_PASS<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        wifi_config<span class="token punctuation">.</span>ap<span class="token punctuation">.</span>authmode <span class="token operator">=</span> WIFI_AUTH_OPEN<span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_wifi_set_mode</span><span class="token punctuation">(</span>WIFI_MODE_AP<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//设置WIFI为AP模式</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_wifi_set_config</span><span class="token punctuation">(</span>WIFI_IF_AP<span class="token punctuation">,</span> <span class="token operator">&amp;</span>wifi_config<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//配置AP模式的WIIF</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_wifi_start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//开启WIIF</span>
+
+    <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"wifi_init_softap finished. SSID:%s password:%s channel:%d"</span><span class="token punctuation">,</span>
+             EXAMPLE_ESP_WIFI_SSID<span class="token punctuation">,</span> EXAMPLE_ESP_WIFI_PASS<span class="token punctuation">,</span> EXAMPLE_ESP_WIFI_CHANNEL<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<h3 id="WIFI事件的回调函数"><a href="#WIFI事件的回调函数" class="headerlink" title="WIFI事件的回调函数"></a>WIFI事件的回调函数</h3><pre class=" language-c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">wifi_event_handler</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> arg<span class="token punctuation">,</span> esp_event_base_t event_base<span class="token punctuation">,</span>
+                                    int32_t event_id<span class="token punctuation">,</span> <span class="token keyword">void</span><span class="token operator">*</span> event_data<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//判断事件的ID并作出相应的操作</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>event_id <span class="token operator">==</span> WIFI_EVENT_AP_STACONNECTED<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        wifi_event_ap_staconnected_t<span class="token operator">*</span> event <span class="token operator">=</span> <span class="token punctuation">(</span>wifi_event_ap_staconnected_t<span class="token operator">*</span><span class="token punctuation">)</span> event_data<span class="token punctuation">;</span>
+        <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"station "</span>MACSTR<span class="token string">" join, AID=%d"</span><span class="token punctuation">,</span>
+                 <span class="token function">MAC2STR</span><span class="token punctuation">(</span>event<span class="token operator">-></span>mac<span class="token punctuation">)</span><span class="token punctuation">,</span> event<span class="token operator">-></span>aid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>event_id <span class="token operator">==</span> WIFI_EVENT_AP_STADISCONNECTED<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        wifi_event_ap_stadisconnected_t<span class="token operator">*</span> event <span class="token operator">=</span> <span class="token punctuation">(</span>wifi_event_ap_stadisconnected_t<span class="token operator">*</span><span class="token punctuation">)</span> event_data<span class="token punctuation">;</span>
+        <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"station "</span>MACSTR<span class="token string">" leave, AID=%d"</span><span class="token punctuation">,</span>
+                 <span class="token function">MAC2STR</span><span class="token punctuation">(</span>event<span class="token operator">-></span>mac<span class="token punctuation">)</span><span class="token punctuation">,</span> event<span class="token operator">-></span>aid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<p>Wi-Fi驱动程序会将事件发送到默认事件循环。应用程序可以在使用进行注册的回调中处理这些事件<code>esp_event_handler_register()</code>。esp_netif组件还处理Wi-Fi事件，以提供一组默认行为。</p>
+<p>例如，当Wi-Fi站连接到AP时，esp_netif将自动启动DHCP客户端（默认情况下）。<br>也就是说WIFI的使用基本离不开esp的事件循环组</p>
+<h2 id="WIFI-Station模式下的使用流程"><a href="#WIFI-Station模式下的使用流程" class="headerlink" title="WIFI Station模式下的使用流程"></a>WIFI Station模式下的使用流程</h2><h3 id="WIIF-Station模式的初始化流程"><a href="#WIIF-Station模式的初始化流程" class="headerlink" title="WIIF Station模式的初始化流程"></a>WIIF Station模式的初始化流程</h3><pre class=" language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">wifi_init_sta</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    s_wifi_event_group <span class="token operator">=</span> <span class="token function">xEventGroupCreate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//创建一个事件标志组</span>
+
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_netif_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//初始化TCP堆栈</span>
+
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_event_loop_create_default</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//创建一个默认的事件循环</span>
+    <span class="token function">esp_netif_create_default_wifi_sta</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//创建一个默认的WIFI STA模式</span>
+
+    wifi_init_config_t cfg <span class="token operator">=</span> <span class="token function">WIFI_INIT_CONFIG_DEFAULT</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//将WIIF底层参数设置为默认值</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_wifi_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cfg<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//初始化WIFI底层驱动</span>
+
+    esp_event_handler_instance_t instance_any_id<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//创建一个实例</span>
+    esp_event_handler_instance_t instance_got_ip<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//创建一个获取ip的实例</span>
+
+    <span class="token comment" spellcheck="true">//创建一个WIFI_EVENT事件标志组，并且为这个组中任何事件ID都设置一个名为event_handler的回调函数，并且绑定一个任何ID的实例</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_event_handler_instance_register</span><span class="token punctuation">(</span>WIFI_EVENT<span class="token punctuation">,</span>
+                                                        ESP_EVENT_ANY_ID<span class="token punctuation">,</span>
+                                                        <span class="token operator">&amp;</span>event_handler<span class="token punctuation">,</span>
+                                                        <span class="token constant">NULL</span><span class="token punctuation">,</span>
+                                                        <span class="token operator">&amp;</span>instance_any_id<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//创建一个IP_EVENT的事件标志组，并未IP_EVENT_STA_GOT_IP这个事件ID注册一个名为event_handler的回调函数(在esp-event中可以将多个事件位绑定为一个回调函数)并且绑定一个获取IP的实例</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_event_handler_instance_register</span><span class="token punctuation">(</span>IP_EVENT<span class="token punctuation">,</span>
+                                                        IP_EVENT_STA_GOT_IP<span class="token punctuation">,</span>
+                                                        <span class="token operator">&amp;</span>event_handler<span class="token punctuation">,</span>
+                                                        <span class="token constant">NULL</span><span class="token punctuation">,</span>
+                                                        <span class="token operator">&amp;</span>instance_got_ip<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//用来配置WIFI STA模式下的参数（需要连接的WIFI账号以及密码）</span>
+    wifi_config_t wifi_config <span class="token operator">=</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token punctuation">.</span>sta <span class="token operator">=</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token punctuation">.</span>ssid <span class="token operator">=</span> EXAMPLE_ESP_WIFI_SSID<span class="token punctuation">,</span>
+            <span class="token punctuation">.</span>password <span class="token operator">=</span> EXAMPLE_ESP_WIFI_PASS<span class="token punctuation">,</span>
+            <span class="token comment" spellcheck="true">/* Setting a password implies station will connect to all security modes including WEP/WPA.
+             * However these modes are deprecated and not advisable to be used. Incase your Access point
+             * doesn't support WPA2, these mode can be enabled by commenting below line */</span>
+         <span class="token punctuation">.</span>threshold<span class="token punctuation">.</span>authmode <span class="token operator">=</span> WIFI_AUTH_WPA2_PSK<span class="token punctuation">,</span>
+
+            <span class="token punctuation">.</span>pmf_cfg <span class="token operator">=</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                <span class="token punctuation">.</span>capable <span class="token operator">=</span> true<span class="token punctuation">,</span>
+                <span class="token punctuation">.</span>required <span class="token operator">=</span> false
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//设置WIFI模式为STA模式</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_wifi_set_mode</span><span class="token punctuation">(</span>WIFI_MODE_STA<span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//将之前设置好的WIFI参数配置</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_wifi_set_config</span><span class="token punctuation">(</span>WIFI_IF_STA<span class="token punctuation">,</span> <span class="token operator">&amp;</span>wifi_config<span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//开启WIIF（如果是STA模式的话开启WIFI会产生一个名为WIFI_EVENT_STA_START的事件标志,在事件任务中，它将启动DHCP客户端，该客户端最终将触发DHCP进程。）</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_wifi_start</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"wifi_init_sta finished."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/* Waiting until either the connection is established (WIFI_CONNECTED_BIT) or connection failed for the maximum
+     * number of re-tries (WIFI_FAIL_BIT). The bits are set by event_handler() (see above) */</span>
+    EventBits_t bits <span class="token operator">=</span> <span class="token function">xEventGroupWaitBits</span><span class="token punctuation">(</span>s_wifi_event_group<span class="token punctuation">,</span>
+            WIFI_CONNECTED_BIT <span class="token operator">|</span> WIFI_FAIL_BIT<span class="token punctuation">,</span>
+            pdFALSE<span class="token punctuation">,</span>
+            pdFALSE<span class="token punctuation">,</span>
+            portMAX_DELAY<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/* xEventGroupWaitBits() returns the bits before the call returned, hence we can test which event actually
+     * happened. */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bits <span class="token operator">&amp;</span> WIFI_CONNECTED_BIT<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"connected to ap SSID:%s password:%s"</span><span class="token punctuation">,</span>
+                 EXAMPLE_ESP_WIFI_SSID<span class="token punctuation">,</span> EXAMPLE_ESP_WIFI_PASS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>bits <span class="token operator">&amp;</span> WIFI_FAIL_BIT<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"Failed to connect to SSID:%s, password:%s"</span><span class="token punctuation">,</span>
+                 EXAMPLE_ESP_WIFI_SSID<span class="token punctuation">,</span> EXAMPLE_ESP_WIFI_PASS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token function">ESP_LOGE</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"UNEXPECTED EVENT"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/* The event will not be processed after unregister */</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_event_handler_instance_unregister</span><span class="token punctuation">(</span>IP_EVENT<span class="token punctuation">,</span> IP_EVENT_STA_GOT_IP<span class="token punctuation">,</span> instance_got_ip<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">ESP_ERROR_CHECK</span><span class="token punctuation">(</span><span class="token function">esp_event_handler_instance_unregister</span><span class="token punctuation">(</span>WIFI_EVENT<span class="token punctuation">,</span> ESP_EVENT_ANY_ID<span class="token punctuation">,</span> instance_any_id<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">vEventGroupDelete</span><span class="token punctuation">(</span>s_wifi_event_group<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<h2 id="WIFI事件的回调函数-1"><a href="#WIFI事件的回调函数-1" class="headerlink" title="WIFI事件的回调函数"></a>WIFI事件的回调函数</h2><pre class=" language-c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">event_handler</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> arg<span class="token punctuation">,</span> esp_event_base_t event_base<span class="token punctuation">,</span>
+                                int32_t event_id<span class="token punctuation">,</span> <span class="token keyword">void</span><span class="token operator">*</span> event_data<span class="token punctuation">)</span>
+<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//当事件标志组是WIFI_EVENT并且事件ID是WIFI_EVENT_STA_START时，就执行esp_wifi_connect()这个函数</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>event_base <span class="token operator">==</span> WIFI_EVENT <span class="token operator">&amp;&amp;</span> event_id <span class="token operator">==</span> WIFI_EVENT_STA_START<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token function">esp_wifi_connect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>event_base <span class="token operator">==</span> WIFI_EVENT <span class="token operator">&amp;&amp;</span> event_id <span class="token operator">==</span> WIFI_EVENT_STA_DISCONNECTED<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>s_retry_num <span class="token operator">&lt;</span> EXAMPLE_ESP_MAXIMUM_RETRY<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token function">esp_wifi_connect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            s_retry_num<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"retry to connect to the AP"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token function">xEventGroupSetBits</span><span class="token punctuation">(</span>s_wifi_event_group<span class="token punctuation">,</span> WIFI_FAIL_BIT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span><span class="token string">"connect to the AP fail"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>event_base <span class="token operator">==</span> IP_EVENT <span class="token operator">&amp;&amp;</span> event_id <span class="token operator">==</span> IP_EVENT_STA_GOT_IP<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        ip_event_got_ip_t<span class="token operator">*</span> event <span class="token operator">=</span> <span class="token punctuation">(</span>ip_event_got_ip_t<span class="token operator">*</span><span class="token punctuation">)</span> event_data<span class="token punctuation">;</span>
+        <span class="token function">ESP_LOGI</span><span class="token punctuation">(</span>TAG<span class="token punctuation">,</span> <span class="token string">"got ip:"</span> IPSTR<span class="token punctuation">,</span> <span class="token function">IP2STR</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>event<span class="token operator">-></span>ip_info<span class="token punctuation">.</span>ip<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        s_retry_num <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token function">xEventGroupSetBits</span><span class="token punctuation">(</span>s_wifi_event_group<span class="token punctuation">,</span> WIFI_CONNECTED_BIT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<p>​    一旦<code>esp_wifi_connect()</code>被调用，Wi-Fi驱动程序将开始内部扫描/连接过程。</p>
+<p>​    如果内部扫描/连接过程成功，将生成WIFI_EVENT_STA_CONNECTED。在事件任务中，它将启动DHCP客户端，该客户端最终将触发DHCP进程。</p>
+<p>​    由于例如密码错误，找不到AP等原因，Wi-Fi连接可能会失败。在这种情况下，会出现WIFI_EVENT_STA_DISCONNECTED并提供这种失败的原因。</p>
+<hr>
+<p>​    初始化DHCP客户端后，将开始IP阶段。如果从DHCP服务器成功接收到IP地址，则将出现IP_EVENT_STA_GOT_IP，并且事件任务将执行常规处理。</p>
+<p>​    在应用程序事件回调中，IP_EVENT_STA_GOT_IP被中继到应用程序任务。对于基于LwIP的应用程序，此事件非常特殊，这意味着该应用程序已准备就绪，可以开始其任务，例如创建TCP / UDP套接字等。一个非常常见的错误是在收到IP_EVENT_STA_GOT_IP之前初始化套接字。接收IP之前，请勿开始与套接字相关的工作。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>​    ESP32的WIFI驱动库是很全的并且配合着事件循环组以及ESP32的双核特性，可以在另一个核上跑WIFI 蓝牙 等等进程。这是很方便的。</p>
+<p>​    然而我对WIFI的相关协议了解的并不多…再接再厉吧</p>
+<p>​    后续再学习下WIFI相关协议以及esp-event事件组的相关操作，这个魔改板的FreeRTOS给人感觉很惊喜，有许多方便的功能，但是用起来还是有些不顺手。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ESP32/" rel="tag"># ESP32</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/09/11/ESP32_C3%E4%B8%B2%E5%8F%A3%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" rel="next" title="EPS32 串口的基本使用">
+                <i class="fa fa-chevron-left"></i> EPS32 串口的基本使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/1610055064437.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">主要函数解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0esp-netif-init"><span class="nav-number">1.1.</span> <span class="nav-text">函数esp_netif_init()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0esp-event-loop-create-default"><span class="nav-number">1.2.</span> <span class="nav-text">函数esp_event_loop_create_default()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0esp-netif-create-default-wifi-ap"><span class="nav-number">1.3.</span> <span class="nav-text">函数esp_netif_create_default_wifi_ap()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0esp-event-handler-instance-register"><span class="nav-number">1.4.</span> <span class="nav-text">函数esp_event_handler_instance_register()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8F%E5%AE%9A%E4%B9%89WIFI-INIT-CONFIG-DEFAULT"><span class="nav-number">1.5.</span> <span class="nav-text">宏定义WIFI_INIT_CONFIG_DEFAULT()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93struct-wifi-init-config-t"><span class="nav-number">1.6.</span> <span class="nav-text">结构体struct wifi_init_config_t</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0esp-wifi-init"><span class="nav-number">1.7.</span> <span class="nav-text">函数esp_wifi_init()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%94%E5%90%88%E4%BD%93union-wifi-config-t"><span class="nav-number">1.8.</span> <span class="nav-text">联合体union wifi_config_t</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93wifi-ap-config-t-%E4%B8%8E-wifi-sta-config-t"><span class="nav-number">1.9.</span> <span class="nav-text">结构体wifi_ap_config_t 与 wifi_sta_config_t</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0esp-wifi-set-mode"><span class="nav-number">1.10.</span> <span class="nav-text">函数esp_wifi_set_mode()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0esp-wifi-set-config"><span class="nav-number">1.11.</span> <span class="nav-text">函数esp_wifi_set_config()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0esp-wifi-start"><span class="nav-number">1.12.</span> <span class="nav-text">函数esp_wifi_start()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WIFI-AP%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">WIFI AP模式下的使用流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#WIFI-AP%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">WIFI AP模式的初始化流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WIFI%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">WIFI事件的回调函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WIFI-Station%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">WIFI Station模式下的使用流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#WIIF-Station%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%81%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text">WIIF Station模式的初始化流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WIFI%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0-1"><span class="nav-number">4.</span> <span class="nav-text">WIFI事件的回调函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WJ</span>
+
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+-->
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
